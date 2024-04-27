@@ -1,0 +1,98 @@
+/* WhatsApp Header Styles */
+.whatsapp-main-header-container {
+  background-color: yellow;
+  padding-top: 15px;
+  z-index: 499;
+  margin-bottom: 10px;
+}
+
+.whatsapp-main-heading {
+  font-family: "Open Sans", sans-serif;
+  font-optical-sizing: auto;
+  padding-top: 12px;
+  padding-bottom: 10px;
+  padding-left: 8px;
+  padding-right: 8px;
+  background-color: yellow;
+  position: fixed;
+  z-index: 500;
+  top: 0;
+  left: 0;
+  width: 100%;
+  font-size: 26px;
+  color: black;
+  font-style: normal;
+}
+
+/* WhatsApp Tabs Styles */
+.whatsapp-upper-tabs-container {
+  position: fixed;
+  top: 55px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  background-color: white;
+  color: black;
+  z-index: 499;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.whatsapp-upper-tab {
+  flex: 1;
+  padding: 10px 0;
+  text-align: center;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+}
+
+.whatsapp-upper-tab.active {
+  border-bottom: 2px solid #25D366;
+}
+
+/* WhatsApp Content Styles */
+.whatsapp-content-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: -20px;
+  align-items: center;
+  height: 100vh;
+  background-color: white;
+}
+
+.whatsapp-tab-content {
+  display: none;
+
+}
+
+.whatsapp-tab-content.active {
+  display: block;
+}
+
+/* WhatsApp QR Code Styles */
+.whatsapp-qr-container {
+  text-align: center;
+}
+
+.whatsapp-qr-heading {
+  color: black;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  margin-bottom: 30px;
+}
+
+.whatsapp-info {
+  color: rgb(3, 231, 95);
+  font-family: "Mukta", sans-serif;
+  font-weight: 600;
+  font-size: 19px;
+  font-style: normal;
+  padding: 6px;
+  margin-top: 20px;
+}
+
+.qr-code {
+  background-color: white;
+}

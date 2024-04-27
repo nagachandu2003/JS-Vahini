@@ -1,0 +1,63 @@
+.footer-container {
+  background-color: black; /* Changed background color to white */
+  color: white; /* Changed text color to dark */
+  padding: 8px; /* Reduced padding */
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center; /* Align content horizontally */
+  align-items: center; /* Align content vertically */
+  z-index: 999; /* Ensure footer stays above other content */
+}
+
+.bottom-tabs-container {
+  display: flex;
+  justify-content: center; /* Center tabs horizontally */
+  width: 100%; /* Ensure tabs take full width */
+  max-width: 500px; /* Limit max width for better responsiveness */
+  list-style-type: none;
+  padding: 0;
+  margin: 0 -4px; /* Reduced margin between tabs */
+}
+
+.bottom-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 16px;
+  text-decoration: none;
+  color: white;
+  padding: 8px 12px; /* Reduced padding */
+  cursor: pointer;
+  flex-grow: 1; /* Allow tabs to grow and fill the width */
+}
+
+.bottom-tab.active {
+  color: yellow;
+}
+
+.bottom-tab.active .active-icon {
+  color: yellow;
+}
+
+.bottom-tab svg {
+  margin-bottom: 5px; /* Moved icon below the text */
+}
+
+.active-icon {
+  color: inherit;
+}
+
+/* Responsive Styles */
+@media only screen and (min-width: 768px) {
+  .bottom-tabs-container {
+    justify-content: space-between; /* Distribute tabs evenly on larger screens */
+    margin: 0; /* Reset margin */
+  }
+
+  .bottom-tab {
+    padding: 8px 16px; /* Restored padding for larger screens */
+  }
+}

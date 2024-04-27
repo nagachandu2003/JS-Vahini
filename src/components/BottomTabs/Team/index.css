@@ -1,0 +1,33 @@
+.team-content {
+    background-color: white;
+    height: 100vh;
+    margin-top: 20px;
+    padding: 10px;
+}
+.team-role {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); 
+    padding: 15px;
+}
+.team-heading {
+    font-family: Poppins;
+    font-weight: 600;
+    font-size: 24px;
+    margin-bottom: 4px;
+}
+.team-para {
+    font-family: Roboto;
+    display: flex;
+    align-items: center;
+}
+.team-phone {
+    color: blue; 
+  }
+  
+  .team-whatsapp {
+    color: green; 
+  }
+  .team-whatsapp-logo {
+    color: green;
+    margin-left: 10px;
+    margin-right: 3px;
+  }

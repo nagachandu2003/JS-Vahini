@@ -1,0 +1,73 @@
+.photos-tab-container {
+  position: fixed; /* Add fixed positioning */
+  top: 5; /* Adjust as needed */
+  background-color: black; /* Add background color */
+  width: 100vw; /* Occupy full width */
+  display: flex;
+  justify-content: space-around;
+  z-index: 999; /* Ensure it's above other content */
+}
+
+.photos-tab-btn {
+  padding: 6px 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 45vw;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  font-style: normal;
+  margin: 4px;
+  cursor: pointer;
+}
+
+.photos-tab-btn.photos-active-tab {
+  background-color: blue;
+  color: white;
+  border-color: #999;
+}
+
+.photo-heading {
+  color: white;
+}
+
+.floating-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: yellow;
+  color: black;
+  border-radius: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+  z-index: 1000;
+}
+
+.floating-button span {
+  font-size: 18px;
+  font-weight: bold;
+  padding-left: 5px;
+  margin-right: 5px;
+}
+
+.camera-icon {
+  font-size: 24px;
+}
+
+/* Popup Styles */
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}

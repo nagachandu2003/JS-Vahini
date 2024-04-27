@@ -1,0 +1,48 @@
+.ss-form {
+    max-width: 320px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .ss-form-field {
+    margin-bottom: 20px;
+  }
+  
+  .ss-form-field label {
+    display: block;
+    margin-bottom: 5px;
+    font-family: Poppins;
+    font-size: 17px;
+    color: white; /* Set text color to white for Hindi text */
+  }
+  
+  .ss-form-field input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid white;
+    border-radius: 5px;
+    background-color: black;
+    color: white;
+  }
+  
+  .ss-submit-btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+  }
+  
+  .ss-submit-btn:hover {
+    background-color: #ccc;
+  }
+  .ss-submit-btn {
+    background-color: blue;
+    color: white;
+    margin: 6px;
+    margin-bottom: 80px;
+    border: none;
+    border-radius: 6px;
+  }
