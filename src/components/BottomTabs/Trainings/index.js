@@ -64,8 +64,8 @@ const Trainings = () => {
         {videos.map((video) => (
           <div key={video.id} className="trainings-video-item">
             <iframe
-              width="100%"
-              height="200"
+              width="95%"
+              height="150"
               src={video.url}
               title={video.title}
               frameBorder="0"
