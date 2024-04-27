@@ -1,0 +1,186 @@
+/* Task Header Styles */
+.main-header-container {
+    background-color: yellow;
+  padding-top: 15px;
+  z-index: 499;
+  margin-bottom: 10px;
+  }
+  
+  .main-heading {
+    font-family: "Open Sans", sans-serif;
+  font-optical-sizing: auto;
+  padding-top: 12px;
+  padding-bottom: 10px;
+  padding-left: 8px;
+  padding-right: 8px;
+  background-color: yellow;
+  position: fixed;
+  z-index: 500;
+  top: 0;
+  left: 0;
+  width: 100%;
+  font-size: 26px;
+  color: black;
+  font-style: normal;
+  }
+  .task-tabs-container {
+ position: fixed;
+  top: 48px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  background-color: white;
+  color: black;
+  z-index: 499;
+  overflow-x: auto;
+  white-space: nowrap;
+  }
+  .task-content-container {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    padding-top: 25px;
+    margin-top: 70px; 
+    height: 100vh;
+    background-color: white;
+  }
+  
+  .task-tab {
+    flex: 1;
+  padding: 10px 0;
+  color: black;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 3px;
+  position: relative;
+  text-align: center;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  }
+  
+  .task-tab.active {
+    background-color:white;
+  }
+  
+  .task-tab-slider {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+    height: 3px;
+    background-color:#25D366;
+    transition: left 0.3s ease;
+  }
+  
+  .underline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: lightblue;
+  }
+  .task-content {
+    display: flex;
+    padding: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1);
+  }
+  .task-icon {
+    font-size: 50px;
+    margin-right: 10px;
+  }
+  .task-details-heading {
+    font-size: 20px;
+    padding-bottom: 3px;
+  }
+  .task-arrow-container {
+    display: flex;
+    align-self: flex-end;
+    justify-content: flex-end;
+  }
+  .task-details-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  .task-right-arrow {
+    font-size: 26px;
+  }
+  .task-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+  }
+  
+  .task-popup p {
+    margin: 0;
+  }
+  
+  /* Media Query for Mobile Devices */
+  @media (max-width: 768px) {
+    .task-popup {
+      width: 90%;
+      max-width: 300px;
+    }
+  }
+
+
+
+  .task-popup-title,
+.task-popup-description {
+  margin-top: 10px;
+}
+.task-popup-title {
+    font-size: 22px;
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+.task-popup-subtitle {
+   font-weight: 600;
+   margin-bottom: 2px;
+   margin-top: 10px;
+}
+
+.task-popup-status {
+  margin-bottom: 10px;
+}
+
+.task-popup-radio-label {
+  display: block;
+  margin-bottom: 5px;
+}
+.task-popup-radio {
+    margin-right: 4px;
+}
+.task-popup-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.task-popup-save-btn {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.task-popup-cancel-btn {
+    padding: 10px 20px;
+  background-color: red;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}

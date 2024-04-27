@@ -1,6 +1,6 @@
 .photos-tab-container {
   position: fixed; /* Add fixed positioning */
-  top: 5; /* Adjust as needed */
+  margin-top: 20px; /* Adjust as needed */
   background-color: black; /* Add background color */
   width: 100vw; /* Occupy full width */
   display: flex;
