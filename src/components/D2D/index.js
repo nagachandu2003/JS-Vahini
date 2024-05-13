@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 // import { MdCameraswitch } from "react-icons/md";
 import { FaPlus } from 'react-icons/fa';
 import { RiArrowRightSLine } from "react-icons/ri";
+import Footer from '../Footer'
 
 import './index.css'; // Import CSS file
 
@@ -118,6 +119,7 @@ const D2D = () => {
  
 
     return (
+      <>
       <div className="form-container active" style={{ overflow: 'auto' }}> {/* Add overflow style */}
         <form className="d2d-form" onSubmit={handleSubmit}>
           <h1 className='popup-heading'>Enter the D2D Details</h1>
@@ -227,10 +229,13 @@ const D2D = () => {
           </div>
         </form>
       </div>
+      <Footer/>
+      </>
     );
   };
 
   return (
+    <>
     <div>
       <div className='main-header-container'>
         <h1 className='main-d2d'>D2D</h1>
@@ -290,6 +295,8 @@ const D2D = () => {
         )}
       </div>
     </div>
+    <Footer/>
+    </>
   );
 }
 export default D2D;

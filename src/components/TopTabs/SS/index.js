@@ -1,9 +1,11 @@
 import React from 'react';
 import "./index.css"
+import Footer from '../../Footer'
 
 const SS = () => {
   return (
-    <div>
+    <>
+    <div style={{backgroundColor:"black"}}>
       <div className='main-header-container'>
         <h1 className='main-heading'>Sansthapak Sadasaya</h1>
       </div>
@@ -43,6 +45,8 @@ const SS = () => {
         <button type='submit' className='ss-submit-btn'>Submit</button>
       </form>
     </div>
+    <Footer/>
+    </>
   );
 };
 

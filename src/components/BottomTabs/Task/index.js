@@ -4,6 +4,7 @@ import { FaRegFileAlt } from "react-icons/fa";
 import { PiPresentationChartBold } from "react-icons/pi";
 import { FcReadingEbook } from "react-icons/fc";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
+import Footer from '../../Footer'
 
 const Task = () => {
   
@@ -19,6 +20,7 @@ const Task = () => {
   };
 
   return (
+    <>
     <div>
       <div className='main-header-container'>
         <h1 className='main-heading'>Team</h1>
@@ -181,6 +183,8 @@ const Task = () => {
         )}
       </div>
     </div>
+    <Footer/>
+    </>
   );
 };
 

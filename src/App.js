@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
+import CampLogin from './components/CampLogin'
+import CampHome from './components/CampHome'
+import {Routes,Route,BrowserRouter} from 'react-router-dom'
 import D2D from './components/D2D';
-import Footer from './components/Footer';
+// import Footer from './components/Footer';
+import "./index.css"
 import YC from './components/TopTabs/YC';
 import SI from './components/TopTabs/SI';
 import SS from './components/TopTabs/SS';
@@ -16,47 +18,30 @@ import Profile from './components/BottomTabs/Profile';
 import Maps from "./components/TopTabs/Maps"
 import LogoLauncher from './components/LogoLauncher';
 import Whatsapp from './components/TopTabs/Whatsapp';
+import CampRegister from './components/CampRegister'
 
-function App() {
-  const [showLogoLauncher, setShowLogoLauncher] = useState(true);
-  const [showMainContent, setShowMainContent] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowLogoLauncher(false); // Hide the logo launcher after 1 or 2 seconds
-      setShowMainContent(true); // Show the main content after hiding the logo launcher
-    }, 2000); // Adjust the duration as needed
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  return (
-    <div className='main-container'>
-      {showLogoLauncher && <LogoLauncher />} 
-      {showMainContent && (
-        <Router>
-          <div className='d2d-container'>
-            <Routes>
-              <Route path="/d2d" element={<D2D />} />
-              <Route path="/yc" element={<YC />} />
-              <Route path="/si" element={<SI />} />
-              <Route path="/ss" element={<SS />} />
-              <Route path="/youtuber" element={<Youtuber />} />
-              <Route path="/photos" element={<Photos />} />
-              <Route path="/" element={<Report />} />
-              <Route path="/trainings" element={<Trainings />} />
-              <Route path="/task" element={<Task />} />
-              <Route path="/team" element={<Team />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/maps" element={<Maps />} />
-              <Route path="/whatsapp" element={<Whatsapp />} />
-            </Routes>
-          </div>
-          <Footer />
-        </Router>
-      )}
-    </div>
-  );
-}
+const App = () => (
+  <BrowserRouter>
+  <LogoLauncher/>
+  <Routes>
+    <Route exact path="/" element={<CampLogin/>}/>
+    <Route exact path="/camphome" element={<CampHome/>}/>
+    <Route exact path="/campregister" element={<CampRegister/>}/>
+    <Route path="/d2d" element={<D2D />} />
+    <Route path="/yc" element={<YC />} />
+    <Route path="/si" element={<SI />} />
+    <Route path="/ss" element={<SS />} />
+    <Route path="/youtuber" element={<Youtuber />} />
+    <Route path="/photos" element={<Photos />} />
+    <Route path="/report" element={<Report />} />
+    <Route path="/trainings" element={<Trainings />} />
+    <Route path="/task" element={<Task />} />
+    <Route path="/team" element={<Team />} />
+    <Route path="/profile" element={<Profile />} />
+    <Route path="/maps" element={<Maps />} />
+    <Route path="/whatsapp" element={<Whatsapp />} />
+  </Routes>
+  </BrowserRouter>
+  )
 
 export default App;

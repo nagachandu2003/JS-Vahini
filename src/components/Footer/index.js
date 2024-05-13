@@ -17,7 +17,7 @@ const Footer = () => {
   return (
     <div className='footer-container'>
       <nav className='bottom-tabs-container'>
-        <Link to="/" className={`bottom-tab ${activeTab === 'Report' ? 'active' : ''}`} onClick={() => handleClick('Report')}><FaFileAlt className={`tab-icon ${activeTab === 'Report' ? 'active-icon' : ''}`} onClick={() => handleIconClick('Report')} /> Report</Link>
+        <Link to="/report" className={`bottom-tab ${activeTab === 'Report' ? 'active' : ''}`} onClick={() => handleClick('Report')}><FaFileAlt className={`tab-icon ${activeTab === 'Report' ? 'active-icon' : ''}`} onClick={() => handleIconClick('Report')} /> Report</Link>
         <Link to="/trainings" className={`bottom-tab ${activeTab === 'Trainings' ? 'active' : ''}`} onClick={() => handleClick('Trainings')}><FaBell className={`tab-icon ${activeTab === 'Trainings' ? 'active-icon' : ''}`} onClick={() => handleIconClick('Trainings')} /> Trainings</Link>
         <Link to="/task" className={`bottom-tab ${activeTab === 'Task' ? 'active' : ''}`} onClick={() => handleClick('Task')}><FaTasks className={`tab-icon ${activeTab === 'Task' ? 'active-icon' : ''}`} onClick={() => handleIconClick('Task')} /> Task</Link>
         <Link to="/team" className={`bottom-tab ${activeTab === 'Team' ? 'active' : ''}`} onClick={() => handleClick('Team')}><FaUsers className={`tab-icon ${activeTab === 'Team' ? 'active-icon' : ''}`} onClick={() => handleIconClick('Team')} /> Team</Link>

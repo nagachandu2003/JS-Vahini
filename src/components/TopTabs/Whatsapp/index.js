@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Footer from '../../Footer'
 import './index.css'; // Import the CSS file for styling
 import QRCode from 'react-qr-code'; // Import QRCode component
 
@@ -13,6 +14,7 @@ const Whatsapp = () => {
   const whatsappURL = `https://wa.me/${phoneNumber}?text=Hello`;
 
   return (
+    <>
     <div className="whatsapp-container">
       <div className='whatsapp-main-header-container'>
         <h1 className='whatsapp-main-heading'>WhatsApp</h1>
@@ -49,6 +51,8 @@ const Whatsapp = () => {
         </div>
       </div>
     </div>
+    <Footer/>
+    </>
   );
 };
 

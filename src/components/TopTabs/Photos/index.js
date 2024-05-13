@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './index.css';
 import { FaCamera } from 'react-icons/fa'; // Importing camera icon
+import Footer from '../../Footer'
 
 const Photos = () => {
   const [activeTab, setActiveTab] = useState('list');
@@ -12,6 +13,7 @@ const Photos = () => {
   };
 
   return (
+    <>
     <div>
       <div className="main-container">
         <div className="main-header-container">
@@ -67,6 +69,8 @@ const Photos = () => {
         </div>
       )}
     </div>
+    <Footer/>
+    </>
   );
 };
 

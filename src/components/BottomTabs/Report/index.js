@@ -10,14 +10,14 @@ import { FaMicrophoneAlt } from "react-icons/fa";
 import { IoLogoWhatsapp } from "react-icons/io";
 import { MdPhotoSizeSelectActual } from "react-icons/md";
 import { FaMapLocationDot } from "react-icons/fa6";
-
-
+import Footer from '../../Footer'
 
 
 import './index.css';
 
 const Report = () => {
   return (
+    <>
     <div>
       <div className='main-header-container'>
         <h1 className='main-heading'>Report</h1>
@@ -64,6 +64,8 @@ const Report = () => {
       </div>
       </div>
       </div>
+      <Footer />
+      </>
   );
 };
 

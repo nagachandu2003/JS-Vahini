@@ -1,5 +1,6 @@
 import React from 'react';
 import './index.css';
+import Footer from '../../Footer'
 
 const Trainings = () => {
   // Sample video data
@@ -55,6 +56,7 @@ const Trainings = () => {
   ];
 
   return (
+    <>
      <div>
     <div className='main-header-container'>
     <h1 className='main-heading'>Trainings</h1>
@@ -78,6 +80,8 @@ const Trainings = () => {
       </div>
     </div>
     </div>
+    <Footer/>
+    </>
   );
 };
 

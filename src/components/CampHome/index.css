@@ -1,0 +1,23 @@
+* {
+    margin: 0;
+  };
+.main-container {
+    position: relative;
+    padding-top: 16vh; /* Adjusted to accommodate the fixed header */
+  }
+  
+  .d2d-container {
+    position: relative;
+    margin: 0;
+    top: 0;
+    height: calc(100vh - 16vh); /* Adjusted to account for the fixed header */
+    overflow-y: auto;
+  }
+  
+  .nav-bar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #fff;
+    z-index: 1000;
+  }

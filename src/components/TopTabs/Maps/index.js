@@ -1,4 +1,5 @@
 import React,{useState,useEffect} from 'react';
+import Footer from  '../../Footer'
 
 const GoogleMap = () => {
   const googleMapsApiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
@@ -80,12 +81,15 @@ const GoogleMap = () => {
 
 const Maps = () => {
   return (
+    <>
     <div>
       <div className='main-header-container'>
         <h1 className='main-heading'>Maps </h1>
       </div>
       <GoogleMap />
+      <Footer/>
     </div>
+    </>
   );
 };
 

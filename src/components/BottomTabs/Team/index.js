@@ -1,10 +1,12 @@
 import React from 'react';
 import "./index.css";
 import { IoLogoWhatsapp } from "react-icons/io5";
+import Footer from '../../Footer'
 
 
 const Team = () => {
   return (
+    <>
     <div className="team-container">
       <div className='main-header-container'>
         <h1 className='main-heading'>Team</h1>
@@ -36,6 +38,8 @@ const Team = () => {
         </div>
       </div>
     </div>
+    <Footer/>
+    </>
   );
 };
 
