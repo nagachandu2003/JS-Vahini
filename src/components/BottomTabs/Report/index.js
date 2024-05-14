@@ -46,7 +46,7 @@ const Report = () => {
           </Link>
           <Link to='/si' className='grid-card grid-card-4'>
             <FaMicrophoneAlt className='icon' />
-            <h2 className='heading-grid'>Social Influencer</h2>
+            <h2 className='heading-grid'>BSC/Social Influencer</h2>
           </Link>
           <Link to='/photos' className='grid-card grid-card-5'>
             <MdPhotoSizeSelectActual className='icon' />
