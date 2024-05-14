@@ -87,6 +87,8 @@ const D2D = () => {
     const [totalFoundingMemberAdded, setTotalFoundingMemberAdded] = useState('');
     const [district, setDistrict] = useState('');
     const [block, setBlock] = useState('');
+    const [panchayat, setPanchayat] = useState('');
+
   
     const handleSubmit = (e) => {
       e.preventDefault();
@@ -100,6 +102,7 @@ const D2D = () => {
         totalFoundingMemberAdded,
         district,
         block,
+        panchayat,
         time: currentTime
       });
       // Reset input fields after submission
@@ -111,6 +114,7 @@ const D2D = () => {
       setTotalFoundingMemberAdded('');
       setDistrict('');
       setBlock('');
+      setPanchayat('');
     };
   
     const handleCancel = () => {
@@ -154,15 +158,24 @@ const D2D = () => {
           required
         />
         <label htmlFor="villagePopulation" className="form-label">Village Population:</label>
-        <input
-          type="text"
-          id="villagePopulation"
-          className="form-input"
-          placeholder="Enter Village Population"
-          value={villagePopulation}
-          onChange={(e) => setVillagePopulation(e.target.value)}
-          required
-        />
+<input
+  type="text"
+  id="villagePopulation"
+  className="form-input"
+  placeholder="Enter Village Population"
+  value={villagePopulation}
+  onChange={(e) => {
+    const inputValue = e.target.value;
+    // Check if the input value is a valid integer
+    if (/^\d*$/.test(inputValue)) {
+      // If it's a valid integer, update the state
+      setVillagePopulation(inputValue);
+    }
+    // If it's not a valid integer, do nothing (or you could provide feedback to the user)
+  }}
+  required
+/>
+
         <label htmlFor="totalHouseholdCovered" className="form-label">Total Household Covered:</label>
         <input
           type="text"
@@ -223,6 +236,16 @@ const D2D = () => {
           onChange={(e) => setBlock(e.target.value)}
           required
         />
+        <label htmlFor="panchayat" className="form-label">Panchayat:</label>
+        <input
+          type="text"
+          id="panchayat"
+          className="form-input"
+          placeholder="Enter Panchayat"
+          value={block}
+          onChange={(e) => setBlock(e.target.value)}
+          required
+        />
           <div className='cancel-submit-btn-container'>
           <button type="button" className="btn-cancel" onClick={handleCancel}>Cancel</button>
           <button type="submit" className="btn-submit">Submit</button>
@@ -262,7 +285,7 @@ const D2D = () => {
                   </div>
                 ) */}
                 <div className='d2d-list-column'>
-                <p className='list-d2d-name'>{user.name}</p>
+                <p className='list-d2d-name'>D2D : {user.block},{user.district}</p>
                 <p className='list-d2d-time'>Date & Time: {user.time}</p>
                 </div>
                 <p><RiArrowRightSLine className='side-arrow' /></p>             
@@ -288,6 +311,8 @@ const D2D = () => {
           <p className='list-time'>Block: {users[selectedItem].block}</p>
           <p className='list-time'>Village Panchayat: {users[selectedItem].villagePanchayat}</p>
           <p className='list-time'>Village: {users[selectedItem].village}</p>
+          <p className='list-time'>Panchayat: {users[selectedItem].pachayat}</p>
+
         </li>
       </ul>
             </div>

@@ -19,8 +19,10 @@
   top: 0; /* Position the heading at the top of the viewport */
   left: 0;
   bottom: 999;
+  padding-bottom: 14px;
+  padding-top: 14px;
   width: 100%;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
   font-size: 26px; /* Reduced font size for mobile */
   color: black;
   font-style: normal;
@@ -30,6 +32,7 @@
 .d2d-container {
   display: flex;
   background-color: black;
+  padding-top: 20px;
   min-height: 100vh;
   flex-direction: column;
 }
@@ -99,7 +102,7 @@
   max-width: 300px;
   margin: 0 auto;
   background-color: #fff;
-  border: 1px solid #ccc;
+  border: 1px solid black;
   border-radius: 5px;
   overflow: hidden;
 }
@@ -288,26 +291,31 @@ border-radius: 5px;
 .userList {
   padding: 0;
   list-style-type: none;
+  margin-top: 20px;
 }
 .list-d2d-time {
-  color: rgba(255, 255, 255, 0.404);
+  color: black;
   font-size: 14px;
 }
 .users-list {
-  border: 2px solid rgba(255, 255, 255, 0.584);
-  border-color: rgba(255, 255, 255, 0.578);
+  border: 2px solid black;
+  border-color:black;
+  background-color: white;
   border-radius: 6px;
   width: 75vw;
   height: 60vh;
   padding: 2px;
+  padding-top: 30px;
 }
 .d2d-users-list {
   margin: 8px;
+  background-color: white;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 2px solid rgba(255, 255, 255, 0.584);
-  border-color: rgba(255, 255, 255, 0.578);
+  border: 2px solid black;
+  border-color: black;
   border-radius: 6px;
   padding: 8px;
 }
@@ -367,7 +375,7 @@ height: 45px;
 }
 
 .list-mobileno {
-  color: white;
+  color: black;
 }
 
 .list-time {
@@ -375,11 +383,12 @@ height: 45px;
   margin-top: 4px;
 }
 .list-d2d-name {
-  color: white;
+  color: black;
   margin-bottom: 10px;
+  font-weight: bold;
 }
 .side-arrow {
-  color: white;
+  color: black;
  margin-left: 15px;
   font-weight: bold;
   font-size: 18px;

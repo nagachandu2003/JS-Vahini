@@ -16,13 +16,11 @@ import Task from './components/BottomTabs/Task';
 import Team from './components/BottomTabs/Team';
 import Profile from './components/BottomTabs/Profile';
 import Maps from "./components/TopTabs/Maps"
-import LogoLauncher from './components/LogoLauncher';
 import Whatsapp from './components/TopTabs/Whatsapp';
 import CampRegister from './components/CampRegister'
 
 const App = () => (
   <BrowserRouter>
-  <LogoLauncher/>
   <Routes>
     <Route exact path="/" element={<CampLogin/>}/>
     <Route exact path="/camphome" element={<CampHome/>}/>

@@ -13,6 +13,8 @@
 .login-form{
     background-color:#F7E07E;
     padding:10px;
+    padding-bottom: 35px;
+    padding-top: 35px;
     border-radius:8px;
     border-width:0;
     text-align: center;
