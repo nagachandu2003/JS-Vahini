@@ -32,8 +32,6 @@
   background-color: white;
   color: black;
   z-index: 499;
-  overflow-x: auto;
-  white-space: nowrap;
   }
   .task-content-container {
     display: flex;
@@ -46,7 +44,7 @@
   }
   
   .task-tab {
-    flex: 1;
+    width: 100%;
   padding: 10px 0;
   color: black;
   cursor: pointer;
@@ -61,15 +59,16 @@
   
   .task-tab.active {
     background-color:white;
+    border-bottom: 2px solid #25D366;
+    ;
   }
   
   .task-tab-slider {
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 50%;
+    width: 35%;
     height: 3px;
-    background-color:#25D366;
     transition: left 0.3s ease;
   }
   
@@ -115,13 +114,15 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: rgba(255, 255, 255, 0.9);
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.441);
+    background-color: white;
     z-index: 999;
-  }
-  
+    width: 70%; /* Adjust the width as needed */
+    max-width: 400px; /* Adjust the max width as needed */
+}
+
   .task-popup p {
     margin: 0;
   }
@@ -129,7 +130,6 @@
   /* Media Query for Mobile Devices */
   @media (max-width: 768px) {
     .task-popup {
-      width: 90%;
       max-width: 300px;
     }
   }
