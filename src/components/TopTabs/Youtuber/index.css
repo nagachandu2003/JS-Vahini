@@ -133,6 +133,8 @@
     margin-bottom: 5px;
     margin-top: 20px;
     background-color: white;
+    margin-right: 8px;
+    margin-left: 8px;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -166,8 +168,8 @@
   
   .close {
     position: absolute;
-    top: -25px;
-    right: 10px;
+    top: -40px;
+    right: 0px;
     margin-bottom: 20px; /* Add extra margin below the close mark */
     cursor: pointer;
     font-size: 29px;

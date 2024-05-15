@@ -190,17 +190,48 @@ const SS = () => {
               <div className="popup-content">
                 <span className="close" onClick={() => setSelectedItem(null)}>&times;</span>
                 <ul className="userList">
-                  <li className="users-list">
-                    <p className='list-time'>संस्थापक सदस्य नाम: {users[selectedItem].founderName}</p>
-                    <p className='list-time'>संस्थापक सदस्य मोबाइल नंबर: {users[selectedItem].founderMobile}</p>
-                    <p className='list-time'>जिला: {users[selectedItem].district}</p>
-                    <p className='list-time'>पेशा: {users[selectedItem].occupation}</p>
-                    <p className='list-time'>वाहिनी / पदयात्री के नज़र में यह संस्थापक सदस्य: {users[selectedItem].perception}</p>
-                    <p className='list-time'>संस्थापक सदस्य के लिए सवाल: {users[selectedItem].successPerson}</p>
-                    <p className='list-time'>वाहिनी / पदयात्री का नाम: {users[selectedItem].visitorName}</p>
-                    <p className='list-time'>वाहिनी / पदयात्री का मोबाइल नंबर: {users[selectedItem].visitorMobile}</p>
-                  </li>
-                </ul>
+  <li className="users-list">
+    <table className="userTable">
+      <tr>
+        <th className="parameterHeader">Parameters</th>
+        <th className="valueHeader">Values</th>
+      </tr>
+      <tr>
+        <td className="parameter">संस्थापक सदस्य नाम</td>
+        <td className="value">{users[selectedItem].founderName}</td>
+      </tr>
+      <tr>
+        <td className="parameter">संस्थापक सदस्य मोबाइल नंबर</td>
+        <td className="value">{users[selectedItem].founderMobile}</td>
+      </tr>
+      <tr>
+        <td className="parameter">जिला</td>
+        <td className="value">{users[selectedItem].district}</td>
+      </tr>
+      <tr>
+        <td className="parameter">पेशा</td>
+        <td className="value">{users[selectedItem].occupation}</td>
+      </tr>
+      <tr>
+        <td className="parameter">वाहिनी / पदयात्री के नज़र में यह संस्थापक सदस्य</td>
+        <td className="value">{users[selectedItem].perception}</td>
+      </tr>
+      <tr>
+        <td className="parameter">संस्थापक सदस्य के लिए सवाल</td>
+        <td className="value">{users[selectedItem].successPerson}</td>
+      </tr>
+      <tr>
+        <td className="parameter">वाहिनी / पदयात्री का नाम</td>
+        <td className="value">{users[selectedItem].visitorName}</td>
+      </tr>
+      <tr>
+        <td className="parameter">वाहिनी / पदयात्री का मोबाइल नंबर</td>
+        <td className="value">{users[selectedItem].visitorMobile}</td>
+      </tr>
+    </table>
+  </li>
+</ul>
+
               </div>
             </div>
           )}

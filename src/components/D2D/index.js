@@ -299,22 +299,64 @@ const D2D = () => {
               <span className="close" onClick={() => setSelectedItem(null)}>&times;</span>
              
               <ul className="userList">
-        <li className="users-list">
-          <p className='list-time'>Village Name: {users[selectedItem].villageName}</p>
-          <p className='list-time'>Date & Time: {users[selectedItem].time}</p>
-          <p className='list-time'>Village Population: {users[selectedItem].villagePopulation}</p>
-          <p className='list-time'>Total Household Covered: {users[selectedItem].totalHouseholdCovered}</p>
-          <p className='list-time'>YouTube Subscription: {users[selectedItem].youtubeSubscription}</p>
-          <p className='list-time'>Total WhatsApp Group Added: {users[selectedItem].totalWhatsAppGroupAdded}</p>
-          <p className='list-time'>Total Founding Member Added: {users[selectedItem].totalFoundingMemberAdded}</p>
-          <p className='list-time'>District: {users[selectedItem].district}</p>
-          <p className='list-time'>Block: {users[selectedItem].block}</p>
-          <p className='list-time'>Village Panchayat: {users[selectedItem].villagePanchayat}</p>
-          <p className='list-time'>Village: {users[selectedItem].village}</p>
-          <p className='list-time'>Panchayat: {users[selectedItem].pachayat}</p>
+  <li className="users-list">
+    <table className="userTable">
+      <tr>
+        <th className="parameterHeader">Parameters</th>
+        <th className="valueHeader">Values</th>
+      </tr>
+      <tr>
+        <td className="parameter">Village Name</td>
+        <td className="value">{users[selectedItem].villageName}</td>
+      </tr>
+      <tr>
+        <td className="parameter">Date & Time</td>
+        <td className="value">{users[selectedItem].time}</td>
+      </tr>
+      <tr>
+        <td className="parameter">Village Population</td>
+        <td className="value">{users[selectedItem].villagePopulation}</td>
+      </tr>
+      <tr>
+        <td className="parameter">Total Household Covered</td>
+        <td className="value">{users[selectedItem].totalHouseholdCovered}</td>
+      </tr>
+      <tr>
+        <td className="parameter">YouTube Subscription</td>
+        <td className="value">{users[selectedItem].youtubeSubscription}</td>
+      </tr>
+      <tr>
+        <td className="parameter">Total WhatsApp Group Added</td>
+        <td className="value">{users[selectedItem].totalWhatsAppGroupAdded}</td>
+      </tr>
+      <tr>
+        <td className="parameter">Total Founding Member Added</td>
+        <td className="value">{users[selectedItem].totalFoundingMemberAdded}</td>
+      </tr>
+      <tr>
+        <td className="parameter">District</td>
+        <td className="value">{users[selectedItem].district}</td>
+      </tr>
+      <tr>
+        <td className="parameter">Block</td>
+        <td className="value">{users[selectedItem].block}</td>
+      </tr>
+      <tr>
+        <td className="parameter">Village Panchayat</td>
+        <td className="value">{users[selectedItem].villagePanchayat}</td>
+      </tr>
+      <tr>
+        <td className="parameter">Village</td>
+        <td className="value">{users[selectedItem].village}</td>
+      </tr>
+      <tr>
+        <td className="parameter">Panchayat</td>
+        <td className="value">{users[selectedItem].pachayat}</td>
+      </tr>
+    </table>
+  </li>
+</ul>
 
-        </li>
-      </ul>
             </div>
           </div>
         )}

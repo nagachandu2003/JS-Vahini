@@ -228,20 +228,60 @@ const YC = () => {
               <div className="popup-content">
                 <span className="close" onClick={() => setSelectedItem(null)}>&times;</span>
                 <ul className="userList">
-                  <li className="users-list">
-                    <p className='list-time'>Name: {users[selectedItem].name}</p>
-                    <p className='list-time'>Contact No: {users[selectedItem].contactNo}</p>
-                    <p className='list-time'>District: {users[selectedItem].district}</p>
-                    <p className='list-time'>Block: {users[selectedItem].block}</p>
-                    <p className='list-time'>Panchayat: {users[selectedItem].panchayat}</p>
-                    <p className='list-time'>Vill: {users[selectedItem].vill}</p>
-                    <p className='list-time'>Group of 25 members: {users[selectedItem].group25}</p>
-                    <p className='list-time'>Whatsapp group of 25 members: {users[selectedItem].whatsappGroup25}</p>
-                    <p className='list-time'>Profession: {users[selectedItem].profession}</p>
-                    <p className='list-time'>Education: {users[selectedItem].education}</p>
-                    <p className='list-time'>Date & Time: {users[selectedItem].time}</p>
-                  </li>
-                </ul>
+  <li className="users-list">
+    <table className="userTable">
+      <tr>
+        <th className="parameterHeader">Parameters</th>
+        <th className="valueHeader">Values</th>
+      </tr>
+      <tr>
+        <td className="parameter">Name</td>
+        <td className="value">{users[selectedItem].name}</td>
+      </tr>
+      <tr>
+        <td className="parameter">Contact No</td>
+        <td className="value">{users[selectedItem].contactNo}</td>
+      </tr>
+      <tr>
+        <td className="parameter">District</td>
+        <td className="value">{users[selectedItem].district}</td>
+      </tr>
+      <tr>
+        <td className="parameter">Block</td>
+        <td className="value">{users[selectedItem].block}</td>
+      </tr>
+      <tr>
+        <td className="parameter">Panchayat</td>
+        <td className="value">{users[selectedItem].panchayat}</td>
+      </tr>
+      <tr>
+        <td className="parameter">Vill</td>
+        <td className="value">{users[selectedItem].vill}</td>
+      </tr>
+      <tr>
+        <td className="parameter">Group of 25 members</td>
+        <td className="value">{users[selectedItem].group25}</td>
+      </tr>
+      <tr>
+        <td className="parameter">Whatsapp group of 25 members</td>
+        <td className="value">{users[selectedItem].whatsappGroup25}</td>
+      </tr>
+      <tr>
+        <td className="parameter">Profession</td>
+        <td className="value">{users[selectedItem].profession}</td>
+      </tr>
+      <tr>
+        <td className="parameter">Education</td>
+        <td className="value">{users[selectedItem].education}</td>
+      </tr>
+      <tr>
+        <td className="parameter">Date & Time</td>
+        <td className="value">{users[selectedItem].time}</td>
+      </tr>
+    </table>
+  </li>
+</ul>
+
               </div>
             </div>
           )}

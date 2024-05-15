@@ -300,12 +300,11 @@ border-radius: 5px;
   background-color: white;
   border-radius: 6px;
   width: 75vw;
-  padding-top: 40px;
+  padding-top: 0px;
 }
 .d2d-users-list {
   margin: 8px;
   background-color: white;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
