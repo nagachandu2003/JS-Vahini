@@ -166,7 +166,7 @@
   
   .close {
     position: absolute;
-    top: 10px;
+    top: -25px;
     right: 10px;
     margin-bottom: 20px; /* Add extra margin below the close mark */
     cursor: pointer;
