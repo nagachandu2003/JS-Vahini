@@ -291,21 +291,16 @@ border-radius: 5px;
 .userList {
   padding: 0;
   list-style-type: none;
-  margin-top: 20px;
 }
 .list-d2d-time {
   color: black;
   font-size: 14px;
 }
 .users-list {
-  border: 2px solid black;
-  border-color:black;
   background-color: white;
   border-radius: 6px;
   width: 75vw;
-  height: 60vh;
-  padding: 2px;
-  padding-top: 30px;
+  padding-top: 40px;
 }
 .d2d-users-list {
   margin: 8px;

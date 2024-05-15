@@ -11,6 +11,7 @@ const CampLogin = () => {
 //   const [username, setUsername] = useState('');
 //   const [password, setPassword] = useState('');
 //   const [errorMsg, setErrorMsg] = useState('');
+console.log(process.env.REACT_APP_GOOGLE_CLIENT_ID)
   const [email,setEmail] = useState('');
   const [name,setName] = useState('');
 //   const [userExist, setUserExist] = useState(false);

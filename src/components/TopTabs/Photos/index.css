@@ -1,73 +1,112 @@
-.photos-tab-container {
-  position: fixed; /* Add fixed positioning */
-  margin-top: 20px; /* Adjust as needed */
-  background-color: black; /* Add background color */
-  width: 100vw; /* Occupy full width */
-  display: flex;
-  justify-content: space-around;
-  z-index: 999; /* Ensure it's above other content */
-}
-
-.photos-tab-btn {
-  padding: 6px 10px;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  width: 45vw;
-  font-family: "Roboto", sans-serif;
-  font-weight: 500;
-  font-size: 18px;
-  font-style: normal;
-  margin: 4px;
-  cursor: pointer;
-}
-
-.photos-tab-btn.photos-active-tab {
-  background-color: blue;
-  color: white;
-  border-color: #999;
-}
-
-.photo-heading {
-  color: white;
-}
-
-.floating-button {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
+/* Photos Header Styles */
+.photos-main-header-container {
   background-color: yellow;
-  color: black;
-  border-radius: 22px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-  cursor: pointer;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease-in-out;
-  z-index: 1000;
+  padding-top: 15px;
+  z-index: 499;
+  margin-bottom: 10px;
 }
 
-.floating-button span {
-  font-size: 18px;
-  font-weight: bold;
-  padding-left: 5px;
-  margin-right: 5px;
-}
-
-.camera-icon {
-  font-size: 24px;
-}
-
-/* Popup Styles */
-.popup {
+.photos-main-heading {
+  font-family: "Open Sans", sans-serif;
+  padding-top: 12px;
+  padding-bottom: 10px;
+  padding-left: 8px;
+  padding-right: 8px;
+  background-color: yellow;
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  z-index: 500;
+  top: 0;
+  left: 0;
+  width: 100%;
+  font-size: 26px;
+  color: black;
 }
+
+/* Photos Tabs Styles */
+.photos-upper-tabs-container {
+  position: fixed;
+  top: 55px;
+  left: 0;
+  width: 100%;
+  display: flex;
+  background-color: white;
+  color: black;
+  z-index: 499;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.photos-upper-tab {
+  flex: 1;
+  padding: 10px 0;
+  text-align: center;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+}
+
+.photos-upper-tab.active {
+  border-bottom: 2px solid #25D366;
+}
+
+/* Photos Content Styles */
+.photos-content-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: -20px;
+  align-items: center;
+  height: 100vh;
+  background-color: white;
+}
+
+.photos-tab-content {
+  display: none;
+}
+
+.photos-tab-content.active {
+  display: block;
+}
+.webcam-in {
+  width: 100%;
+  max-width: 300px; /* Adjust max-width as needed */
+}
+
+@media (min-width: 768px) {
+  .webcam-in {
+    max-width: none;
+  }
+}
+/* WebcamImageList.css */
+
+.webcam-image-list-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.camera-container {
+  margin-bottom: 20px;
+}
+
+.capture-button {
+  margin-top: 10px;
+}
+
+.image-list-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.image-item {
+  width: 100%; /* Adjusted for mobile devices */
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.image {
+  max-width: 100%;
+  height: auto;
+}
+
+
+/* Additional CSS for other components as needed */

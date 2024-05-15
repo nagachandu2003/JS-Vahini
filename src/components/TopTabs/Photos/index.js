@@ -1,75 +1,100 @@
-import React, { useState } from 'react';
-import './index.css';
-import { FaCamera } from 'react-icons/fa'; // Importing camera icon
-import Footer from '../../Footer'
+import React, { useState, useRef } from 'react';
+import Footer from '../../Footer';
+import Webcam from 'react-webcam';
+import Maps from '../Maps';
+import './index.css'; // Import the CSS file for styling
 
 const Photos = () => {
-  const [activeTab, setActiveTab] = useState('list');
-  const [showListForm, setShowListForm] = useState(false); // State for List tab popup
-  const [showMapForm, setShowMapForm] = useState(false); // State for Map tab popup
+  const [activeTab, setActiveTab] = useState(0); // State to manage active tab
+  const [capturedImages, setCapturedImages] = useState([]);
+  const [location, setLocation] = useState('');
+  const webcamRef = useRef(null);
 
-  const handleTabClick = (tab) => {
-    setActiveTab(tab);
+  const handleImageCapture = async () => {
+    const imageSrc = webcamRef.current.getScreenshot();
+    getLocation(); // Fetch user's location when capturing the image
+    setCapturedImages([...capturedImages, { src: imageSrc, alt: 'Captured Image', location }]);
+  };
+
+  const getLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const { latitude, longitude } = position.coords;
+        fetchLocation(latitude, longitude);
+      });
+    } else {
+      setLocation('Location not available');
+    }
+  };
+
+  const fetchLocation = async (latitude, longitude) => {
+    try {
+      const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`);
+      const data = await response.json();
+      const { principalSubdivision, city, locality, district } = data;
+      setLocation(`${locality}, ${district}, ${city}, ${principalSubdivision}`);
+    } catch (error) {
+      console.error('Error fetching location:', error);
+      setLocation('Location not available');
+    }
   };
 
   return (
     <>
-    <div>
-      <div className="main-container">
-        <div className="main-header-container">
-          <h1 className="main-heading">Photos</h1>
+      <div className="photos-container">
+        <div className='photos-main-header-container'>
+          <h1 className='photos-main-heading'>Photos</h1>
         </div>
-        <div className="photos-tab-container">
-          {/* List Tab */}
-          <div className="tab">
-            <button
-              className={`photos-tab-btn ${activeTab === 'list' ? 'photos-active-tab' : ''}`}
-              onClick={() => handleTabClick('list')}
-            >
-              List
-            </button>
-            {/* Floating camera button for List tab */}
-            {activeTab === 'list' && (
-              <div className="floating-button" onClick={() => setShowListForm(!showListForm)}>
-                <span>New</span>
-                <FaCamera className="camera-icon" />
-              </div>
-            )}
+        <div className="photos-upper-tabs-container">
+          <div
+            className={`photos-upper-tab ${activeTab === 0 ? 'active' : ''}`}
+            onClick={() => setActiveTab(0)}
+          >
+            List
           </div>
-          {/* Map Tab */}
-          <div className="tab">
-            <button
-              className={`photos-tab-btn ${activeTab === 'map' ? 'photos-active-tab' : ''}`}
-              onClick={() => handleTabClick('map')}
-            >
-              Map
-            </button>
-            {/* Floating camera button for Map tab */}
-            {activeTab === 'map' && (
-              <div className="floating-button" onClick={() => setShowMapForm(!showMapForm)}>
-                <span>New</span>
-                <FaCamera className="camera-icon" />
+          <div
+            className={`photos-upper-tab ${activeTab === 1 ? 'active' : ''}`}
+            onClick={() => setActiveTab(1)}
+          >
+            Maps
+          </div>
+        </div>
+        <div className="photos-content-container">
+          {/* Content for Photos tab */}
+          <div className={`photos-tab-content ${activeTab === 0 ? 'active' : ''}`}>
+            <div className="photos-container">
+              {/* Webcam and Image List */}
+              <div className="camera-container">
+                <Webcam
+                  audio={false}
+                  ref={webcamRef}
+                  screenshotFormat="image/jpeg"
+                  width={320} // Adjusted width for mobile devices
+                  height={240} // Adjusted height for mobile devices
+                />
+                <button onClick={handleImageCapture} className="capture-button">Capture</button>
               </div>
-            )}
+              <div className="image-list-container">
+                {capturedImages.map((image, index) => (
+                  <div className="image-item" key={index}>
+                    <img src={image.src} alt={image.alt} className="image" />
+                    <div className="image-location">{image.location}</div> {/* Display location */}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          {/* Content for Maps tab */}
+          <div className={`photos-tab-content ${activeTab === 1 ? 'active' : ''}`}>
+            <div className="photos-container">
+              {/* Placeholder for Maps content */}
+             <Maps/>
+              {/* Add your content here */}
+            </div>
           </div>
         </div>
       </div>
-      {/* Popup for List tab */}
-      {activeTab === 'list' && showListForm && (
-        <div className="popup">
-          <p>List tab popup interface content goes here</p>
-          <button className="cancel-button" onClick={() => setShowListForm(false)}>Cancel</button>
-        </div>
-      )}
-      {/* Popup for Map tab */}
-      {activeTab === 'map' && showMapForm && (
-        <div className="popup">
-          <p>Map tab popup interface content goes here</p>
-          <button className="cancel-button" onClick={() => setShowMapForm(false)}>Cancel</button>
-        </div>
-      )}
-    </div>
-    <Footer/>
+      <Footer />
     </>
   );
 };

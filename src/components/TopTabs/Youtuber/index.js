@@ -141,11 +141,34 @@ const Youtuber = () => {
                 <span className="close" onClick={() => setSelectedItem(null)}>&times;</span>
                 <ul className="userList">
                   <li className="users-list">
-                    <p className='list-time'>Name: {users[selectedItem].name}</p>
-                    <p className='list-time'>Contact No: {users[selectedItem].contactNo}</p>
-                    <p className='list-time'>Dist.: {users[selectedItem].dist}</p>
-                    <p className='list-time'>Constituency: {users[selectedItem].constituency}</p>
-                    <p className='list-time'>Date & Time: {users[selectedItem].time}</p>
+                  <table className="userTable">
+  <tr>
+    <th className="parameterHeader">Parameters</th>
+    <th className="valueHeader">Values</th>
+  </tr>
+  <tr>
+    <td className="parameter">Name</td>
+    <td className="value">{users[selectedItem].name}</td>
+  </tr>
+  <tr>
+    <td className="parameter">Contact No</td>
+    <td className="value">{users[selectedItem].contactNo}</td>
+  </tr>
+  <tr>
+    <td className="parameter">Dist.</td>
+    <td className="value">{users[selectedItem].dist}</td>
+  </tr>
+  <tr>
+    <td className="parameter">Constituency</td>
+    <td className="value">{users[selectedItem].constituency}</td>
+  </tr>
+  <tr>
+    <td className="parameter">Date & Time</td>
+    <td className="value">{users[selectedItem].time}</td>
+  </tr>
+</table>
+
+
                   </li>
                 </ul>
               </div>
