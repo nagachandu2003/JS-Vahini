@@ -908,7 +908,7 @@ const blocks = {
 
 const CampRegister = () => {
     const [name, setName] = useState('');
-    const [channelUrl, setChannelUrl] = useState('');
+    const [campid, setChannelUrl] = useState('');
     const [state, setState] = useState('Bihar');
     const [district, setDistrict] = useState('SELECT');
     const [constituency, setConstituency] = useState('SELECT');
@@ -945,16 +945,19 @@ const CampRegister = () => {
         },
         body : JSON.stringify(value)
       }
-      const response = await fetch("https://js-member-backend.vercel.app/users",options)
+      const response = await fetch("http://localhost:3001/campusers",options)
       const data = await response.json()
       console.log(data)
     }
 
     const onSubmitRegisterYTMC = (event) => {
         event.preventDefault();
+        if(district==="SELECT")
+          alert("Please fill the district")
+        else {
         const formData = {
             name,
-            channelUrl,
+            campid,
             state,
             district,
             constituency: selectedConstituency,
@@ -963,13 +966,13 @@ const CampRegister = () => {
             Googlename,
             email,
             regstatus:"pending",
-            channels:[],
-            videos:[]
+            kycstatus : "pending"
         };
         postData(formData);
         // history.replace("/regpending")
         navigate("/regpending",{replace:true})
         setRegisteredStatus(!registeredStatus);
+      }
     };
 
     const onLogOut = () => {
@@ -992,9 +995,9 @@ const CampRegister = () => {
               <input placeholder="Enter the Name" onChange={onChangeName} className="ytmcregister-user-input" type="text" id="username" required/>
               </div>
               <div className="ytmcregister-cont-ele">
-              <label htmlFor="channelurl">Channel URL</label>
+              <label htmlFor="channelurl">Camp ID</label>
               <br/>
-              <input placeholder="Enter the Channel Url" onChange={onChangeChannelUrl} className="ytmcregister-user-input" type="url" id="channelurl" required/>
+              <input placeholder="Enter the Camp ID" onChange={onChangeChannelUrl} className="ytmcregister-user-input" type="text" id="channelurl" required/>
               </div>
               <div className="ytmcregister-cont-ele">
                   <label htmlFor="state">State</label>
@@ -1036,7 +1039,9 @@ const CampRegister = () => {
                   <br/>
                   <input onChange={onChangeWhatsApp} placeholder="Enter the whatsapp number E.g : +91 987654321" pattern="^\+91(?:[0-9] ?){6,14}[0-9]$" className="ytmcregister-user-input" type="tel" id="whatsappno" required/>
               </div>
+              <div style={{textAlign:'center',marginTop:'10px'}}>
               <button className="fetchBtn" type="submit">Register</button>
+              </div>
           </form>
       </div>
       </>

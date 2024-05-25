@@ -18,6 +18,7 @@ import Profile from './components/BottomTabs/Profile';
 import Maps from "./components/TopTabs/Maps"
 import Whatsapp from './components/TopTabs/Whatsapp';
 import CampRegister from './components/CampRegister'
+import RegistrationPending from './components/RegistrationPending';
 
 const App = () => (
   <BrowserRouter>
@@ -25,6 +26,7 @@ const App = () => (
     <Route exact path="/" element={<CampLogin/>}/>
     <Route exact path="/camphome" element={<CampHome/>}/>
     <Route exact path="/campregister" element={<CampRegister/>}/>
+    <Route exact path="/regpending" element={<RegistrationPending/>}/>
     <Route path="/d2d" element={<D2D />} />
     <Route path="/yc" element={<YC />} />
     <Route path="/si" element={<SI />} />

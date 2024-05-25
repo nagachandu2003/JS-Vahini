@@ -1,0 +1,62 @@
+body{
+    margin:0;
+    padding:0;
+}
+.ytmcregister-main-container{
+    min-height:100vh;
+    font-family: "Roboto";
+    display:flex;
+    flex-direction: column;
+}
+.ytmcregister-top-container{
+    text-align: center;
+    color:black;
+    background-color: #ECCA3D;
+    padding:10px;
+}
+  
+  .toggle-button {
+    margin: 10px;
+  }
+  
+  .ytmcregister-form-container {
+    background-color: white;
+    width:100%;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    margin:auto;
+    padding:20px;
+  }
+  
+  @media (min-width:767px){
+    .ytmcregister-form-container{
+        width:50%;
+    }
+  }
+  .ytmcregister-user-input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    margin-top:5px;
+    margin-bottom:5px;
+  }
+
+  .ytmcregister-cont-ele label{
+    margin-top:5px;
+    margin-bottom:5px;
+  }
+
+  .ytmcregister-cont-ele{
+    width:100%;
+  }
+
+  .fetchBtn{
+        background-color: green;
+        color:white;
+        padding:8px;
+        border-width:0px;
+        border-radius:3px;
+        margin-left:10px;
+    }
