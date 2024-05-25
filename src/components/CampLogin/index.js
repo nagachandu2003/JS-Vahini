@@ -6,40 +6,22 @@ import {jwtDecode} from 'jwt-decode'
 
 import './index.css';
 
+let availableCamps = []
 
 const CampLogin = () => {
-//   const [username, setUsername] = useState('');
-//   const [password, setPassword] = useState('');
-//   const [errorMsg, setErrorMsg] = useState('');
   const [email,setEmail] = useState('');
   const [name,setName] = useState('');
-//   const [userExist, setUserExist] = useState(false);
-  // console.log(data);
-  // const navigate = useNavigate()
   const navigate = useNavigate()
 
-//   const onChangeUsername = event => {
-//     setUsername(event.target.value);
-//   };
-
-//   const onChangePassword = event => {
-//     setPassword(event.target.value);
-//   };
-
   const check = async (arg) => {
-    // console.log("I am Check Function")
     console.log(arg);
-    const response = await fetch(`https://js-member-backend.vercel.app/campusers/${arg}`)
+    const response = await fetch(`http://localhost:3001/campusers/${arg}`)
     if (response.ok){
     const data = await response.json()
-    console.log(data)
     if(data.success===true)
     {
+      availableCamps = data.campsList
       return true
-    }
-    else if(data.success==="pending")
-    {
-      return "pending"
     }
     else
     return false
@@ -90,10 +72,8 @@ const CampLogin = () => {
             // console.log("User ID:", userId);
             // console.log("User Name:", userName);
             // console.log("User Email:", userEmail);
-            if(res==="pending")
-             navigate("/regpending", {replace:true})
-            else if(res===false)
-                navigate("/campregister",{ state: {email,Googlename:name}},{replace:true} )
+            if(res===false)
+              return (<h1>Access Denied</h1>)
             else 
               navigate("/report", {replace:true})
             }}
