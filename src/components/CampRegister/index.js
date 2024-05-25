@@ -945,7 +945,7 @@ const CampRegister = () => {
         },
         body : JSON.stringify(value)
       }
-      const response = await fetch("http://localhost:3001/campusers",options)
+      const response = await fetch("https://js-member-backend.vercel.app/campusers",options)
       const data = await response.json()
       console.log(data)
     }
