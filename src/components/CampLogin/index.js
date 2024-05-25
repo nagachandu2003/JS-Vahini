@@ -15,7 +15,7 @@ const CampLogin = () => {
 
   const check = async (arg) => {
     console.log(arg);
-    const response = await fetch(`http://localhost:3001/campusers/${arg}`)
+    const response = await fetch(`https://js-member-backend.vercel.app/campusers/${arg}`)
     if (response.ok){
     const data = await response.json()
     if(data.success===true)
