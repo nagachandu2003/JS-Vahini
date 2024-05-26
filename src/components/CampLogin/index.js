@@ -18,14 +18,16 @@ const CampLogin = () => {
     const response = await fetch(`https://js-member-backend.vercel.app/campusers/${arg}`)
     if (response.ok){
     const data = await response.json()
-    if(data.success===true)
+    
+    if(data.success===true )
     {
-      availableCamps = data.campsList
       return true
     }
     else
     return false
+
     }
+
   }
 
 //   const onSubmitSuccess = () => {
@@ -62,7 +64,6 @@ const CampLogin = () => {
               const {email,name} = token
               setEmail(email);
               setName(name);
-              Cookies.set("useremail",email)
               const res = await check(email)
             //   const { profileObj } = credentialResponse;
             // const userId = profileObj.googleId;
@@ -72,10 +73,14 @@ const CampLogin = () => {
             // console.log("User ID:", userId);
             // console.log("User Name:", userName);
             // console.log("User Email:", userEmail);
+            console.log(res)
             if(res===false)
-              return (<h1>Access Denied</h1>)
-            else 
-              navigate("/report", {replace:true})
+              return navigate("/regpending",{replace:true})
+            else {
+              Cookies.set("campuseremail",email)
+              navigate("/selectcamp", {replace:true})
+            }
+
             }}
             onError={() => {
                 console.log("Login Failed")

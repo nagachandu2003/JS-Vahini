@@ -19,6 +19,7 @@ import Maps from "./components/TopTabs/Maps"
 import Whatsapp from './components/TopTabs/Whatsapp';
 import CampRegister from './components/CampRegister'
 import RegistrationPending from './components/RegistrationPending';
+import SelectCamp from './components/SelectCamp';
 
 const App = () => (
   <BrowserRouter>
@@ -27,6 +28,7 @@ const App = () => (
     <Route exact path="/camphome" element={<CampHome/>}/>
     <Route exact path="/campregister" element={<CampRegister/>}/>
     <Route exact path="/regpending" element={<RegistrationPending/>}/>
+    <Route exact path="/selectcamp" element={<SelectCamp/>}/>
     <Route path="/d2d" element={<D2D />} />
     <Route path="/yc" element={<YC />} />
     <Route path="/si" element={<SI />} />
