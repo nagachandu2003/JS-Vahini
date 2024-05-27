@@ -17,7 +17,7 @@ const CampLogin = () => {
 
   const check1 = async (arg) => {
     //Checking member or not
-    const response = await fetch(`http://localhost:3001/campusers/${arg}`)
+    const response = await fetch(`https://js-member-backend.vercel.app/campusers/${arg}`)
     if (response.ok){
     const data = await response.json()
     
@@ -32,7 +32,7 @@ const CampLogin = () => {
   }
 
   const check2 = async (arg) => {
-    const response = await fetch(`http://localhost:3001/admincampusers/${arg}`)
+    const response = await fetch(`https://js-member-backend.vercel.app/admincampusers/${arg}`)
     if(response.ok){
       const data = await response.json()
       if(data.success===true)

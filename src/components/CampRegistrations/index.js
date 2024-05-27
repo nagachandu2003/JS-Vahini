@@ -18,7 +18,7 @@ const CampRegistrations = () => {
     const getVideos = async () => {
       setIsLoading(true)
       try{
-        const response = await fetch(`http://localhost:3001/campusers`);
+        const response = await fetch(`https://js-member-backend.vercel.app/campusers`);
         if(response.ok)
           {
             const data = await response.json()
@@ -45,7 +45,7 @@ const CampRegistrations = () => {
         body : JSON.stringify({newemail:value,newregstatus:"rejected"})
     }
     // https://js-member-backend.vercel.app
-    const response = await fetch(`http://localhost:3001/campusers`,options)
+    const response = await fetch(`https://js-member-backend.vercel.app/campusers`,options)
     const data = await response.json()
     console.log(data);
     window.location.reload()
@@ -62,7 +62,7 @@ const onClickApprove = async (value) => {
         body : JSON.stringify({newemail:value,newregstatus:"approved"})
     }
     // https://js-member-backend.vercel.app
-    const response = await fetch(`http://localhost:3001/campusers`,options)
+    const response = await fetch(`https://js-member-backend.vercel.app/campusers`,options)
     const data = await response.json()
     console.log(data);
     window.location.reload()
