@@ -11,23 +11,38 @@ let availableCamps = []
 const CampLogin = () => {
   const [email,setEmail] = useState('');
   const [name,setName] = useState('');
+  const [user1, setUser1] = useState('');
+  const [user2, setUser2] = useState('');
   const navigate = useNavigate()
 
-  const check = async (arg) => {
-    console.log(arg);
-    const response = await fetch(`https://js-member-backend.vercel.app/campusers/${arg}`)
+  const check1 = async (arg) => {
+    //Checking member or not
+    const response = await fetch(`http://localhost:3001/campusers/${arg}`)
     if (response.ok){
     const data = await response.json()
     
     if(data.success===true )
     {
+      setUser1('member')
       return true
     }
     else
     return false
-
     }
+  }
 
+  const check2 = async (arg) => {
+    const response = await fetch(`http://localhost:3001/admincampusers/${arg}`)
+    if(response.ok){
+      const data = await response.json()
+      if(data.success===true)
+        {
+          setUser2('admin')
+          return true
+        }
+        else
+        return false
+    }
   }
 
 //   const onSubmitSuccess = () => {
@@ -64,7 +79,8 @@ const CampLogin = () => {
               const {email,name} = token
               setEmail(email);
               setName(name);
-              const res = await check(email)
+              const res1 = await check1(email)
+              const res2 = await check2(email)
             //   const { profileObj } = credentialResponse;
             // const userId = profileObj.googleId;
             // const userName = profileObj.name;
@@ -73,13 +89,28 @@ const CampLogin = () => {
             // console.log("User ID:", userId);
             // console.log("User Name:", userName);
             // console.log("User Email:", userEmail);
-            console.log(res)
-            if(res===false)
-              return navigate("/regpending",{replace:true})
-            else {
-              Cookies.set("campuseremail",email)
-              navigate("/selectcamp", {replace:true})
+            if(res1===true && res2===true)
+              {
+                Cookies.set("isAdmin",true);
+                navigate("/choosepath",{replace:true})
+              }
+            else if(res1===true && res2===false){
+              Cookies.set("isAdmin",false);
+              navigate("/selectcamp",{replace:true})
             }
+            else if(res1===false && res2===false){
+              navigate("/campregister", { state: {email,Googlename:name}},{replace:true})
+            }
+            else if(res2===true && res1===false){
+              Cookies.set("isAdmin",true)
+              navigate("/adminreport",{replace:true})
+            }
+            // if(res===false)
+            //   return navigate("/regpending",{replace:true})
+            // else {
+            //   Cookies.set("campuseremail",email)
+            //   navigate("/selectcamp", {replace:true})
+            // }
 
             }}
             onError={() => {

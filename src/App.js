@@ -20,11 +20,15 @@ import Whatsapp from './components/TopTabs/Whatsapp';
 import CampRegister from './components/CampRegister'
 import RegistrationPending from './components/RegistrationPending';
 import SelectCamp from './components/SelectCamp';
+import AdminReport from './components/AdminReport'
+import CampRegistrations from './components/CampRegistrations'
 
 const App = () => (
   <BrowserRouter>
   <Routes>
     <Route exact path="/" element={<CampLogin/>}/>
+    <Route exact path="/adminreport" element={<AdminReport/>}/>
+    <Route exact path="/campregistrations" element={<CampRegistrations/>}/>
     <Route exact path="/camphome" element={<CampHome/>}/>
     <Route exact path="/campregister" element={<CampRegister/>}/>
     <Route exact path="/regpending" element={<RegistrationPending/>}/>

@@ -945,12 +945,14 @@ const CampRegister = () => {
         },
         body : JSON.stringify(value)
       }
-      const response = await fetch("https://js-member-backend.vercel.app/campusers",options)
+      const response = await fetch("http://localhost:3001/campusers",options)
       const data = await response.json()
       console.log(data)
     }
 
     const onSubmitRegisterYTMC = (event) => {
+      const currDate = (new Date()).toLocaleDateString('en-GB');
+      const currTime = (new Date()).toLocaleTimeString()
         event.preventDefault();
         if(district==="SELECT")
           alert("Please fill the district")
@@ -966,7 +968,9 @@ const CampRegister = () => {
             Googlename,
             email,
             regstatus:"pending",
-            kycstatus : "pending"
+            kycstatus : "pending",
+            date : currDate,
+            time : currTime
         };
         postData(formData);
         // history.replace("/regpending")
