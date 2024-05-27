@@ -96,7 +96,7 @@ const CampLogin = () => {
               }
             else if(res1===true && res2===false){
               Cookies.set("isAdmin",false);
-              navigate("/selectcamp",{replace:true})
+              navigate("/report",{replace:true})
             }
             else if(res1===false && res2===false){
               navigate("/campregister", { state: {email,Googlename:name}},{replace:true})

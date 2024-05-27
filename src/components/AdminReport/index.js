@@ -25,9 +25,9 @@ const AdminReport = () => {
       </div>
       <div className='grid-container' style={{backgroundColor:'black',minHeight:'100vh'}}>
         <div className='grid-row'>
-          <Link to='/campregistrations' className='grid-card grid-card-1'>
+          <Link to='/campregistrations'  className='grid-card grid-card-1'>
             <MdAppRegistration className='icon' />
-            <h2 className='heading-grid'>Registrations</h2>
+            <h2 className='heading-grid'>Registration</h2>
           </Link>
           <Link to='/subadmin' className='grid-card grid-card-2'>
           <svg

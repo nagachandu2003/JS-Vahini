@@ -2,8 +2,18 @@ import React from 'react';
 import { FaUser, FaPhone, FaEnvelope, FaIdCard, FaLock, FaInfoCircle, FaUserFriends, FaNetworkWired, FaComment, FaQuestionCircle, FaMapMarkerAlt } from 'react-icons/fa'; // Added FaMapMarkerAlt for address icon
 import Footer from '../../Footer';
 import "./index.css";
+import { googleLogout } from '@react-oauth/google';
+import Cookies from 'js-cookie'
 
 const Profile = () => {
+
+  const onClickLogOut = () => {
+    googleLogout()
+    Cookies.remove("isAdmin")
+    Cookies.remove("campuseremail")
+    window.location.href="/"
+  }
+
   return (
     <div className='main-profile-container'>
       <div className='main-header-container'>
@@ -49,6 +59,9 @@ const Profile = () => {
         <div className='profile-bottom-address'>
           <FaMapMarkerAlt className='profile-bottom-logo'/> Address
         </div>
+        <div style={{textAlign:'center'}}>
+        <button onClick={onClickLogOut} className="delete-Btn" type="button">Log Out</button>
+          </div>
       </div>
       <Footer />
     </div>
