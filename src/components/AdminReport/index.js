@@ -41,11 +41,13 @@ const AdminReport = () => {
   }, [isSubAdmin, location.state]);
 
 
-
-
-  const accessTabItems = accessTabs.map(tab => ({
+  let accessTabItems = [];
+  if(isSubAdmin==="true")
+    {
+    accessTabItems = accessTabs.map(tab => ({
     tab: accessibleTabs.includes(tab) ? 'norm' : 'dis'
   }));
+}
 
 
 
