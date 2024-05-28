@@ -41,7 +41,9 @@ const AdminReport = () => {
   }, [isSubAdmin, location.state]);
 
 
-  let accessTabItems = [];
+  let accessTabItems = [  'Registration', 'Sub Admin', 'Team', 'Attendance', 'D2D Incharge', 
+  'Culture', 'Activity', 'Camp Visitor', 'Collaterals', 
+  'Cabs', 'Kitchen', 'Expenses', 'Feedback', 'Help Ticket'];
   if(isSubAdmin==="true")
     {
     accessTabItems = accessTabs.map(tab => ({
