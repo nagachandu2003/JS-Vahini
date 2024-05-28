@@ -13,6 +13,7 @@ const CampLogin = () => {
   const [name,setName] = useState('');
   const [user1, setUser1] = useState('');
   const [user2, setUser2] = useState('');
+  const [subAdminDetails, setSubAdminDetails] = useState([])
   const navigate = useNavigate()
 
   const check1 = async (arg) => {
@@ -38,6 +39,25 @@ const CampLogin = () => {
       if(data.success===true)
         {
           setUser2('admin')
+          return true
+        }
+        else
+        return false
+    }
+  }
+  const check3 = async (arg) => {
+    const response = await fetch(`https://js-member-backend.vercel.app/subadmincampusers/${arg}`)
+    if(response.ok){
+      const data = await response.json()
+      console.log(data)
+      const {subadminList} = data
+      if(data.success===true)
+        {
+          navigate("/adminreport", {
+            state: { subAdminDetails: subadminList[0] },
+            replace: true
+          });
+          Cookies.set("isSubAdmin",true);
           return true
         }
         else
@@ -81,6 +101,7 @@ const CampLogin = () => {
               setName(name);
               const res1 = await check1(email)
               const res2 = await check2(email)
+              const res3 = await check3(email)
             //   const { profileObj } = credentialResponse;
             // const userId = profileObj.googleId;
             // const userName = profileObj.name;
@@ -89,25 +110,31 @@ const CampLogin = () => {
             // console.log("User ID:", userId);
             // console.log("User Name:", userName);
             // console.log("User Email:", userEmail);
+            if(res3!==true){
             if(res1===true && res2===true)
               {
                 Cookies.set("campuseremail",email);
                 Cookies.set("isAdmin",true);
+                Cookies.set("isSubAdmin",false);
                 navigate("/choosepath",{replace:true})
               }
             else if(res1===true && res2===false){
               Cookies.set("campuseremail",email);
               Cookies.set("isAdmin",false);
+              Cookies.set("isSubAdmin",false);
               navigate("/report",{replace:true})
             }
             else if(res1===false && res2===false){
               navigate("/campregister", { state: {email,Googlename:name}},{replace:true})
+              Cookies.set("isSubAdmin",false);
             }
             else if(res2===true && res1===false){
               Cookies.set("campuseremail",email);
               Cookies.set("isAdmin",true)
+              Cookies.set("isSubAdmin",false);
               navigate("/adminreport",{replace:true})
             }
+          }
             // if(res===false)
             //   return navigate("/regpending",{replace:true})
             // else {
