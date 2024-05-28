@@ -22,6 +22,7 @@ import RegistrationPending from './components/RegistrationPending';
 import SelectCamp from './components/SelectCamp';
 import AdminReport from './components/AdminReport'
 import CampRegistrations from './components/CampRegistrations'
+import SubAdmin from './components/SubAdmin'
 
 const App = () => (
   <BrowserRouter>
@@ -31,6 +32,7 @@ const App = () => (
     <Route exact path="/campregistrations" element={<CampRegistrations/>}/>
     <Route exact path="/camphome" element={<CampHome/>}/>
     <Route exact path="/campregister" element={<CampRegister/>}/>
+    <Route exact path="/subadmin" element={<SubAdmin/>}/>
     <Route exact path="/regpending" element={<RegistrationPending/>}/>
     <Route exact path="/selectcamp" element={<SelectCamp/>}/>
     <Route path="/d2d" element={<D2D />} />

@@ -91,10 +91,12 @@ const CampLogin = () => {
             // console.log("User Email:", userEmail);
             if(res1===true && res2===true)
               {
+                Cookies.set("campuseremail",email);
                 Cookies.set("isAdmin",true);
                 navigate("/choosepath",{replace:true})
               }
             else if(res1===true && res2===false){
+              Cookies.set("campuseremail",email);
               Cookies.set("isAdmin",false);
               navigate("/report",{replace:true})
             }
@@ -102,6 +104,7 @@ const CampLogin = () => {
               navigate("/campregister", { state: {email,Googlename:name}},{replace:true})
             }
             else if(res2===true && res1===false){
+              Cookies.set("campuseremail",email);
               Cookies.set("isAdmin",true)
               navigate("/adminreport",{replace:true})
             }

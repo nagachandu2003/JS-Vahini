@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-// import { FaCamera } from "react-icons/fa";
-// import { MdCameraswitch } from "react-icons/md";
 import { FaPlus } from 'react-icons/fa';
 import { RiArrowRightSLine } from "react-icons/ri";
 import Footer from '../Footer'

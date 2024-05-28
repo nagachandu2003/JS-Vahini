@@ -23,7 +23,7 @@ const AdminReport = () => {
       <div className='main-header-container'>
         <h1 className='main-heading'>Admin</h1>
       </div>
-      <div className='grid-container' style={{backgroundColor:'black',minHeight:'100vh'}}>
+      <div className='grid-container' style={{backgroundColor:'black',minHeight:'100vh',display:'flex',justifyContent:'flex-start'}}>
         <div className='grid-row'>
           <Link to='/campregistrations'  className='grid-card grid-card-1'>
             <MdAppRegistration className='icon' />

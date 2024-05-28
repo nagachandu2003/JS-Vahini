@@ -916,6 +916,7 @@ const CampRegister = () => {
     const [whatsappNumber, setWhatsappNumber] = useState('');
     const [selectedConstituency, setSelectedConstituency] = useState('SELECT');
     const [registeredStatus, setRegisteredStatus] = useState(false);
+    const [referral, setReferral] = useState('');
     const [block,setBlock] = useState('SELECT')
     const navigate = useNavigate();
     const location = useLocation();
@@ -936,6 +937,7 @@ const CampRegister = () => {
     const onChangePhoto = (event) => setPhoto(event.target.files[0]);
     const onChangeWhatsApp = (event) => setWhatsappNumber(event.target.value);
     const onChangeBlock = (event) => setBlock(event.target.value)
+    const onChangeReferral = (event) => setReferral(event.target.value)
 
     const postData = async (value) => {
       let options = {
@@ -969,6 +971,7 @@ const CampRegister = () => {
             email,
             regstatus:"pending",
             kycstatus : "pending",
+            referral,
             date : currDate,
             time : currTime
         };
@@ -989,7 +992,7 @@ const CampRegister = () => {
           {registeredStatus===false && (
               <>
           <div className="ytmcregister-top-container">
-              <h1>Register</h1>
+              <h1>Registration</h1>
           </div>
           <div className="ytmcregister-form-container">
           <form onSubmit={onSubmitRegisterYTMC}>
@@ -1015,7 +1018,7 @@ const CampRegister = () => {
                   <label htmlFor="district">District</label>
                   <br/>
                   <select onChange={onChangeDistrict} id="district" className="ytmcregister-user-input">
-                      <option>SELECT</option>
+                      <option disabled>SELECT</option>
                       {options.map((ele) => <DistrictItem key={ele.OptionId} optionDetails={ele} checked/>)}
                   </select>
                   </div>
@@ -1043,8 +1046,13 @@ const CampRegister = () => {
                   <br/>
                   <input onChange={onChangeWhatsApp} placeholder="Enter the whatsapp number E.g : +91 987654321" pattern="^\+91(?:[0-9] ?){6,14}[0-9]$" className="ytmcregister-user-input" type="tel" id="whatsappno" required/>
               </div>
+              <div className="ytmcregister-cont-ele">
+              <label htmlFor="referral">Referral</label>
+              <br/>
+              <input placeholder="Enter the Referral" onChange={onChangeReferral} className="ytmcregister-user-input" type="text" id="referral" required/>
+              </div>
               <div style={{textAlign:'center',marginTop:'10px'}}>
-              <button className="fetchBtn" type="submit">Register</button>
+              <button style={{fontSize:'18px'}} className="fetchBtn" type="submit">Submit</button>
               </div>
           </form>
       </div>

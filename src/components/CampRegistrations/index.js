@@ -9,6 +9,7 @@ import { Popup } from 'reactjs-popup';
 import './index.css'; // Import CSS file
 
 const CampRegistrations = () => {
+  const [activeTab, setActiveTab] = useState('pending');
   const [showForm, setShowForm] = useState(false);
   const [users, setUsers] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -22,6 +23,7 @@ const CampRegistrations = () => {
         if(response.ok)
           {
             const data = await response.json()
+            // console.log(data)
             setUsers(data)
             setIsLoading(false)
             // console.log(data);
@@ -35,6 +37,10 @@ const CampRegistrations = () => {
     // Call getVideos only once on mount
     getVideos();
   }, []); // Empty dependency array means it runs only once on mount
+  let filteredList = [];
+  const handleTabClick = (tabName) => {
+    setActiveTab(tabName);
+  };
 
   const onClickReject = async (value) => {
     const options = {
@@ -68,6 +74,17 @@ const onClickApprove = async (value) => {
     window.location.reload()
 }
 
+if(activeTab==="pending")
+  filteredList = users.filter((ele) => ele.regstatus==="pending")
+ else if(activeTab==="approved")
+   filteredList = users.filter((ele) => ele.regstatus==="approved")
+ else 
+ filteredList = users.filter((ele) => ele.regstatus==="rejected")
+
+
+
+
+
 
   return (
     <>
@@ -75,18 +92,40 @@ const onClickApprove = async (value) => {
       <div className='main-header-container'>
         <h1 className='main-d2d'>Registrations</h1>
       </div>
-      <div className='d2d-container'>
+      <nav style={{marginTop:'5px'}} className="task-tabs-container">
+        <div
+          className={`task-tab ${activeTab === 'pending' ? 'active' : ''}`}
+          onClick={() => handleTabClick('pending')}
+        >
+          Pending
+        </div>
+        <div
+          className={`task-tab ${activeTab === 'approved' ? 'active' : ''}`}
+          onClick={() => handleTabClick('approved')}
+        >
+          Approved
+        </div>
+        <div
+          className={`task-tab ${activeTab === 'rejected' ? 'active' : ''}`}
+          onClick={() => handleTabClick('rejected')}
+        >
+          Rejected
+        </div>
+        <div className="task-tab-slider" style={{ left: activeTab === 'claimed' ? '50%' : '0' }} />
+      </nav> 
+      <div style={{marginTop:'50px'}} className='d2d-container'>
         <ul className={selectedItem !== null ? "userList popup" : "userList"}>
-          {users.length === 0 ? (
+          {filteredList.length === 0 ? (
             <div className='empty-list-container'>
-              <li className="empty-list">There are no registered members</li>
+              <li className="empty-list">Loading Members</li>
             </div>
           ) : (
-            users.map((user, index) => (
+            filteredList.map((user, index) => (
               <li key={index} className="d2d-users-list" onClick={() => setSelectedItem(index)}>
                 <div className='d2d-list-column'>
-                <p className='list-d2d-name'>Username : {user.name}</p>
+                <p className='list-d2d-name'>Name : {user.name}</p>
                 <p className='list-d2d-time'>Mobile No : {user.whatsappNumber}</p>
+                <p className='list-d2d-time'>Referral : {user.referral}</p>
                 </div>
                 <p><RiArrowRightSLine className='side-arrow' /></p>             
               </li>
@@ -111,47 +150,53 @@ const onClickApprove = async (value) => {
                     <tbody>
                       <tr>
                         <td className="parameter">Name</td>
-                        <td className="value">{users[selectedItem].name}</td>
+                        <td className="value">{filteredList[selectedItem].name}</td>
                       </tr>
                       <tr>
                         <td className="parameter">Date & Time</td>
-                        <td className="value">{users[selectedItem].date & users[selectedItem].time}</td>
+                        <td className="value">{filteredList[selectedItem].date & users[selectedItem].time}</td>
+                      </tr>
+                      <tr>
+                        <td className="parameter">Referral</td>
+                        <td className="value">{filteredList[selectedItem].referral}</td>
                       </tr>
                       <tr>
                         <td className="parameter">Camp ID</td>
-                        <td className="value">{users[selectedItem].campid}</td>
+                        <td className="value">{filteredList[selectedItem].campid}</td>
                       </tr>
                       <tr>
                         <td className="parameter">State</td>
-                        <td className="value">{users[selectedItem].state}</td>
+                        <td className="value">{filteredList[selectedItem].state}</td>
                       </tr>
                       <tr>
                         <td className="parameter">District</td>
-                        <td className="value">{users[selectedItem].district}</td>
+                        <td className="value">{filteredList[selectedItem].district}</td>
                       </tr>
                       <tr>
                         <td className="parameter">Constituency</td>
-                        <td className="value">{users[selectedItem].constituency}</td>
+                        <td className="value">{filteredList[selectedItem].constituency}</td>
                       </tr>
                       <tr>
                         <td className="parameter">Block</td>
-                        <td className="value">{users[selectedItem].block}</td>
+                        <td className="value">{filteredList[selectedItem].block}</td>
                       </tr>
                       <tr>
-                        <td className="parameter">whatsapp Number</td>
-                        <td className="value">{users[selectedItem].whatsappNumber}</td>
+                        <td className="parameter">WhatsApp Number</td>
+                        <td className="value">{filteredList[selectedItem].whatsappNumber}</td>
                       </tr>
                       <tr>
                         <td className="parameter">Email</td>
-                        <td className="value">{users[selectedItem].email}</td>
+                        <td className="value">{filteredList[selectedItem].email}</td>
                       </tr>
                       <tr>
-                        <td className="parameter">Registration Pending</td>
-                        <td className="value">{users[selectedItem].regstatus}</td>
+                        <td className="parameter">Registration Status</td>
+                        {filteredList[selectedItem].regstatus==="approved" && (<td className='text-color1 value'>Approved</td>)}
+                        {filteredList[selectedItem].regstatus==="rejected" && (<td className='text-color2 value'>Rejected</td>)}
+                        {filteredList[selectedItem].regstatus==="pending" && (<td className='value'>Pending</td>)}
                       </tr>
                     </tbody>
                   </table>
-                  {users[selectedItem].regstatus==="pending" && (
+                  {filteredList[selectedItem].regstatus==="pending" && (
                   <div style={{textAlign:'center',marginTop:'15px'}}>
                   <Popup
                     trigger={<button className="edit-Btn" type="button">Approve</button>}
@@ -165,7 +210,7 @@ const onClickApprove = async (value) => {
                         <div className="content rcyt-popup-cont">
                             <h3>Are you sure want to Approve?</h3>
                             <button className="edit-Btn" type="button" onClick={() => {
-                            onClickApprove(users[selectedItem].email)
+                            onClickApprove(filteredList[selectedItem].email)
                             close()
                             }}>Approve</button>
                         </div>
@@ -191,7 +236,7 @@ const onClickApprove = async (value) => {
                         <div className="content rcyt-popup-cont">
                             <h3>Are you sure you want to Reject?</h3>
                             <button className="delete-Btn" onClick={() => {
-                            onClickReject(users[selectedItem].email)
+                            onClickReject(filteredList[selectedItem].email)
                             close()
                             }} type="button">Reject</button>
                         </div>
