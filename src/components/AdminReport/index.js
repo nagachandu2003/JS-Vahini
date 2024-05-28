@@ -15,6 +15,24 @@ import { MdAppRegistration } from "react-icons/md";
 import { RiTeamFill } from "react-icons/ri";
 import { MdOutlineVerifiedUser } from "react-icons/md";
 import Footer from "../Footer"
+import { FaRegListAlt, FaUserShield, FaUsers, FaClipboardList, FaHome, FaPalette, FaRunning, FaCampground, FaFolderOpen, FaTaxi, FaUtensils, FaMoneyCheckAlt, FaCommentDots, FaQuestionCircle } from 'react-icons/fa';
+
+const iconMapping = {
+  'Registration': FaRegListAlt,
+  'Sub Admin': FaUserShield,
+  'Team': FaUsers,
+  'Attendance': FaClipboardList,
+  'D2D Incharge': FaHome,
+  'Culture': FaPalette,
+  'Activity': FaRunning,
+  'Camp Visitor': FaCampground,
+  'Collaterals': FaFolderOpen,
+  'Cabs': FaTaxi,
+  'Kitchen': FaUtensils,
+  'Expenses': FaMoneyCheckAlt,
+  'Feedback': FaCommentDots,
+  'Help Ticket': FaQuestionCircle
+};
 
 const AdminReport = () => {
     return (
@@ -26,51 +44,65 @@ const AdminReport = () => {
       <div className='grid-container' style={{backgroundColor:'black',minHeight:'100vh',display:'flex',justifyContent:'flex-start'}}>
         <div className='grid-row'>
           <Link to='/campregistrations'  className='grid-card grid-card-1'>
-            <MdAppRegistration className='icon' />
+            <FaRegListAlt className='icon' />
             <h2 className='heading-grid'>Registration</h2>
           </Link>
           <Link to='/subadmin' className='grid-card grid-card-2'>
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg">
-            <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"
-            fill="#000000"
-            />
-        </svg>
+          <FaUserShield className='icon' />
             <h2 className='heading-grid'>
               Sub Admin
             </h2>
           </Link>
           <Link to='/team' className='grid-card grid-card-3'>
-            <RiTeamFill className='icon' />
+            <FaUsers className='icon' />
             <h2 className='heading-grid'>Team</h2>
           </Link>
           <Link to='/adminattendance' className='whatsapp grid-card'>
-            <MdOutlineVerifiedUser className='icon' />
+            <FaClipboardList className='icon' />
             <h2 className='heading-grid'>Attendance</h2>
           </Link>
-          {/* <Link to='/si' className='grid-card grid-card-4'>
-            <FaMicrophoneAlt className='icon' />
-            <h2 className='heading-grid'>BSC/Social Influencer</h2>
+          <Link to='/d2dincharge' className='grid-card grid-card-4'>
+            <FaHome className='icon' />
+            <h2 className='heading-grid'>D2D Incharge</h2>
           </Link>
           <Link to='/photos' className='grid-card grid-card-5'>
-            <MdPhotoSizeSelectActual className='icon' />
-            <h2 className='heading-grid'>Photos</h2>
+            <FaPalette className='icon' />
+            <h2 className='heading-grid'>Culture</h2>
           </Link>
           <Link to='/youtuber' className='grid-card grid-card-6'>
-            <FaYoutube className='icon' />
-            <h2 className='heading-grid'>Youtuber</h2>
+            <FaRunning className='icon' />
+            <h2 className='heading-grid'>Activity</h2>
           </Link>
           <Link to='/maps' className='grid-card maps'>
-            <FaMapLocationDot className='icon' />
-            <h2 className='heading-grid'>Maps</h2>
-          </Link> */}
+            <FaCampground className='icon' />
+            <h2 className='heading-grid'>Camp Visitor</h2>
+          </Link>
+          <Link to='/collateral'  className='grid-card grid-card-1'>
+            <FaFolderOpen className='icon' />
+            <h2 className='heading-grid'>Collaterals</h2>
+          </Link>
+          <Link to='/cabs' className='grid-card grid-card-2'>
+          <FaTaxi className="icon"/>
+            <h2 className='heading-grid'>
+              Cabs
+            </h2>
+          </Link>
+          <Link to='/kitchen' className='grid-card grid-card-3'>
+            <FaUtensils className='icon' />
+            <h2 className='heading-grid'>Kitchen</h2>
+          </Link>
+          <Link to='/expenses' className='whatsapp grid-card'>
+            <FaMoneyCheckAlt className='icon' />
+            <h2 className='heading-grid'>Expenses</h2>
+          </Link>
+          <Link to='/feedback' className='grid-card grid-card-5'>
+            <FaCommentDots className='icon' />
+            <h2 className='heading-grid'>Feedback</h2>
+          </Link>
+          <Link to='/helpticket' className='grid-card grid-card-6'>
+            <FaQuestionCircle className='icon' />
+            <h2 className='heading-grid'>Help Ticket</h2>
+          </Link>
 
       </div>
       </div>
