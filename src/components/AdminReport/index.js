@@ -70,7 +70,7 @@ const AdminReport = () => {
               Sub Admin
             </h2>
           </Link>
-          <Link to='/team' className={`grid-card grid-card-3 ${accessTabItems[2].tab}`}>
+          <Link to='/adminteam' className={`grid-card grid-card-3 ${accessTabItems[2].tab}`}>
             <FaUsers className='icon' />
             <h2 className='heading-grid'>Team</h2>
           </Link>

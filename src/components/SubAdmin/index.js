@@ -160,7 +160,7 @@ const SubAdmin = () => {
         <h1 className='main-d2d'>Sub Admin</h1>
       </div>
       <div className='d2d-container'>
-
+      <div className={showForm ? "overlay" : "overlay hidden"} onClick={() => setShowForm(false)}></div>
         {showForm && <FormComponent onSave={handleSave} onClose={() => setShowForm(false)} />}
         <div className="floating-button" onClick={() => setShowForm(!showForm)}>
           <span>New</span>
