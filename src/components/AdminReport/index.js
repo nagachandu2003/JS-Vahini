@@ -4,9 +4,7 @@ import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import { useLocation } from "react-router-dom";
 import {
-  FaDoorOpen,
-  FaUserFriends,
-  FaUserCheck,
+  FaDoorOpen, FaUserFriends, FaUserCheck,
 } from 'react-icons/fa';
 import { FaYoutube } from "react-icons/fa6";
 import { FaMicrophoneAlt } from "react-icons/fa";

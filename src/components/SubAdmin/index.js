@@ -160,7 +160,7 @@ const SubAdmin = () => {
         <h1 className='main-d2d'>Sub Admin</h1>
       </div>
       <div className='d2d-container'>
-        <div className={showForm ? "overlay" : "overlay hidden"} onClick={() => setShowForm(false)}></div>
+
         {showForm && <FormComponent onSave={handleSave} onClose={() => setShowForm(false)} />}
         <div className="floating-button" onClick={() => setShowForm(!showForm)}>
           <span>New</span>
@@ -195,8 +195,8 @@ const SubAdmin = () => {
             <div className="popup-content">
               <span className="close" onClick={() => setSelectedItem(null)}>&times;</span>
              
-              <ul className="userList">
-  <li className="users-list" style={{height:'300px',overflowY:'auto'}}>
+  <ul className="userList">
+  <li className="users-list" style={{height:'400px',overflowY:'auto'}}>
     <table className="userTable">
       <thead>
       <tr>
