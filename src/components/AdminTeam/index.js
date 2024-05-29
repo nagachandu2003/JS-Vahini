@@ -226,52 +226,24 @@ const AdminTeam = () => {
                     <th className="valueHeader">Values</th>
                 </tr>
                 <tr>
-                    <td className="parameter">Village Name</td>
-                    <td className="value">{users[selectedItem].villageName}</td>
+                    <td className="parameter">Team Name</td>
+                    <td className="value">{users[selectedItem].teamName}</td>
                 </tr>
                 <tr>
                     <td className="parameter">Date & Time</td>
                     <td className="value">{users[selectedItem].time}</td>
                 </tr>
                 <tr>
-                    <td className="parameter">Village Population</td>
-                    <td className="value">{users[selectedItem].villagePopulation}</td>
+                    <td className="parameter">Team Number</td>
+                    <td className="value">{users[selectedItem].teamNumber}</td>
                 </tr>
                 <tr>
-                    <td className="parameter">Total Household Covered</td>
-                    <td className="value">{users[selectedItem].totalHouseholdCovered}</td>
+                    <td className="parameter">Team Lead Name</td>
+                    <td className="value">{users[selectedItem].teamLeadName}</td>
                 </tr>
                 <tr>
-                    <td className="parameter">YouTube Subscription</td>
-                    <td className="value">{users[selectedItem].youtubeSubscription}</td>
-                </tr>
-                <tr>
-                    <td className="parameter">Total WhatsApp Group Added</td>
-                    <td className="value">{users[selectedItem].totalWhatsAppGroupAdded}</td>
-                </tr>
-                <tr>
-                    <td className="parameter">Total Founding Member Added</td>
-                    <td className="value">{users[selectedItem].totalFoundingMemberAdded}</td>
-                </tr>
-                <tr>
-                    <td className="parameter">District</td>
-                    <td className="value">{users[selectedItem].district}</td>
-                </tr>
-                <tr>
-                    <td className="parameter">Block</td>
-                    <td className="value">{users[selectedItem].block}</td>
-                </tr>
-                <tr>
-                    <td className="parameter">Village Panchayat</td>
-                    <td className="value">{users[selectedItem].villagePanchayat}</td>
-                </tr>
-                <tr>
-                    <td className="parameter">Village</td>
-                    <td className="value">{users[selectedItem].village}</td>
-                </tr>
-                <tr>
-                    <td className="parameter">Panchayat</td>
-                    <td className="value">{users[selectedItem].pachayat}</td>
+                    <td className="parameter">Team Lead Mobile No</td>
+                    <td className="value">{users[selectedItem].teamLeadMobile}</td>
                 </tr>
                 </table>
             </li>
