@@ -88,8 +88,7 @@
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
   z-index: 1001;
   height: 60vh;
-  max-width: 80%; /* Adjust the maximum width of the form */
-  overflow: auto; /* Add overflow */
+  overflow: auto;
 }
 
 /* Base styles for mobile devices */
@@ -250,7 +249,6 @@ border-radius: 5px;
   padding: 10px; /* Increased padding */
   border: 2px solid #ccc; /* Increased border thickness */
   border-radius: 8px; /* Increased border radius */
-  font-size: 20px; /* Increased font size */
 }
 
 .button-group {

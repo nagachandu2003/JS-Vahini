@@ -219,7 +219,7 @@ const AdminTeam = () => {
               <span className="close" onClick={() => setSelectedItem(null)}>&times;</span>
              
               <ul className="userList">
-            <li className="users-list">
+            <li className="users-list" style={{height:'300px',overflowY:'auto'}}>
                 <table className="userTable">
                 <tr>
                     <th className="parameterHeader">Parameters</th>
