@@ -29,6 +29,7 @@ const AdminReport = () => {
   const location = useLocation();
   const isSubAdmin = Cookies.get("isSubAdmin");
   const [accessibleTabs, setAccessibleTabs] = useState([]);
+  const campId = Cookies.get("campId");
 
   useEffect(() => {
     if (isSubAdmin === "true") {

@@ -5,6 +5,7 @@ import { FaPlus } from 'react-icons/fa';
 import { RiArrowRightSLine } from "react-icons/ri";
 import Footer from '../Footer'
 import { Popup } from 'reactjs-popup';
+import Cookies from 'js-cookie'
 
 import './index.css'; // Import CSS file
 
@@ -14,17 +15,18 @@ const CampRegistrations = () => {
   const [users, setUsers] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const [isLoading,setIsLoading] = useState(false);
+  const campId = Cookies.get("campId");
 
   useEffect(() => {
     const getVideos = async () => {
       setIsLoading(true)
       try{
-        const response = await fetch(`https://js-member-backend.vercel.app/campusers`);
+        const response = await fetch(`https://js-member-backend.vercel.app/regcampusers/${campId}`);
         if(response.ok)
           {
             const data = await response.json()
             // console.log(data)
-            setUsers(data)
+            setUsers(data.result)
             setIsLoading(false)
             // console.log(data);
           }
@@ -80,6 +82,8 @@ if(activeTab==="pending")
    filteredList = users.filter((ele) => ele.regstatus==="approved")
  else 
  filteredList = users.filter((ele) => ele.regstatus==="rejected")
+
+
 
 
 
@@ -154,7 +158,7 @@ if(activeTab==="pending")
                       </tr>
                       <tr>
                         <td className="parameter">Date & Time</td>
-                        <td className="value">{filteredList[selectedItem].date & users[selectedItem].time}</td>
+                        <td className="value">{filteredList[selectedItem].date} & {filteredList[selectedItem].time}</td>
                       </tr>
                       <tr>
                         <td className="parameter">Referral</td>

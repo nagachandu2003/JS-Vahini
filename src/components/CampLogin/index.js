@@ -39,6 +39,7 @@ const CampLogin = () => {
       if(data.success===true)
         {
           setUser2('admin')
+          Cookies.set("campId",(data.campsList)[0].campId);
           return true
         }
         else
