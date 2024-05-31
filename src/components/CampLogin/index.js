@@ -90,7 +90,7 @@ const CampLogin = () => {
         <img src="https://res.cloudinary.com/dylh46szw/image/upload/v1711793425/favicon2_pef2lb.jpg" className='login-logo' alt="img"/>
       </div>
       <form className="login-form" >
-        <h1 style={{marginBottom:'10px'}}>Camp Login</h1>
+        <h1 style={{marginBottom:'10px'}}>JS Vahini Login</h1>
          {/* <h1 className="main-heading">Camp Login</h1> */}
         <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}>
             <GoogleLogin 
