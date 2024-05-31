@@ -4,6 +4,7 @@ import { MdDelete } from "react-icons/md";
 import { RiArrowRightSLine } from "react-icons/ri";
 import {v4 as uuidv4} from 'uuid'
 import Footer from '../Footer'
+import Cookies from 'js-cookie'
 
 import './index.css'; // Import CSS file
 
@@ -12,6 +13,7 @@ const AdminTeam = () => {
   const [users, setUsers] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const [isLoading,setIsLoading] = useState(false); // Track selected item index
+  const campid = Cookies.get("campId")
 
   useEffect(() => {
     const getVideos = async () => {
@@ -21,7 +23,8 @@ const AdminTeam = () => {
         if(response.ok)
           {
             const data = await response.json()
-            setUsers(data.Teams)
+            const filteredTeams = (data.Teams).filter((ele) => ele.campid===campid)
+            setUsers(filteredTeams)
             setIsLoading(false)
             // console.log(data);
           }
@@ -37,6 +40,7 @@ const AdminTeam = () => {
 
 
   const postData = async (obj) => {
+    console.log(obj)
     try{
         const options = {
             method : "POST",
@@ -101,7 +105,8 @@ const AdminTeam = () => {
         teamNumber,
         teamLeadName,
         teamLeadMobile,
-        time: currentTime
+        time: currentTime,
+        campid
       });
       setTeamName('');
       setTeamLeadName('');

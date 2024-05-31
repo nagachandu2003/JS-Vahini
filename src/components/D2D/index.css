@@ -310,6 +310,7 @@ border-radius: 5px;
   border-color: black;
   border-radius: 6px;
   padding: 8px;
+  overflow-y:scroll;
 }
 .d2d-photo-item {
   text-align: center;
