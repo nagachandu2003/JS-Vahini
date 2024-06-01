@@ -13,7 +13,7 @@ const AdminTeam = () => {
   const [users, setUsers] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const [isLoading,setIsLoading] = useState(false); // Track selected item index
-  const campid = Cookies.get("campId")
+  const campId = Cookies.get("campId")
 
   useEffect(() => {
     const getVideos = async () => {
@@ -106,7 +106,7 @@ const AdminTeam = () => {
         teamLeadName,
         teamLeadMobile,
         time: currentTime,
-        campid
+        campId
       });
       setTeamName('');
       setTeamLeadName('');

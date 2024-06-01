@@ -17,7 +17,7 @@ const SubAdmin = () => {
   const [users, setUsers] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null); 
   const [isLoading, setIsLoading] = useState(false);
-  const campid = Cookies.get("campId")
+  const campId = Cookies.get("campId")
 
   useEffect(() => {
     const getVideos = async () => {
@@ -94,7 +94,7 @@ const SubAdmin = () => {
         email,
         mobileNo,
         accessItems,
-        campid,
+        campId,
         time: currentTime
       });
       setName('')

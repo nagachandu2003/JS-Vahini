@@ -114,7 +114,8 @@ const Attendance = () => {
         attendance : allusers,
         time : `${currentDate} & ${currentTime}`,
         present : allusers.filter(member => member.status === 'present').length,
-        absent : allusers.filter(member => member.status === 'absent').length
+        absent : allusers.filter(member => member.status === 'absent').length,
+        campId : Cookies.get("campId")
       });
     };
   
