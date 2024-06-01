@@ -41,18 +41,20 @@ const Attendance = () => {
         // Getting Members
         const response1 = await fetch(`https://js-member-backend.vercel.app/campusers`);
         const data1 = await response1.json();
-        const filteredList1 = data1.filter((ele) => ele.regstatus === "approved");
+        const filteredList1 = data1.filter((ele) => (ele.regstatus === "approved" && ele.campId===campId));
         const mappedList1 = filteredList1.map((ele) => ({ ...ele, person: 'member',MobNo:ele.whatsappNumber,status:'present' }));
   
         // Getting Admins
         const response2 = await fetch(`https://js-member-backend.vercel.app/getcampusers`);
         const data2 = await response2.json();
-        const mappedList2 = data2.CampusersList.map((ele) => ({ ...ele, person: 'admin', MobNo : ele.campInchargeNumber,name:ele.campInchargeName,status:'present' }));
+        const filteredList2 = data2.filter((ele) => ele.campId===campId)
+        const mappedList2 = filteredList2.CampusersList.map((ele) => ({ ...ele, person: 'admin', MobNo : ele.campInchargeNumber,name:ele.campInchargeName,status:'present' }));
   
         // Getting Sub Admins
         const response3 = await fetch(`https://js-member-backend.vercel.app/getsubadmindetails`);
         const data3 = await response3.json();
-        const mappedList3 = data3.subadminList.map((ele) => ({ ...ele, person: 'subadmin', MobNo : ele.mobileNo, status:'present' }));
+        const filteredList3 = data3.filter((ele) => ele.campId===campId)
+        const mappedList3 = filteredList3.subadminList.map((ele) => ({ ...ele, person: 'subadmin', MobNo : ele.mobileNo, status:'present' }));
   
         const newList = [...mappedList1, ...mappedList2, ...mappedList3];
         setAllUsers(newList);
