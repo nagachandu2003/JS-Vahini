@@ -15,6 +15,7 @@ const Attendance = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [isLoading,setIsLoading] = useState(false); // Track selected item index
   const [isLoading2,setIsLoading2] = useState(false); // Track selected item index
+  const campId = Cookies.get("campId")
 
   useEffect(() => {
     const getVideos = async () => {
@@ -22,7 +23,8 @@ const Attendance = () => {
       try {
         const response = await fetch(`https://js-member-backend.vercel.app/getattendanceadmin`);
         const data = await response.json() 
-        setUsers(data.AttendanceList);
+        const {AttendanceList} = data
+        setUsers(AttendanceList.filter((ele) => ele.campId===campId));
         // setIsLoading(false);
       } catch (err) {
         console.log(`Error Occurred : ${err}`);

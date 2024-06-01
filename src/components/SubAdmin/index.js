@@ -27,6 +27,7 @@ const SubAdmin = () => {
         if(response.ok)
           {
             const data = await response.json()
+            const filteredList = (data.subadminList).filter((ele) => ele.campId===campId)
             setUsers(data.subadminList)
             // setUsers(data)
             setIsLoading(false)
