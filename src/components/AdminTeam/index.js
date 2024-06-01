@@ -23,7 +23,7 @@ const AdminTeam = () => {
         if(response.ok)
           {
             const data = await response.json()
-            const filteredTeams = (data.Teams).filter((ele) => ele.campid===campid)
+            const filteredTeams = (data.Teams).filter((ele) => ele.campId===campId)
             setUsers(filteredTeams)
             setIsLoading(false)
             // console.log(data);
