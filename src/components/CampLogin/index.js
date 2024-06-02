@@ -15,6 +15,7 @@ const CampLogin = () => {
   const [user2, setUser2] = useState('');
   const [subAdminDetails, setSubAdminDetails] = useState([])
   const navigate = useNavigate()
+  const getItem = localStorage.getItem("campuseremail");
 
   const check1 = async (arg) => {
     //Checking member or not
@@ -84,8 +85,8 @@ const CampLogin = () => {
 //     }
 //   };
 
-if(Cookies.get("campuseremail"))
-navigate("/report")
+  if(getItem)
+  navigate("/report")
 
   return (
     <div className="login-form-container">
@@ -117,12 +118,14 @@ navigate("/report")
             if(res3!==true){
             if(res1===true && res2===true)
               {
+                localStorage.setItem("campuseremail",JSON.stringify(email))
                 Cookies.set("campuseremail",email);
                 Cookies.set("isAdmin",true);
                 Cookies.set("isSubAdmin",false);
                 navigate("/choosepath",{replace:true})
               }
             else if(res1===true && res2===false){
+              localStorage.setItem("campuseremail",JSON.stringify(email))
               Cookies.set("campuseremail",email);
               Cookies.set("isAdmin",false);
               Cookies.set("isSubAdmin",false);
