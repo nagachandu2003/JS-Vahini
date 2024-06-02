@@ -908,7 +908,7 @@ const blocks = {
 
 const CampRegister = () => {
     const [name, setName] = useState('');
-    const [campid, setChannelUrl] = useState('');
+    const [campId, setChannelUrl] = useState('');
     const [state, setState] = useState('Bihar');
     const [district, setDistrict] = useState('SELECT');
     const [constituency, setConstituency] = useState('SELECT');
@@ -961,7 +961,7 @@ const CampRegister = () => {
         else {
         const formData = {
             name,
-            campid,
+            campId,
             state,
             district,
             constituency: selectedConstituency,
