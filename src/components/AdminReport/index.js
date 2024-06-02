@@ -49,10 +49,6 @@ const AdminReport = () => {
     tab: accessibleTabs.includes(tab) ? 'norm' : 'dis'
   }));
 }
-
-
-
-  // return <h1>Hello Sub Admin</h1>
     return (
         <>
             <div>

@@ -84,6 +84,9 @@ const CampLogin = () => {
 //     }
 //   };
 
+if(Cookies.get("campuseremail"))
+navigate("/report")
+
   return (
     <div className="login-form-container">
       <div>

@@ -12,7 +12,7 @@ const AdminTeam = () => {
   const [showForm, setShowForm] = useState(false);
   const [users, setUsers] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
-  const [isLoading,setIsLoading] = useState(false); // Track selected item index
+  const [isLoading,setIsLoading] = useState(false); 
   const campId = Cookies.get("campId")
 
   useEffect(() => {
@@ -128,7 +128,7 @@ const AdminTeam = () => {
         <input
           type="text"
           id="teamname"
-          className="form-input"
+          className="ytmcregister-user-input"
           placeholder="Enter Team Name "
           value={teamName}
           onChange={(e) => setTeamName(e.target.value)}
@@ -138,7 +138,7 @@ const AdminTeam = () => {
         <input
         type="number"
         id="teamnumber"
-        className="form-input"
+        className="ytmcregister-user-input"
         placeholder="Enter Team Number"
         value={teamNumber}
         min="1"
@@ -153,7 +153,7 @@ const AdminTeam = () => {
         <input
           type="text"
           id="teamleadname"
-          className="form-input"
+          className="ytmcregister-user-input"
           placeholder="Enter Team Lead Name"
           value={teamLeadName}
           onChange={(e) => setTeamLeadName(e.target.value)}
@@ -163,7 +163,7 @@ const AdminTeam = () => {
         <input
           type="tel"
           id="teamleadmobileno"
-          className="form-input"
+          className="ytmcregister-user-input"
           placeholder="Enter Team Lead Mobile No"
           value={teamLeadMobile}
           onChange={(e) => setTeamLeadMobileNo(e.target.value)}
