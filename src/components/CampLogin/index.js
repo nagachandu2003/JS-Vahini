@@ -39,7 +39,7 @@ const CampLogin = () => {
       if(data.success===true)
         {
           setUser2('admin')
-          Cookies.set("campId",(data.campsList)[0].campId,{expiry:7});
+          Cookies.set("campId",(data.campsList)[0].campId);
           return true
         }
         else
@@ -58,7 +58,7 @@ const CampLogin = () => {
             state: { subAdminDetails: subadminList[0] },
             replace: true
           });
-          Cookies.set("isSubAdmin",true,{expiry:7});
+          Cookies.set("isSubAdmin",true);
           return true
         }
         else
@@ -116,27 +116,27 @@ const CampLogin = () => {
             if(res1===true && res2===true)
               {
                 localStorage.setItem("campuseremail",JSON.stringify(email))
-                Cookies.set("campuseremail",email,{expiry:7});
-                Cookies.set("isAdmin",true,{expiry:7});
-                Cookies.set("isSubAdmin",false,{expiry:7});
+                Cookies.set("campuseremail",email);
+                Cookies.set("isAdmin",true);
+                Cookies.set("isSubAdmin",false);
                 navigate("/choosepath",{replace:true})
               }
             else if(res1===true && res2===false){
               localStorage.setItem("campuseremail",JSON.stringify(email))
-              Cookies.set("campuseremail",email,{expiry:7});
-              Cookies.set("isAdmin",false,{expiry:7});
-              Cookies.set("isSubAdmin",false,{expiry:7});
+              Cookies.set("campuseremail",email);
+              Cookies.set("isAdmin",false);
+              Cookies.set("isSubAdmin",false);
               navigate("/report",{replace:true})
             }
             else if(res1===false && res2===false){
               navigate("/campregister", { state: {email,Googlename:name}},{replace:true})
-              Cookies.set("isSubAdmin",false,{expiry:7});
+              Cookies.set("isSubAdmin",false);
             }
             else if(res2===true && res1===false){
               localStorage.setItem("campuseremail",JSON.stringify(email))
-              Cookies.set("campuseremail",email,{expiry:7});
-              Cookies.set("isAdmin",true,{expiry:7})
-              Cookies.set("isSubAdmin",false,{expiry:7});
+              Cookies.set("campuseremail",email);
+              Cookies.set("isAdmin",true)
+              Cookies.set("isSubAdmin",false);
               navigate("/adminreport",{replace:true})
             }
           }
