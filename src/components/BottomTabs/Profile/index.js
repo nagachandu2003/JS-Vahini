@@ -11,6 +11,7 @@ const Profile = () => {
     googleLogout()
     Cookies.remove("isAdmin")
     Cookies.remove("campuseremail")
+    Cookies.remove("isSubAdmin")
     window.location.href="/"
   }
 
