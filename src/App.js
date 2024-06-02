@@ -31,18 +31,12 @@ const App = () => {
   const userexists = Cookies.get("campuseremail");
   const isadmin = Cookies.get("isAdmin");
   const issubadmin = Cookies.get("isSubAdmin");
-  const navigate = useNavigate()
-  if(isadmin==="true" || issubadmin==="true")
-    navigate("/adminreport")
-  else
-  navigate("/report")
-
   return (
   <BrowserRouter>
   <Routes>
-    <Route exact path="/" element={<CampLogin/>}/>
-    {/* <Route exact path="/" element={<Report/>}/>
-    <Route exact path="/" element={<AdminReport/>}/> */}
+    {userexists===undefined && <Route exact path="/" element={<CampLogin/>}/>}
+    {(userexists && (isadmin!=="true" && issubadmin!=="true")) && <Route exact path="/" element={<Report/>}/>}
+    {(userexists && (isadmin==="true" || issubadmin==="true")) && <Route exact path="/" element={<AdminReport/>}/>}
     <Route exact path="/adminreport" element={<AdminReport/>}/>
     <Route exact path="/campregistrations" element={<CampRegistrations/>}/>
     <Route exact path="/camphome" element={<CampHome/>}/>

@@ -15,7 +15,6 @@ const CampLogin = () => {
   const [user2, setUser2] = useState('');
   const [subAdminDetails, setSubAdminDetails] = useState([])
   const navigate = useNavigate()
-  const getItem = localStorage.getItem("campuseremail");
 
   const check1 = async (arg) => {
     //Checking member or not
@@ -85,8 +84,6 @@ const CampLogin = () => {
 //     }
 //   };
 
-  if(getItem)
-  navigate("/report")
 
   return (
     <div className="login-form-container">
