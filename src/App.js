@@ -4,6 +4,7 @@ import CampHome from './components/CampHome'
 import {Routes,Route,BrowserRouter} from 'react-router-dom'
 import D2D from './components/D2D';
 // import Footer from './components/Footer';
+import Cookies from 'js-cookie'
 import "./index.css"
 import YC from './components/TopTabs/YC';
 import SI from './components/TopTabs/SI';
@@ -26,10 +27,14 @@ import SubAdmin from './components/SubAdmin'
 import AdminTeam from './components/AdminTeam';
 import Attendance from './components/Attendance';
 
-const App = () => (
+const App = () => {
+  const userexists = Cookies.get("campuseremail")
+
+  return (
   <BrowserRouter>
   <Routes>
-    <Route exact path="/" element={<CampLogin/>}/>
+    {userexists===undefined && <Route exact path="/" element={<CampLogin/>}/>}
+    {userexists.length!==0 && <Route exact path="/" element={<Report/>}/>}
     <Route exact path="/adminreport" element={<AdminReport/>}/>
     <Route exact path="/campregistrations" element={<CampRegistrations/>}/>
     <Route exact path="/camphome" element={<CampHome/>}/>
@@ -45,7 +50,7 @@ const App = () => (
     <Route path="/ss" element={<SS />} />
     <Route path="/youtuber" element={<Youtuber />} />
     <Route path="/photos" element={<Photos />} />
-    <Route path="/report" element={<Report />} />
+   <Route path="/report" element={<Report />} />
     <Route path="/trainings" element={<Trainings />} />
     <Route path="/task" element={<Task />} />
     <Route path="/team" element={<Team />} />
@@ -55,5 +60,6 @@ const App = () => (
   </Routes>
   </BrowserRouter>
   )
+}
 
 export default App;
