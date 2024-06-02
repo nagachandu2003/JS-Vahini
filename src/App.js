@@ -34,7 +34,7 @@ const App = () => {
   <BrowserRouter>
   <Routes>
     {userexists===undefined && <Route exact path="/" element={<CampLogin/>}/>}
-    {userexists.length!==0 && <Route exact path="/" element={<Report/>}/>}
+    {userexists && <Route exact path="/" element={<Report/>}/>}
     <Route exact path="/adminreport" element={<AdminReport/>}/>
     <Route exact path="/campregistrations" element={<CampRegistrations/>}/>
     <Route exact path="/camphome" element={<CampHome/>}/>
