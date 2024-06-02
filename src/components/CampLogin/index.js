@@ -136,6 +136,7 @@ const CampLogin = () => {
               Cookies.set("isSubAdmin",false);
             }
             else if(res2===true && res1===false){
+              localStorage.setItem("campuseremail",JSON.stringify(email))
               Cookies.set("campuseremail",email);
               Cookies.set("isAdmin",true)
               Cookies.set("isSubAdmin",false);
