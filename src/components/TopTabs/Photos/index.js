@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react';
 import Webcam from 'react-webcam';
 import './index.css'; // Import the CSS file for styling
+import { FaCamera } from "react-icons/fa";
+import Footer from '../../Footer';
 
 const Photos = () => {
   const [activeTab, setActiveTab] = useState(0); // State to manage active tab
@@ -12,8 +14,9 @@ const Photos = () => {
     const imageSrc = webcamRef.current.getScreenshot();
     const imageData = {
       src: imageSrc,
-      location: null // We'll update this with location data later
+      location: getLocation() // We'll update this with location data later
     };
+    console.log(imageData);
     setCapturedImages(prevImages => [...prevImages, imageData]);
     getLocation(); // Fetch user's location when capturing the image
   };
@@ -33,6 +36,7 @@ const Photos = () => {
     try {
       const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`);
       const data = await response.json();
+      console.log(data)
       const { city, principalSubdivision, countryName } = data;
       const locationData = { city, region: principalSubdivision, country: countryName };
       updateLastCapturedImageLocation(locationData);
@@ -81,11 +85,14 @@ const Photos = () => {
                   audio={false}
                   ref={webcamRef}
                   screenshotFormat="image/jpeg"
-                  width={320} // Adjusted width for mobile devices
+                  width={300} // Adjusted width for mobile devices
                   height={240} // Adjusted height for mobile devices
                 />
-                <div className='capture-button-container'>                <button onClick={captureImage} className="capture-button">Capture</button>
-</div>
+                <div className='capture-button-container'>                
+                <button style={{borderRadius:'5px',borderWidth:0}} onClick={captureImage} className="floating-button">
+                  <FaCamera size={30}/>
+                </button>
+                </div>
               </div>
               <div className="image-list-container">
                 {capturedImages.map((image, index) => (
@@ -112,7 +119,9 @@ const Photos = () => {
           </div>
         </div>
       </div>
+      <Footer/>
     </>
+
   );
 };
 

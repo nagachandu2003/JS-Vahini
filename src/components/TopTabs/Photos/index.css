@@ -4,6 +4,9 @@
   padding-top: 15px;
   z-index: 499;
   margin-bottom: 10px;
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
 
 .photos-main-heading {
@@ -51,12 +54,11 @@
 /* Photos Content Styles */
 .photos-content-container {
   display: flex;
-  margin: 10px;
   flex-direction: column;
   width: 100%;
-  align-items: center;
-  margin-top: 90px;
-  height: 150vh;
+  margin-top: 100px; /* Adjusted to fit the fixed header */
+  height: calc(100vh - 100px - 50px); /* Adjusted for header and footer height */
+  overflow-y: auto; /* Makes the content scrollable */
   background-color: white;
 }
 
@@ -66,6 +68,7 @@
 
 .photos-tab-content.active {
   display: block;
+  padding: 10px;
 }
 
 .webcam-in {
@@ -87,7 +90,7 @@
 }
 
 .camera-container {
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 
 .capture-button {
@@ -117,8 +120,22 @@
   max-width: 100%;
   height: auto;
 }
+
 .capture-button-container {
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
+}
+
+.photos-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin:auto;
+}
+
+.photos-content {
+  flex: 1;
+  overflow-y: auto;
 }
