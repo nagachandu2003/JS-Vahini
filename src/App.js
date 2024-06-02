@@ -1,7 +1,7 @@
 import './App.css';
 import CampLogin from './components/CampLogin'
 import CampHome from './components/CampHome'
-import {Routes,Route,BrowserRouter} from 'react-router-dom'
+import {Routes,Route,BrowserRouter, useNavigate} from 'react-router-dom'
 import D2D from './components/D2D';
 // import Footer from './components/Footer';
 import Cookies from 'js-cookie'
@@ -28,13 +28,15 @@ import AdminTeam from './components/AdminTeam';
 import Attendance from './components/Attendance';
 
 const App = () => {
-  const userexists = Cookies.get("campuseremail")
-
+  const userexists = Cookies.get("campuseremail");
+  const isadmin = Cookies.get("isAdmin");
+  const issubadmin = Cookies.get("isSubAdmin");
   return (
   <BrowserRouter>
   <Routes>
     {userexists===undefined && <Route exact path="/" element={<CampLogin/>}/>}
-    {userexists && <Route exact path="/" element={<Report/>}/>}
+    {(userexists && (isadmin!=="true" && issubadmin!=="true")) && <Route exact path="/" element={<Report/>}/>}
+    {(userexists && (isadmin==="true" || issubadmin==="true")) && <Route exact path="/" element={<AdminReport/>}/>}
     <Route exact path="/adminreport" element={<AdminReport/>}/>
     <Route exact path="/campregistrations" element={<CampRegistrations/>}/>
     <Route exact path="/camphome" element={<CampHome/>}/>
