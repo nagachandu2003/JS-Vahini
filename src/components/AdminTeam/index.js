@@ -13,7 +13,7 @@ const AdminTeam = () => {
   const [users, setUsers] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const [isLoading,setIsLoading] = useState(false); 
-  const campId = Cookies.get("campId")
+  const campCluster = Cookies.get("campId")
 
   useEffect(() => {
     const getVideos = async () => {
@@ -23,7 +23,7 @@ const AdminTeam = () => {
         if(response.ok)
           {
             const data = await response.json()
-            const filteredTeams = (data.Teams).filter((ele) => ele.campId===campId)
+            const filteredTeams = (data.Teams).filter((ele) => ele.campCluster===campCluster)
             setUsers(filteredTeams)
             setIsLoading(false)
             // console.log(data);
@@ -80,7 +80,7 @@ const AdminTeam = () => {
 
   const handleSave = (userData) => {
     postData(userData)
-    const newList = [...users,userData]
+    const newList = [userData,...users]
     setUsers(newList)
     setShowForm(false);
   }
@@ -106,7 +106,7 @@ const AdminTeam = () => {
         teamLeadName,
         teamLeadMobile,
         time: currentTime,
-        campId
+        campCluster
       });
       setTeamName('');
       setTeamLeadName('');
@@ -121,10 +121,10 @@ const AdminTeam = () => {
 
     return (
       <>
-      <div className="form-container active" style={{ overflow: 'auto' }}> {/* Add overflow style */}
+      <div className="form-container active"> {/* Add overflow style */}
         <form className="d2d-form" onSubmit={handleSubmit}>
           <h1 className='popup-heading'>Enter the Team Details</h1>
-         <label htmlFor="villageName" className="form-label">Team Name:</label>
+         <label htmlFor="teamname" className="form-label">Team Name:</label>
         <input
           type="text"
           id="teamname"
@@ -226,10 +226,13 @@ const AdminTeam = () => {
               <ul className="userList">
             <li className="users-list" style={{height:'300px',overflowY:'auto'}}>
                 <table className="userTable">
+                  <thead>
                 <tr>
                     <th className="parameterHeader">Parameters</th>
                     <th className="valueHeader">Values</th>
                 </tr>
+                </thead>
+                <tbody>
                 <tr>
                     <td className="parameter">Team Name</td>
                     <td className="value">{users[selectedItem].teamName}</td>
@@ -250,6 +253,7 @@ const AdminTeam = () => {
                     <td className="parameter">Team Lead Mobile No</td>
                     <td className="value">{users[selectedItem].teamLeadMobile}</td>
                 </tr>
+                </tbody>
                 </table>
             </li>
             </ul>

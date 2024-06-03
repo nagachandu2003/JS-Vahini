@@ -119,22 +119,28 @@ if(activeTab==="pending")
       </nav> 
       <div style={{marginTop:'50px'}} className='d2d-container'>
         <ul className={selectedItem !== null ? "userList popup" : "userList"}>
-          {filteredList.length === 0 ? (
+        {isLoading ? (
             <div className='empty-list-container'>
-              <li className="empty-list">Loading Members</li>
+                <li className="empty-list">Loading Members</li>
             </div>
-          ) : (
-            filteredList.map((user, index) => (
-              <li key={index} className="d2d-users-list" onClick={() => setSelectedItem(index)}>
-                <div className='d2d-list-column'>
-                <p className='list-d2d-name'>Name : {user.name}</p>
-                <p className='list-d2d-time'>Mobile No : {user.whatsappNumber}</p>
-                <p className='list-d2d-time'>Referral : {user.referral}</p>
+        ) : (
+            filteredList.length === 0 ? (
+                <div className='empty-list-container'>
+                    <li className="empty-list">Please add Attendance</li>
                 </div>
-                <p><RiArrowRightSLine className='side-arrow' /></p>             
-              </li>
-            ))
-          )}
+            ) : (
+              filteredList.map((user, index) => (
+                <li key={index} className="d2d-users-list" onClick={() => setSelectedItem(index)}>
+                  <div className='d2d-list-column'>
+                  <p className='list-d2d-name'>Name : {user.name}</p>
+                  <p className='list-d2d-time'>Mobile No : {user.whatsappNumber}</p>
+                  <p className='list-d2d-time'>Referral : {user.referral}</p>
+                  </div>
+                  <p><RiArrowRightSLine className='side-arrow' /></p>             
+                </li>
+              ))
+            )
+        )}
         </ul>
         {selectedItem !== null && (
           <div className="popup">

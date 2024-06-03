@@ -17,7 +17,7 @@ const SubAdmin = () => {
   const [users, setUsers] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null); 
   const [isLoading, setIsLoading] = useState(false);
-  const campId = Cookies.get("campId")
+  const campCluster = Cookies.get("campId")
 
   useEffect(() => {
     const getVideos = async () => {
@@ -27,8 +27,8 @@ const SubAdmin = () => {
         if(response.ok)
           {
             const data = await response.json()
-            const filteredList = (data.subadminList).filter((ele) => ele.campId===campId)
-            setUsers(data.subadminList)
+            const filteredList = (data.subadminList).filter((ele) => ele.campCluster===campCluster)
+            setUsers(filteredList)
             // setUsers(data)
             setIsLoading(false)
             // console.log(data);
@@ -45,6 +45,8 @@ const SubAdmin = () => {
 
 
   const handleSave = async (userData) => {
+    const newList = [userData,...users]
+    setUsers(newList)
     setShowForm(false)
     try{
       const options = {
@@ -95,7 +97,7 @@ const SubAdmin = () => {
         email,
         mobileNo,
         accessItems,
-        campId,
+        campCluster,
         time: currentTime
       });
       setName('')
@@ -118,7 +120,7 @@ const SubAdmin = () => {
         <input
           type="text"
           id="subadminname"
-          className="form-input"
+          className="ytmcregister-user-input"
           placeholder="Enter Sub Admin Name "
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -128,7 +130,7 @@ const SubAdmin = () => {
         <input
         type="email"
         id="subadminemail"
-        className="form-input"
+        className="ytmcregister-user-input"
         placeholder="Enter Email"
         value={email}
         onChange={(e) => {setEmail(e.target.value)}}
@@ -137,13 +139,13 @@ const SubAdmin = () => {
         <label htmlFor="accessitems" className="form-label">Tabs to be Accessed : </label>
         <br/>
         {accessTabs.map(option => (
-            <div className="form-input" key={option}>
+            <div className="ytmcregister-user-input" key={option}>
                 <input style={{marginRight:'10px'}} type="checkbox" id={option} value={option} onChange={onChangeAccessItems}/>
                 <label htmlFor={option}>{option}</label>
             </div>
         ))}
-        <label htmlFor="mobno">Mobile Number</label>
-        <input onChange={(e) => setMobileNo(e.target.value)} placeholder="Enter the whatsapp number E.g : +91 987654321" pattern="^\+91(?:[0-9] ?){6,14}[0-9]$" className="ytmcregister-user-input" type="tel" id="mobno" required/>
+        <label className="form-label" htmlFor="mobno">Mobile Number</label>
+        <input onChange={(e) => setMobileNo(e.target.value)} placeholder="Enter the whatsapp number E.g : +91 987654321" className="ytmcregister-user-input" type="tel" id="mobno" required/>
         
           <div style={{marginTop:'10px'}} className='cancel-submit-btn-container'>
           <button type="button" className="btn-cancel" onClick={handleCancel}>Cancel</button>
@@ -170,28 +172,35 @@ const SubAdmin = () => {
           <FaPlus className="plus-icon" />
         </div>
         <ul className={selectedItem !== null ? "userList popup" : "userList"}>
-          {users.length === 0 ? (
+
+        {isLoading ? (
             <div className='empty-list-container'>
-              <li className="empty-list">There are no Sub Admins.</li>
+                <li className="empty-list">Loading Sub Admins</li>
             </div>
-          ) : (
-            users.map((user, index) => (
-              <li key={index} className="d2d-users-list" onClick={() => setSelectedItem(index)}>
-                 {/* user.photo && (
-                  <div className="d2d-photo-item">
-                    <img src={user.photo.imgSrc} alt="Captured" className='d2d-photo'/>
-                      <p>Location: {user.photo.location}</p>
-                  </div>
-                ) */}
-                <div className='d2d-list-column'>
-                <p className='list-d2d-name'>Name : {user.name}</p>
-                <p className='list-d2d-time'>Email : {user.email}</p>
-                <p className='list-d2d-time'>Date & Time: {(user.time).toLocaleString('en-GB')}</p>
+        ) : (
+            users.length === 0 ? (
+                <div className='empty-list-container'>
+                    <li className="empty-list">Please add Sub Admins</li>
                 </div>
-                <p><RiArrowRightSLine className='side-arrow' /></p>             
-              </li>
-            ))
-          )}
+            ) : (
+              users.map((user, index) => (
+                <li key={index} className="d2d-users-list" onClick={() => setSelectedItem(index)}>
+                   {/* user.photo && (
+                    <div className="d2d-photo-item">
+                      <img src={user.photo.imgSrc} alt="Captured" className='d2d-photo'/>
+                        <p>Location: {user.photo.location}</p>
+                    </div>
+                  ) */}
+                  <div className='d2d-list-column'>
+                  <p className='list-d2d-name'>Name : {user.name}</p>
+                  <p className='list-d2d-time'>Email : {user.email}</p>
+                  <p className='list-d2d-time'>Date & Time: {(user.time).toLocaleString('en-GB')}</p>
+                  </div>
+                  <p><RiArrowRightSLine className='side-arrow' /></p>             
+                </li>
+              ))
+            )
+        )}
         </ul>
         {selectedItem !== null && (
           <div className="popup">

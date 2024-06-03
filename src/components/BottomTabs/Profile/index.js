@@ -9,9 +9,10 @@ const Profile = () => {
 
   const onClickLogOut = () => {
     googleLogout()
-    Cookies.remove("isAdmin")
-    Cookies.remove("campuseremail")
-    Cookies.remove("isSubAdmin")
+    Cookies.remove("isAdmin");
+    Cookies.remove("campuseremail");
+    Cookies.remove("isSubAdmin");
+    Cookies.remove("campId");
     window.location.href="/"
   }
 

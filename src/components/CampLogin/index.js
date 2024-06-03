@@ -36,10 +36,11 @@ const CampLogin = () => {
     const response = await fetch(`https://js-member-backend.vercel.app/admincampusers/${arg}`)
     if(response.ok){
       const data = await response.json()
+      // console.log(data.campsList[0])
       if(data.success===true)
         {
           setUser2('admin')
-          Cookies.set("campId",(data.campsList)[0].campId);
+          Cookies.set("campId",(data.campsList)[0].campCluster);
           return true
         }
         else

@@ -15,7 +15,8 @@ const Attendance = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [isLoading,setIsLoading] = useState(false); // Track selected item index
   const [isLoading2,setIsLoading2] = useState(false); // Track selected item index
-  const campId = Cookies.get("campId")
+  const campCluster = Cookies.get("campId")
+  console.log("Camp ID "+campCluster)
 
   useEffect(() => {
     const getVideos = async () => {
@@ -24,7 +25,7 @@ const Attendance = () => {
         const response = await fetch(`https://js-member-backend.vercel.app/getattendanceadmin`);
         const data = await response.json() 
         const {AttendanceList} = data
-        setUsers(AttendanceList.filter((ele) => ele.campId===campId));
+        setUsers(AttendanceList.filter((ele) => ele.campCluster===campCluster));
         // setIsLoading(false);
       } catch (err) {
         console.log(`Error Occurred : ${err}`);
@@ -41,32 +42,48 @@ const Attendance = () => {
         // Getting Members
         const response1 = await fetch(`https://js-member-backend.vercel.app/campusers`);
         const data1 = await response1.json();
-        const filteredList1 = data1.filter((ele) => (ele.regstatus === "approved" && ele.campId===campId));
-        const mappedList1 = filteredList1.map((ele) => ({ ...ele, person: 'member',MobNo:ele.whatsappNumber,status:'present' }));
-  
+        const filteredList1 = data1.filter((ele) => ele.regstatus === "approved" && ele.campCluster === campCluster);
+        const mappedList1 = filteredList1.map((ele) => ({
+          ...ele,
+          person: 'member',
+          MobNo: ele.whatsappNumber,
+          status: 'present',
+        }));
+
         // Getting Admins
         const response2 = await fetch(`https://js-member-backend.vercel.app/getcampusers`);
         const data2 = await response2.json();
-        const filteredList2 = data2.filter((ele) => ele.campId===campId)
-        const mappedList2 = filteredList2.CampusersList.map((ele) => ({ ...ele, person: 'admin', MobNo : ele.campInchargeNumber,name:ele.campInchargeName,status:'present' }));
-  
+        const filteredList2 = data2.CampusersList.filter((ele) => ele.campCluster === campCluster);
+        const mappedList2 = filteredList2.map((ele) => ({
+          ...ele,
+          person: 'admin',
+          MobNo: ele.campInchargeNumber,
+          name: ele.campInchargeName,
+          status: 'present',
+        }));
+
         // Getting Sub Admins
         const response3 = await fetch(`https://js-member-backend.vercel.app/getsubadmindetails`);
         const data3 = await response3.json();
-        const filteredList3 = data3.filter((ele) => ele.campId===campId)
-        const mappedList3 = filteredList3.subadminList.map((ele) => ({ ...ele, person: 'subadmin', MobNo : ele.mobileNo, status:'present' }));
-  
+        const filteredList3 = data3.subadminList.filter((ele) => ele.campCluster === campCluster);
+        const mappedList3 = filteredList3.map((ele) => ({
+          ...ele,
+          person: 'subadmin',
+          MobNo: ele.mobileNo,
+          status: 'present',
+        }));
+
         const newList = [...mappedList1, ...mappedList2, ...mappedList3];
         setAllUsers(newList);
-        setIsLoading(false);
       } catch (err) {
-        console.log(`Error Occurred : ${err}`);
+        console.log(`Error Occurred: ${err}`);
+      } finally {
         setIsLoading(false);
       }
     };
-  
+
     getVideos();
-  }, []);
+  }, [campCluster]);
 
   const postData = async (obj) => {
     try{
@@ -120,7 +137,7 @@ const Attendance = () => {
         time : `${currentDate} & ${currentTime}`,
         present : allusers.filter(member => member.status === 'present').length,
         absent : allusers.filter(member => member.status === 'absent').length,
-        campId : Cookies.get("campId")
+        campCluster : Cookies.get("campId")
       });
     };
   
@@ -134,13 +151,13 @@ const Attendance = () => {
       <div className="form-container active" style={{ overflow: 'auto' }}> {/* Add overflow style */}
         <form className="d2d-form" onSubmit={handleSubmit} style={{width:'100%'}}>
           <h1 className='popup-heading'>Mark Attendance</h1>
-         <label htmlFor="villageName" className="form-label">Date :</label>
+         <label htmlFor="dateinput" className="form-label">Date :</label>
          <br/>
         <input
         style={{width:'100%'}}
           type="date"
           id="dateinput"
-          className="form-input"
+          className="ytmcregister-user-input"
           placeholder="Select Date "
           value={date}
           max="<?php echo date('Y-m-d'); ?>"
@@ -148,6 +165,9 @@ const Attendance = () => {
           required
         />
         <br/>
+  {isLoading===true && (
+    <p>Loading Members</p>
+  )}
 
 {isLoading === false && (
   <table className="userTable">
@@ -199,7 +219,7 @@ const Attendance = () => {
 
 
 
-          <div className='cancel-submit-btn-container'>
+          <div style={{marginTop:'10px'}} className='cancel-submit-btn-container'>
           <button type="button" className="btn-cancel" onClick={handleCancel}>Cancel</button>
           <button type="submit" className="btn-submit">Submit</button>
           </div>
