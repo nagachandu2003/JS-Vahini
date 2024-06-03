@@ -3,6 +3,7 @@ import { googleLogout } from '@react-oauth/google';
 import {useNavigate, useLocation } from 'react-router-dom';
 // import {useHistory} from 'react-router-dom'
 import DistrictItem from '../DistrictItem';
+import { IoLanguage } from "react-icons/io5";
 import "./index.css"
 const constituencies = {
   "SELECT" : ['SELECT'],
@@ -904,27 +905,52 @@ const blocks = {
   ]
 }
 
+const campClusters = [
+  "Begusarai",
+  "Bhagalpur",
+  "Buxar",
+  "Darbhanga",
+  "East Champaran",
+  "Gaya",
+  "Gopalganj",
+  "Katihar",
+  "Madhepura",
+  "Madhubani",
+  "Muzaffarpur",
+  "Nalanda",
+  "Nawada",
+  "Sitamarhi",
+  "Vaishali"
+];
 
 
 const CampRegister = () => {
     const [name, setName] = useState('');
-    const [campId, setChannelUrl] = useState('');
+    const [campCluster, setChannelUrl] = useState('');
     const [state, setState] = useState('Bihar');
     const [district, setDistrict] = useState('SELECT');
     const [constituency, setConstituency] = useState('SELECT');
     const [photo, setPhoto] = useState('');
-    const [whatsappNumber, setWhatsappNumber] = useState('');
+    const [mobileno, setMobileNumber] = useState('');
     const [selectedConstituency, setSelectedConstituency] = useState('SELECT');
     const [registeredStatus, setRegisteredStatus] = useState(false);
     const [referral, setReferral] = useState('');
-    const [block,setBlock] = useState('SELECT')
+    const [block,setBlock] = useState('SELECT');
+    const [dob,setDob] = useState('');
+    const [fathername,setFatherName] = useState('');
+    const [panchayat, setPanchayat] = useState('');
+    const [village, setVillage] = useState('');
+    const [aadhaarNo, setAadhaarNo] = useState('');
+    const [language, setLanguage] = useState('english');
+
+
     const navigate = useNavigate();
     const location = useLocation();
     // const history = useHistory();
     const {Googlename,email} = location.state
 
     const onChangeName = (event) => setName(event.target.value);
-    const onChangeChannelUrl = (event) => setChannelUrl(event.target.value);
+    const onChangeCampCluster = (event) => setChannelUrl(event.target.value);
     const onChangeState = (event) => setState(event.target.value);
     const onChangeDistrict = (event) => {
         setDistrict(event.target.value);
@@ -935,9 +961,22 @@ const CampRegister = () => {
     };
     const onChangeConstituency = (event) => setSelectedConstituency(event.target.value);
     const onChangePhoto = (event) => setPhoto(event.target.files[0]);
-    const onChangeWhatsApp = (event) => setWhatsappNumber(event.target.value);
+    const onChangeMobileNo = (event) => setMobileNumber(event.target.value);
     const onChangeBlock = (event) => setBlock(event.target.value)
     const onChangeReferral = (event) => setReferral(event.target.value)
+    const onChangeDob = (event) => setDob(event.target.value)
+    const onChangeFatherName = (event) => setFatherName(event.target.value)
+    const onChangePanchayat = (event) => setPanchayat(event.target.value)
+    const onChangeVillage = (event) => setVillage(event.target.value)
+    const onChangeAadhaarNo = (event) => setAadhaarNo(event.target.value)
+    const onChangeLanguage = (event) => {
+      if(language==="english")
+        setLanguage("hindi")
+      else
+      setLanguage("english")
+    }
+
+    
 
     const postData = async (value) => {
       let options = {
@@ -961,20 +1000,26 @@ const CampRegister = () => {
         else {
         const formData = {
             name,
-            campId,
-            state,
+            campCluster,
+            dob,
+            fathername,
+            // state,
             district,
-            constituency: selectedConstituency,
+            // constituency: selectedConstituency,
             block,
-            whatsappNumber,
+            panchayat,
+            village,
+            aadhaarNo,
+            mobileno,
+            referral,
             Googlename,
             email,
             regstatus:"pending",
             kycstatus : "pending",
-            referral,
             date : currDate,
             time : currTime
         };
+        // console.log(formData)
         postData(formData);
         // history.replace("/regpending")
         navigate("/regpending",{replace:true})
@@ -987,50 +1032,92 @@ const CampRegister = () => {
         navigate("/",{replace:true})
     };
 
+    const campregistrationlabel = language==="english"?"Camp Registration Form":"कैम्प पंजीकरण फॉर्म"
+    const campclusterlabel = language==="english"?"Camp Cluster":"कैम्प क्लस्टर";
+    const namelabel = language==="english"?"Name":"नाम"
+    const doblabel = language==="english"?"D.O.B":"जन्म तिथी"
+    const fathernamelabel = language==="english"?"Father Name":"पिता का नाम"
+    const districtlabel = language==="english"?"District":"जिला"
+    const blocklabel = language==="english"?"Block":"प्रखण्ड"
+    const panchayatlabel = language==="english"?"Panchayat":"पंचायत"
+    const villagelabel = language==="english"?"Village":"गाँव"
+    const aadharnolabel = language==="english"?"Aadhaar Number":"आधार नंबर"
+    const mobilenolabel = language==="english"?"Mobile Number":"मोबाईल नंबर"
+    const referrallabel = language==="english"?"Referral":"किसके द्वारा लाए गए"
+
     return (
       <div className="ytmcregister-main-container">
           {registeredStatus===false && (
               <>
           <div className="ytmcregister-top-container">
-              <h1>Registration</h1>
+          <p onClick={onChangeLanguage} style={{textAlign:'right'}}><IoLanguage/></p>
+              <h1>{campregistrationlabel}</h1>
           </div>
           <div className="ytmcregister-form-container">
           <form onSubmit={onSubmitRegisterYTMC}>
               <div className="ytmcregister-cont-ele">
-              <label htmlFor="username">Username</label>
+              <label htmlFor="campcluster">{campclusterlabel}</label>
+              <br/>
+              <select 
+              onChange={onChangeCampCluster} 
+              className="ytmcregister-user-input"
+              id="campCluster" 
+              required 
+              value={campCluster}
+          >
+              <option value="" disabled>Select Camp Cluster</option>
+              {campClusters.map((name, index) => (
+                  <option key={index} value={name}>{name}</option>
+              ))}
+          </select>
+          </div>
+              <div className="ytmcregister-cont-ele">
+              <label htmlFor="username">{namelabel}</label>
               <br/>
               <input placeholder="Enter the Name" onChange={onChangeName} className="ytmcregister-user-input" type="text" id="username" required/>
               </div>
+
               <div className="ytmcregister-cont-ele">
-              <label htmlFor="channelurl">Camp ID</label>
+              <label htmlFor="dob">{doblabel}</label>
               <br/>
-              <input placeholder="Enter the Camp ID" onChange={onChangeChannelUrl} className="ytmcregister-user-input" type="text" id="channelurl" required/>
+              <input placeholder="Enter the D.O.B" onChange={onChangeDob} className="ytmcregister-user-input" type="date" id="dob" required/>
               </div>
+
               <div className="ytmcregister-cont-ele">
+              <label htmlFor="fathername">{fathernamelabel}</label>
+              <br/>
+              <input placeholder="Enter the Father Name" onChange={onChangeFatherName} className="ytmcregister-user-input" type="text" id="fathername" required/>
+              </div>
+
+              
+
+                                      {/* <input placeholder="Enter the Camp Name" onChange={this.onChangeCampName} className="rcyt-user-input" type="text" id="campName" required value={campName}/> */}
+            
+              {/* <div className="ytmcregister-cont-ele">
                   <label htmlFor="state">State</label>
                   <br/>
                   <select className="ytmcregister-user-input" id="state" onChange={onChangeState} value={state}>
                       {states.map((ele) =>  <option key={ele}>{ele}</option>)}
                   </select>
-                  {/* <input placeholder="Enter the State : E.g: Bihar" onChange={onChangeState} type="text" className="ytmchome-user-input" required/> */}
-              </div>
+                   <input placeholder="Enter the State : E.g: Bihar" onChange={onChangeState} type="text" className="ytmchome-user-input" required/> 
+              </div> */}
               <div className="ytmcregister-cont-ele">
-                  <label htmlFor="district">District</label>
+                  <label htmlFor="district">{districtlabel}</label>
                   <br/>
                   <select onChange={onChangeDistrict} id="district" className="ytmcregister-user-input">
                       <option disabled>SELECT</option>
                       {options.map((ele) => <DistrictItem key={ele.OptionId} optionDetails={ele} checked/>)}
                   </select>
                   </div>
-                  <div className="ytmcregister-cont-ele">
+                  {/* <div className="ytmcregister-cont-ele">
                   <label htmlFor="constituency">Constituency</label>
                   <br/>
                   <select onChange={onChangeConstituency} id="constituency" className="ytmcregister-user-input" >
                       {constituencies[district].map((ele) => (<option key={ele} value={ele}>{ele}</option>))}
                   </select>
-              </div>
+              </div> */}
               <div className="ytmcregister-cont-ele">
-                  <label htmlFor="block">Block</label>
+                  <label htmlFor="block">{blocklabel}</label>
                   <br/>
                   <select onChange={onChangeBlock} id="block" className="ytmcregister-user-input" >
                       {blocks[district].map((ele) => (<option key={ele} value={ele}>{ele}</option>))}
@@ -1041,13 +1128,33 @@ const CampRegister = () => {
                   <br/>
                   <input className="ytmcregister-user-input" onChange={onChangePhoto} type="file" id="photo" required/>
               </div> */}
-              <div className="ytmcregister-cont-ele">
-                  <label htmlFor="whatsappno">Whatsapp Number</label>
-                  <br/>
-                  <input onChange={onChangeWhatsApp} placeholder="Enter the whatsapp number E.g : +91 987654321" pattern="^\+91(?:[0-9] ?){6,14}[0-9]$" className="ytmcregister-user-input" type="tel" id="whatsappno" required/>
+
+<div className="ytmcregister-cont-ele">
+              <label htmlFor="panchayat">{panchayatlabel}</label>
+              <br/>
+              <input placeholder="Enter the Panchayat" onChange={onChangePanchayat} className="ytmcregister-user-input" type="text" id="panchayat" required/>
               </div>
+
               <div className="ytmcregister-cont-ele">
-              <label htmlFor="referral">Referral</label>
+              <label htmlFor="village">{villagelabel}</label>
+              <br/>
+              <input placeholder="Enter the Village" onChange={onChangeVillage} className="ytmcregister-user-input" type="text" id="village" required/>
+              </div>
+
+              <div className="ytmcregister-cont-ele">
+              <label htmlFor="aadhaar">{aadharnolabel}</label>
+              <br/>
+              <input placeholder="Enter the Aadhaar No" onChange={onChangeAadhaarNo} className="ytmcregister-user-input" type="text" id="aadhaar" required/>
+              </div>
+
+              <div className="ytmcregister-cont-ele">
+                  <label htmlFor="mobileno">{mobilenolabel}</label>
+                  <br/>
+                  <input onChange={onChangeMobileNo} placeholder="Enter the Mobile No E.g : 987654321" className="ytmcregister-user-input" type="tel" id="mobileno" required/>
+              </div>
+
+              <div className="ytmcregister-cont-ele">
+              <label htmlFor="referral">{referrallabel}</label>
               <br/>
               <input placeholder="Enter the Referral" onChange={onChangeReferral} className="ytmcregister-user-input" type="text" id="referral" required/>
               </div>
