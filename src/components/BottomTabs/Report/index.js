@@ -10,6 +10,7 @@ import { FaMicrophoneAlt } from "react-icons/fa";
 import { IoLogoWhatsapp } from "react-icons/io";
 import { MdPhotoSizeSelectActual } from "react-icons/md";
 import { FaMapLocationDot } from "react-icons/fa6";
+import { FaCamera } from "react-icons/fa";
 import Footer from '../../Footer'
 
 
@@ -24,6 +25,10 @@ const Report = () => {
       </div>
       <div className='grid-container'>
         <div className='grid-row'>
+        <Link to='/selfie' className='grid-card grid-card-6'>
+            <FaCamera className='icon' />
+            <h2 className='heading-grid'>Household (Selfie)</h2>
+          </Link>
           <Link to='/d2d' className='grid-card grid-card-1'>
             <FaDoorOpen className='icon' />
             <h2 className='heading-grid'>Door 2 Door</h2>

@@ -27,6 +27,8 @@ const CampLogin = () => {
       setUser1('member')
       return true
     }
+    else if(data.success==="pending")
+      navigate("/regpending",{replace:true})
     else
     return false
     }

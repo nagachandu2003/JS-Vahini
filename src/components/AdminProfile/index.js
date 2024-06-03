@@ -1,18 +1,19 @@
 import React,{useState,useEffect} from 'react';
 import { FaUser, FaPhone, FaEnvelope, FaIdCard, FaLock, FaInfoCircle, FaUserFriends, FaNetworkWired, FaComment, FaQuestionCircle, FaMapMarkerAlt } from 'react-icons/fa'; // Added FaMapMarkerAlt for address icon
-import Footer from '../../Footer';
+import Footer from '../Footer';
 import "./index.css";
 import { googleLogout } from '@react-oauth/google';
 import Cookies from 'js-cookie'
-import { ThreeDots } from 'react-loader-spinner';
 
-const Profile = () => {
+const AdminProfile = () => {
   const [isLoading,setIsLoading] = useState(false);
   const [users,setUsers] = useState([])
   const campCluster = Cookies.get("campId")
   const isAdmin = Cookies.get("isAdmin");
   const isSubAdmin = Cookies.get("isSubAdmin")
   const emailId = Cookies.get("campuseremail")
+  const [name, setName] = useState('');
+  const [mobileno, setMobileNo] = useState('');
 
 
   useEffect(() => {
@@ -23,6 +24,11 @@ const Profile = () => {
         if(isAdmin==="true"){
         const response = await fetch(`https://js-member-backend.vercel.app/admincampusers/${emailId}`)
          const data = await response.json()
+            console.log(data)
+            const {campsList} = data;
+            setName(campsList[0].campInchargeName)
+            setMobileNo(campsList[0].campInchargeNumber)
+            setIsLoading(false)
             // console.log(data);
         }
         else if(isSubAdmin==="true"){
@@ -35,9 +41,7 @@ const Profile = () => {
       {
         const response = await fetch(`https://js-member-backend.vercel.app/campusers/${emailId}`)
         const data = await response.json()
-        // console.log(data.result)
-        setUsers(data.result)
-        setIsLoading(false)
+        console.log(data);
       }
     }
       catch(Err){
@@ -57,27 +61,18 @@ const Profile = () => {
     Cookies.remove("campId");
     window.location.href="/"
   }
-  console.log(users)
 
   return (
     <div className='main-profile-container'>
       <div className='main-header-container'>
         <h1 className='main-heading'>Profile</h1>
       </div>
-      {
-         isLoading===true && (
-          <div className="main-content" style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
-              <ThreeDots color="gray" height={50} width={50}/>
-          </div>
-      )
-      }
-      {isLoading===false && (
       <div className='main-content'>
       <div className='profile-top-container'>
         <img src="https://res.cloudinary.com/dvwnbhpcy/image/upload/v1715776970/istockphoto-1495088043-612x612-removebg-preview_hdifqs.png" alt="profile" className='profile-logo' />
-        <p className='profile-name'>{users.name}</p>
-        <p className='profile-number'>{users.mobileno}</p>
-        <p className='profile-number'>Camp Cluster : {users.campCluster}</p>
+        <p className='profile-name'>{name}</p>
+        <p className='profile-number'>{mobileno}</p>
+        <p className='profile-number'>Camp Cluster : {campCluster}</p>
       </div>
       <div className='profile-bottom-container'>
         {/* <div className='profile-bottom-name'>
@@ -119,10 +114,9 @@ const Profile = () => {
           </div>
       </div>
       </div>
-            )}
       <Footer />
     </div>
   );
 }
 
-export default Profile;
+export default AdminProfile;

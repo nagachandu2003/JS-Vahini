@@ -15,13 +15,13 @@ const CampRegistrations = () => {
   const [users, setUsers] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const [isLoading,setIsLoading] = useState(false);
-  const campId = Cookies.get("campId");
+  const campCluster = Cookies.get("campId");
 
   useEffect(() => {
     const getVideos = async () => {
       setIsLoading(true)
       try{
-        const response = await fetch(`https://js-member-backend.vercel.app/regcampusers/${campId}`);
+        const response = await fetch(`https://js-member-backend.vercel.app/regcampusers/${campCluster}`);
         if(response.ok)
           {
             const data = await response.json()
@@ -126,7 +126,7 @@ if(activeTab==="pending")
         ) : (
             filteredList.length === 0 ? (
                 <div className='empty-list-container'>
-                    <li className="empty-list">Please add Attendance</li>
+                    <li className="empty-list">No Members Yet</li>
                 </div>
             ) : (
               filteredList.map((user, index) => (
@@ -172,7 +172,7 @@ if(activeTab==="pending")
                       </tr>
                       <tr>
                         <td className="parameter">Camp ID</td>
-                        <td className="value">{filteredList[selectedItem].campid}</td>
+                        <td className="value">{filteredList[selectedItem].campCluster}</td>
                       </tr>
                       <tr>
                         <td className="parameter">State</td>

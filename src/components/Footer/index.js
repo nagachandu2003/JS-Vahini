@@ -42,10 +42,10 @@ const Footer = () => {
           <nav className='bottom-tabs-container'>
             {renderTab("/adminreport", 'Admin', RiAdminFill, 'Admin')}
             {renderTab("/report", 'Report', FaFileAlt, 'Report')}
-            {renderTab("/stats", 'Stats', FaTasks, 'Stats')}
+            {renderTab("/adminstats", 'Stats', FaTasks, 'Stats')}
             {renderTab("/trainings", 'Trainings', FaBell, 'Trainings')}
             {renderTab("/team", 'Team', FaUsers, 'Team')}
-            {renderTab("/profile", 'Profile', FaUser, 'Profile')}
+            {renderTab("/adminprofile", 'Profile', FaUser, 'Profile')}
           </nav>
         </div>
       )}

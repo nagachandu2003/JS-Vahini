@@ -26,6 +26,9 @@ import CampRegistrations from './components/CampRegistrations'
 import SubAdmin from './components/SubAdmin'
 import AdminTeam from './components/AdminTeam';
 import Attendance from './components/Attendance';
+import Selfie from './components/TopTabs/Selfie';
+import AdminStats from './components/AdminStats';
+import AdminProfile from './components/AdminProfile';
 
 const App = () => {
   const userexists = Cookies.get("campuseremail");
@@ -38,6 +41,8 @@ const App = () => {
     {(userexists && (isadmin!=="true" && issubadmin!=="true")) && <Route exact path="/" element={<Report/>}/>}
     {(userexists && (isadmin==="true" || issubadmin==="true")) && <Route exact path="/" element={<AdminReport/>}/>}
     <Route exact path="/adminreport" element={<AdminReport/>}/>
+    <Route exact path="/adminstats" element={<AdminStats/>}/>
+    <Route exact path="/adminprofile" element={<AdminProfile/>}/>
     <Route exact path="/campregistrations" element={<CampRegistrations/>}/>
     <Route exact path="/camphome" element={<CampHome/>}/>
     <Route exact path="/campregister" element={<CampRegister/>}/>
@@ -50,6 +55,7 @@ const App = () => {
     <Route path="/yc" element={<YC />} />
     <Route path="/si" element={<SI />} />
     <Route path="/ss" element={<SS />} />
+    <Route path="/selfie" element={<Selfie/>}/> 
     <Route path="/youtuber" element={<Youtuber />} />
     <Route path="/photos" element={<Photos />} />
    <Route path="/report" element={<Report />} />
