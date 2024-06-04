@@ -76,7 +76,7 @@ const SubAdmin = () => {
         },
         body : JSON.stringify({email:value,person:'subadmin'})
       }
-      const response = await fetch(`http://localhost:3001/updatemembertosubadmin`,options)
+      const response = await fetch(`https://js-member-backend.vercel.app/updatemembertosubadmin`,options)
       const data = await response.json()
       console.log(data)
     }
