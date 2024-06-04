@@ -66,10 +66,3 @@
       width: 45%; /* Adjust as needed */
     }
   }
-  .profile-bottom-container {
-    display: flex;
-    flex-direction: column;
-    color: #4f4f4f;
-    font-size: 20px;
-  }
-  

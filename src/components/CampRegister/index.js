@@ -548,7 +548,8 @@ const CampRegister = () => {
             regstatus:"pending",
             kycstatus : "pending",
             date : currDate,
-            time : currTime
+            time : currTime,
+            person:"member"
         };
         // console.log(formData)
         postData(formData);

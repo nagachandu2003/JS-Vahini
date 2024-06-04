@@ -18,21 +18,22 @@ const SubAdmin = () => {
   const [selectedItem, setSelectedItem] = useState(null); 
   const [isLoading, setIsLoading] = useState(false);
   const campCluster = Cookies.get("campId")
+  const [members,setMembers] = useState([])
 
   useEffect(() => {
     const getVideos = async () => {
       setIsLoading(true)
       try{
         const response = await fetch(`https://js-member-backend.vercel.app/getsubadmindetails`);
-        if(response.ok)
-          {
-            const data = await response.json()
-            const filteredList = (data.subadminList).filter((ele) => ele.campCluster===campCluster)
+        const response2 = await fetch(`https://js-member-backend.vercel.app/campusers`)        
+            const data2 = await response2.json()
+            const data = await response.json() 
+            const filteredList2 = data2.filter((ele) => (ele.campCluster===campCluster && ele.person==="member" && ele.regstatus==="approved"))
+            const filteredList = (data.subadminList).filter((ele) => (ele.campCluster===campCluster))
+            setMembers(filteredList2)
             setUsers(filteredList)
             // setUsers(data)
             setIsLoading(false)
-            // console.log(data);
-          }
       }
       catch(Err){
         console.log(`Error Occurred : ${Err}`);
@@ -43,11 +44,7 @@ const SubAdmin = () => {
     getVideos();
   }, []); // Empty dependency array means it runs only once on mount
 
-
-  const handleSave = async (userData) => {
-    const newList = [userData,...users]
-    setUsers(newList)
-    setShowForm(false)
+  const postData = async (userData) => {
     try{
       const options = {
         method: "POST",
@@ -70,11 +67,39 @@ const SubAdmin = () => {
     }
   }
 
+  const updateStatus = async (value) => {
+    try{
+      const options = {
+        method : "PUT",
+        headers : {
+          "Content-Type" : "application/json"
+        },
+        body : JSON.stringify({email:value,person:'subadmin'})
+      }
+      const response = await fetch(`http://localhost:3001/updatemembertosubadmin`,options)
+      const data = await response.json()
+      console.log(data)
+    }
+    catch(Err){
+      console.log(`Error Occurred : ${Err}`)
+    }
+  }
+
+  const handleSave = async (userData) => {
+    await updateStatus(userData.email)
+    await postData(userData)
+    const newList = [userData,...users]
+    setUsers(newList)
+    setShowForm(false)
+    alert("Sub Admin Added Successfully")
+  }
+
   const FormComponent = ({ onSave, onClose }) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [mobileNo, setMobileNo] = useState('');
     let [accessItems, setAccessItems] = useState([]);
+    const [item,setItem] = useState({})
 
     const onChangeAccessItems = (event) => {
       const { value, checked } = event.target;
@@ -93,9 +118,9 @@ const SubAdmin = () => {
       e.preventDefault();
       const currentTime = new Date().toLocaleString();
       onSave({
-        name,
-        email,
-        mobileNo,
+        name:item.name,
+        email:item.email,
+        mobileNo:item.mobileno,
         accessItems,
         campCluster,
         time: currentTime
@@ -109,14 +134,30 @@ const SubAdmin = () => {
     const handleCancel = () => {
       onClose();
     };
+
+    const onChangeMember = (item) => {
+      setItem(item)
+    }
  
 
     return (
       <>
       <div className="form-container active" style={{ overflow: 'auto' }}> {/* Add overflow style */}
         <form className="d2d-form" onSubmit={handleSubmit}>
-          <h2 className='popup-heading'>Enter the Sub Admin Details</h2>
-         <label htmlFor="subadminname" className="form-label">Name :</label>
+          <h2 className='popup-heading'>Add Sub Admin </h2>
+          {members.length===0 && <p>No Registered Members</p> }
+          {members.length!==0 && (
+            <>
+          <p>Select the Member</p>
+          {members.map((ele) => (
+            <div key={ele.email} className='ytmcregister-user-input'>
+              <input type="radio" name="subadmin" id={ele.email} onChange={() => onChangeMember(ele)} />
+              <label htmlFor={ele.email}><span style={{marginLeft:'20px'}}>{ele.name}</span><br/><span style={{marginLeft:'26px'}}>{ele.mobileno}</span></label>
+            </div>
+          ))}
+          </>
+        )}
+         {/* <label htmlFor="subadminname" className="form-label">Name :</label>
         <input
           type="text"
           id="subadminname"
@@ -135,7 +176,7 @@ const SubAdmin = () => {
         value={email}
         onChange={(e) => {setEmail(e.target.value)}}
         required
-        />
+        /> */}
         <label htmlFor="accessitems" className="form-label">Tabs to be Accessed : </label>
         <br/>
         {accessTabs.map(option => (
@@ -144,8 +185,8 @@ const SubAdmin = () => {
                 <label htmlFor={option}>{option}</label>
             </div>
         ))}
-        <label className="form-label" htmlFor="mobno">Mobile Number</label>
-        <input onChange={(e) => setMobileNo(e.target.value)} placeholder="Enter the whatsapp number E.g : +91 987654321" className="ytmcregister-user-input" type="tel" id="mobno" required/>
+        {/* <label className="form-label" htmlFor="mobno">Mobile Number</label>
+        <input onChange={(e) => setMobileNo(e.target.value)} placeholder="Enter the whatsapp number E.g : +91 987654321" className="ytmcregister-user-input" type="tel" id="mobno" required/> */}
         
           <div style={{marginTop:'10px'}} className='cancel-submit-btn-container'>
           <button type="button" className="btn-cancel" onClick={handleCancel}>Cancel</button>
@@ -208,7 +249,7 @@ const SubAdmin = () => {
               <span className="close" onClick={() => setSelectedItem(null)}>&times;</span>
              
   <ul className="userList">
-  <li className="users-list" style={{height:'400px',overflowY:'auto'}}>
+  <li className="users-list" style={{margin:'auto',width:'90%',overflowY:'auto'}} >
     <table className="userTable">
       <thead>
       <tr>
@@ -235,9 +276,9 @@ const SubAdmin = () => {
       </tr>
       <tr>
         <td className="parameter">Tabs Accessed</td>
-        <td className="value">{users[selectedItem].accessItems.map((item, index) => (
+        <td className="value">{(users[selectedItem].accessItems).map((items, index) => (
       <React.Fragment key={index}>
-        {item}
+        {items}
         <br />
       </React.Fragment>
     ))}</td>
