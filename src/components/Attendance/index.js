@@ -154,10 +154,10 @@ const Attendance = () => {
       <div className="form-container active" style={{ overflow: 'auto' }}> {/* Add overflow style */}
         <form className="d2d-form" onSubmit={handleSubmit} style={{width:'100%'}}>
           <h1 className='popup-heading'>Mark Attendance</h1>
-         <label htmlFor="dateinput" className="form-label">Date :</label>
+         <label htmlFor="dateinput" className="form-label">Select Date :</label>
          <br/>
         <input
-        style={{width:'100%'}}
+        style={{width:'100%',marginBottom:'10px'}}
           type="date"
           id="dateinput"
           className="ytmcregister-user-input"
@@ -173,7 +173,7 @@ const Attendance = () => {
   )}
 
 {isLoading === false && (
-  <table className="userTable">
+  <table className="userTable" style={{marginTop:"10px",marginBottom:"10px"}}>
     <thead>
       <tr>
         <th className='parameterHeader'>Name</th>
