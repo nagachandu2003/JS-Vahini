@@ -42,11 +42,11 @@ const Attendance = () => {
         // Getting Members
         const response1 = await fetch(`https://js-member-backend.vercel.app/campusers`);
         const data1 = await response1.json();
-        const filteredList1 = data1.filter((ele) => ele.regstatus === "approved" && ele.campCluster === campCluster);
+        const filteredList1 = data1.filter((ele) => (ele.regstatus === "approved" && ele.campCluster === campCluster && ele.person==="member"));
         const mappedList1 = filteredList1.map((ele) => ({
           ...ele,
           person: 'member',
-          MobNo: ele.whatsappNumber,
+          MobNo: ele.mobileno,
           status: 'present',
         }));
 
@@ -65,7 +65,7 @@ const Attendance = () => {
         // Getting Sub Admins
         const response3 = await fetch(`https://js-member-backend.vercel.app/getsubadmindetails`);
         const data3 = await response3.json();
-        const filteredList3 = data3.subadminList.filter((ele) => ele.campCluster === campCluster);
+        const filteredList3 = data3.subadminList.filter((ele) => (ele.campCluster === campCluster && ele.person==="subadmin"));
         const mappedList3 = filteredList3.map((ele) => ({
           ...ele,
           person: 'subadmin',
@@ -84,6 +84,8 @@ const Attendance = () => {
 
     getVideos();
   }, [campCluster]);
+
+  console.log(allusers)
 
   const postData = async (obj) => {
     try{
@@ -107,7 +109,8 @@ const Attendance = () => {
 
   const handleSave = (userData) => {
     postData(userData)
-    console.log(userData.attendance)
+    const newList = [userData,...users]
+    setUsers(newList)
     setShowForm(false);
   }
 
@@ -181,12 +184,12 @@ const Attendance = () => {
     <tbody>
       {allusers.map((member) => (
         <tr key={member.name} style={{fontSize:'12px'}}>
-          <td className={`${(member.type === "admin" || member.person === "subadmin") ? 'normStyle' : ''} value`}>
+          <td className={`${(member.person === "admin" || member.person === "subadmin") ? 'normStyle' : ''} value`}>
             {member.name}
             <br />
             {member.MobNo}
           </td>
-          <td className='value'>
+          <td style={{textAlign:'center'}} className='value'>
             <input
               type="radio"
               name={`attendance-${member.name}`}
@@ -195,7 +198,7 @@ const Attendance = () => {
               onChange={() => handleAttendanceChange(member.name, 'present')}
             />
           </td>
-          <td className='value'>
+          <td style={{textAlign:'center'}} className='value'>
             <input
               type="radio"
               name={`attendance-${member.name}`}
@@ -267,6 +270,7 @@ const Attendance = () => {
         )}
 
         </ul>
+        console.log(users)
         {selectedItem !== null && (
           <div className="popup">
             <div className="popup-content">
@@ -286,7 +290,7 @@ const Attendance = () => {
                     <td className="parameter">Date & Time</td>
                     <td className="value">{users[selectedItem].time}</td>
                 </tr>
-                {users[selectedItem].attendance.map((ele) => (
+                {(users[selectedItem].attendance).map((ele) => (
                   <tr key={ele.name}>
                     <td className="parameter">{ele.name} <br/> {ele.MobNo}</td>
                     <td className="value">{ele.status}</td>
