@@ -5,6 +5,7 @@ import { RiArrowRightSLine } from "react-icons/ri";
 import {v4 as uuidv4} from 'uuid'
 import Footer from '../Footer'
 import Cookies from 'js-cookie'
+import { Popup } from 'react-leaflet';
 
 import './index.css'; // Import CSS file
 
@@ -106,6 +107,26 @@ const Attendance = () => {
   }
 }
 
+const onDeleteAttendance = async (value) => {
+  try{
+    const options = {
+      method : "DELETE",
+      headers : {
+        "Content-Type" : "application/json"
+      },
+      body : JSON.stringify({id:value})
+    }
+    const response = await fetch(`https://js-member-backend.vercel.app/deleteattendance`,options)
+    const data = await response.json()
+    console.log(data)
+  }
+  catch(Err){
+    console.log(`Error Occurred : ${Err}`)
+  }
+  const newList = users.filter((ele) => ele.id!==value)
+  setUsers(newList)
+}
+
 
   const handleSave = (userData) => {
     postData(userData)
@@ -162,6 +183,7 @@ const Attendance = () => {
           id="dateinput"
           className="ytmcregister-user-input"
           placeholder="Select Date "
+          max = {(new Date())}
           value={date}
           onChange={(e) => setAttendanceDate(e.target.value)}
           required
@@ -262,7 +284,7 @@ const Attendance = () => {
                             <p className='list-d2d-name'>Date: {user.time}</p>
                             <p className='list-d2d-time'>Present: {user.present} & Absent: {user.absent}</p>
                         </div>
-                        <p ><RiArrowRightSLine className='side-arrow' /></p>
+                        <p onClick={() => onDeleteAttendance(user.id)}><MdDelete size={20} style={{color:'red'}}/></p>
                     </li>
                 ))
             )
@@ -271,39 +293,62 @@ const Attendance = () => {
         </ul>
         console.log(users)
         {selectedItem !== null && (
-          <div className="popup">
+          <div className="popup" style={{height:'100%',width:'100%'}}>
             <div className="popup-content">
               <span className="close" onClick={() => setSelectedItem(null)}>&times;</span>
              
               <ul className="userList">
             <li className="users-list" style={{height:'300px',overflowY:'auto'}}>
-                <table className="userTable">
+                <table className="userTable" style={{ marginTop: "10px", marginBottom: "10px" }}>
                   <thead>
-                <tr>
-                    <th className="parameterHeader">Parameters</th>
-                    <th className="valueHeader">Values</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td className="parameter">Date & Time</td>
-                    <td className="value">{users[selectedItem].time}</td>
-                </tr>
-                {(users[selectedItem].attendance).map((ele) => (
-                  <tr key={ele.name}>
-                    <td className="parameter">{ele.name} <br/> {ele.MobNo}</td>
-                    <td className="value">{ele.status}</td>
-                  </tr>
-                ))}
-                <tr>
-                  <th className="parameter">Present</th>
-                  <td className='value'>{users[selectedItem].present}</td>
-                </tr>
-                <tr>
-                  <th className="parameter">Absent</th>
-                  <td className="value">{users[selectedItem].absent}</td>
-                </tr>
-                </tbody>
+                  <tr>
+                      <th className="parameterHeader">Parameters</th>
+                      <th colSpan={2} className="valueHeader">Values</th>
+                    </tr>
+                    <tr>
+                      <td className="parameter">Date & Time</td>
+                      <td colSpan={2} className="value">{users[selectedItem].time}</td>
+                    </tr>
+                    <tr>
+                      <th className='parameterHeader'>Name</th>
+                      <th className='parameterHeader'>Present</th>
+                      <th className='parameterHeader'>Absent</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {users[selectedItem].attendance.map((member) => (
+                      <tr key={member.name} style={{ fontSize: '12px' }}>
+                        <td className={`${(member.person === "admin" || member.person === "subadmin") ? 'normStyle' : ''} value`}>
+                          {member.name}
+                          <br />
+                          {member.MobNo}
+                        </td>
+                        <td style={{ textAlign: 'center' }} className='value'>
+                          <input
+                            type="radio"
+                            name={`present-${member.name}`}
+                            value="present"
+                            defaultChecked={member.status === 'present'}
+                          />
+                        </td>
+                        <td style={{ textAlign: 'center' }} className='value'>
+                          <input
+                            type="radio"
+                            name={`absent-${member.name}`}
+                            value="absent"
+                            defaultChecked={member.status === 'absent'}
+                          />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                  <tfoot>
+                  <tr>
+                            <th className='value'>Total</th>
+                            <td className='value'>{allusers.filter(member => member.status === 'present').length}</td>
+                            <td className='value'>{allusers.filter(member => member.status === 'absent').length}</td>
+                            </tr>
+                  </tfoot>
                 </table>
             </li>
             </ul>
