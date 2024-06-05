@@ -86,7 +86,7 @@ const Attendance = () => {
     getVideos();
   }, [campCluster]);
 
-  console.log(allusers)
+  console.log(users);
 
   const postData = async (obj) => {
     try{
@@ -129,10 +129,18 @@ const onDeleteAttendance = async (value) => {
 
 
   const handleSave = (userData) => {
+    const filteredList = users.filter((ele) => ele.attendanceDate===userData.attendanceDate)
+    if(filteredList.length>0)
+      {
+        alert("Remove the Record with currently entered date")
+      }
+    else 
+    {
     postData(userData)
     const newList = [userData,...users]
     setUsers(newList)
     setShowForm(false);
+    }
   }
 
 
@@ -158,6 +166,7 @@ const onDeleteAttendance = async (value) => {
       onSave({
         id:uuidv4(),
         attendance : allusers,
+        attendanceDate:(new Date(date)).toLocaleDateString('en-GB'),
         time : `${currentDate} & ${currentTime}`,
         present : allusers.filter(member => member.status === 'present').length,
         absent : allusers.filter(member => member.status === 'absent').length,
@@ -183,7 +192,7 @@ const onDeleteAttendance = async (value) => {
           id="dateinput"
           className="ytmcregister-user-input"
           placeholder="Select Date "
-          max = {(new Date())}
+          max = "<?php echo date('Y-m-d'); ?>"
           value={date}
           onChange={(e) => setAttendanceDate(e.target.value)}
           required
@@ -281,7 +290,7 @@ const onDeleteAttendance = async (value) => {
                 users.map((user, index) => (
                     <li key={index} className="d2d-users-list">
                         <div className='d2d-list-column' onClick={() => setSelectedItem(index)}>
-                            <p className='list-d2d-name'>Date: {user.time}</p>
+                            <p className='list-d2d-name'>Date: {user.attendanceDate}</p>
                             <p className='list-d2d-time'>Present: {user.present} & Absent: {user.absent}</p>
                         </div>
                         <p onClick={() => onDeleteAttendance(user.id)}><MdDelete size={20} style={{color:'red'}}/></p>
