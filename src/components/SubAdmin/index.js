@@ -177,7 +177,7 @@ const SubAdmin = () => {
         onChange={(e) => {setEmail(e.target.value)}}
         required
         /> */}
-        <label htmlFor="accessitems" className="form-label">Tabs to be Accessed : </label>
+        <label htmlFor="accessitems" className="form-label">Access </label>
         <br/>
         {accessTabs.map(option => (
             <div className="ytmcregister-user-input" key={option}>
