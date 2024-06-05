@@ -163,7 +163,6 @@ const Attendance = () => {
           className="ytmcregister-user-input"
           placeholder="Select Date "
           value={date}
-          max="<?php echo date('Y-m-d'); ?>"
           onChange={(e) => setAttendanceDate(e.target.value)}
           required
         />
