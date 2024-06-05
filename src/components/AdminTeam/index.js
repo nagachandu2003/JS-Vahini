@@ -12,7 +12,8 @@ const AdminTeam = () => {
   const [showForm, setShowForm] = useState(false);
   const [users, setUsers] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
-  const [isLoading,setIsLoading] = useState(false); 
+  const [isLoading,setIsLoading] = useState(false);
+  const [members, setMembers] = useState([]) 
   const campCluster = Cookies.get("campId")
 
   useEffect(() => {
@@ -20,14 +21,16 @@ const AdminTeam = () => {
       setIsLoading(true)
       try{
         const response = await fetch(`https://js-member-backend.vercel.app/getcampteams`);
-        if(response.ok)
-          {
-            const data = await response.json()
-            const filteredTeams = (data.Teams).filter((ele) => ele.campCluster===campCluster)
-            setUsers(filteredTeams)
-            setIsLoading(false)
+        const response2 = await fetch(`https://js-member-backend.vercel.app/campusers`);
+        const data2 = await response2.json()
+        const data = await response.json()
+        const filteredTeams = (data.Teams).filter((ele) => ele.campCluster===campCluster)
+        const filteredMembers = data2.filter((ele) => (ele.campCluster===campCluster && ele.person==="member" && ele.addedToTeam===false))
+        console.log(filteredMembers)
+        setMembers(filteredMembers)
+        setUsers(filteredTeams)
+        setIsLoading(false)
             // console.log(data);
-          }
       }
       catch(Err){
         console.log(`Error Occurred : ${Err}`);
@@ -39,8 +42,31 @@ const AdminTeam = () => {
   }, []); // Empty dependency array means it runs only once on mount
 
 
+  const updateMemberStatus = async (email,arg) => {
+    try{
+      const options = {
+        method : "PUT",
+        headers : {
+          "Content-Type" : "application/json"
+        },
+        body : JSON.stringify({email,addedToTeam:arg})
+      }
+      const response = await fetch(`https://js-member-backend.vercel.app/updatemembertoteamlead`,options);
+      const data = await response.json()
+      console.log(data)
+    }
+    catch(Err){
+      console.log(`Error Occurred : ${Err}`)
+    }
+  }
+
+
   const postData = async (obj) => {
     console.log(obj)
+    const filteredList = users.filter((ele) => ele.teamNumber===obj.teamNumber)
+    if(filteredList.length>0)
+      alert("Team already exists")
+    else{
     try{
         const options = {
             method : "POST",
@@ -57,8 +83,13 @@ const AdminTeam = () => {
         console.log(`Error Occurred : ${Err}`);
     }
   }
+  }
 
   const onDeleteTeam = async (value) => {
+    const reqitem = users.filter((ele) => ele.id===value)[0];
+    await updateMemberStatus(reqitem.teamLeadEmail,false)
+    const newList = users.filter((ele) => ele.id!==value)
+    setUsers(newList)
     try{
         const options = {
             method : "DELETE",
@@ -78,8 +109,9 @@ const AdminTeam = () => {
 
 
 
-  const handleSave = (userData) => {
-    postData(userData)
+  const handleSave = async (userData) => {
+    await postData(userData)
+    await updateMemberStatus(userData.teamLeadEmail,true)
     const newList = [userData,...users]
     setUsers(newList)
     setShowForm(false);
@@ -94,18 +126,21 @@ const AdminTeam = () => {
     const [teamNumber, setTeamNumber] = useState('');
     const [teamLeadName, setTeamLeadName] = useState('');
     const [teamLeadMobile, setTeamLeadMobileNo] = useState('');
+    const [item, setItem] = useState('')
 
   
     const handleSubmit = (e) => {
       e.preventDefault();
-      const currentTime = new Date().toLocaleString();
+      const currentDate = (new Date()).toLocaleDateString('en-GB');
+      const currentTime = (new Date()).toLocaleTimeString();
       onSave({
         id:uuidv4(),
         teamName,
         teamNumber,
-        teamLeadName,
-        teamLeadMobile,
-        time: currentTime,
+        teamLeadName : item.name,
+        teamLeadMobile : item.mobileno,
+        teamLeadEmail : item.email,
+        time: `${currentDate} & ${currentTime}`,
         campCluster
       });
       setTeamName('');
@@ -117,6 +152,9 @@ const AdminTeam = () => {
     const handleCancel = () => {
       onClose();
     };
+    const onChangeMember = (item) => {
+      setItem(item)
+    }
  
 
     return (
@@ -148,8 +186,20 @@ const AdminTeam = () => {
             // If it's not a valid integer, do nothing (or you could provide feedback to the user)
         required
         />
+        {members.length===0 && <p>No Registered Members</p> }
+          {members.length!==0 && (
+            <>
+          <p>Select the Team Lead</p>
+          {members.map((ele) => (
+            <div key={ele.email} className='ytmcregister-user-input'>
+              <input type="radio" name="subadmin" id={ele.email} onChange={() => onChangeMember(ele)} />
+              <label htmlFor={ele.email}><span style={{marginLeft:'20px'}}>{ele.name}</span><br/><span style={{marginLeft:'26px'}}>{ele.mobileno}</span></label>
+            </div>
+          ))}
+          </>
+        )}
 
-        <label htmlFor="teamleadname" className="form-label">Team Lead Name :</label>
+        {/* <label htmlFor="teamleadname" className="form-label">Team Lead Name :</label>
         <input
           type="text"
           id="teamleadname"
@@ -168,8 +218,8 @@ const AdminTeam = () => {
           value={teamLeadMobile}
           onChange={(e) => setTeamLeadMobileNo(e.target.value)}
           required
-        />
-          <div className='cancel-submit-btn-container'>
+        /> */}
+          <div style={{marginTop:'20px'}} className='cancel-submit-btn-container'>
           <button type="button" className="btn-cancel" onClick={handleCancel}>Cancel</button>
           <button type="submit" className="btn-submit">Submit</button>
           </div>

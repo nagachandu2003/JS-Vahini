@@ -549,7 +549,8 @@ const CampRegister = () => {
             kycstatus : "pending",
             date : currDate,
             time : currTime,
-            person:"member"
+            person:"member",
+            addedToTeam : false
         };
         // console.log(formData)
         postData(formData);
