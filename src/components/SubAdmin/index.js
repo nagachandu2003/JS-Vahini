@@ -151,8 +151,8 @@ const SubAdmin = () => {
           <p>Select the Member</p>
           {members.map((ele) => (
             <div style={{display:'flex',flexDirection:'row',alignItems:'center',justifyContent:'space-between'}} key={ele.email} className='ytmcregister-user-input'>
+                            <label htmlFor={ele.email}><span style={{marginLeft:'20px'}}>{ele.name}</span><br/><span style={{marginLeft:'20px'}}>{ele.mobileno}</span></label>
               <input type="radio" name="subadmin" id={ele.email} onChange={() => onChangeMember(ele)} />
-              <label htmlFor={ele.email}><span style={{marginLeft:'20px'}}>{ele.name}</span><br/><span style={{marginLeft:'26px'}}>{ele.mobileno}</span></label>
             </div>
           ))}
           </>

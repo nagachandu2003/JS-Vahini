@@ -134,6 +134,9 @@ const onDeleteAttendance = async (value) => {
       {
         alert("Remove the Record with currently entered date")
       }
+    else if(new Date(userData.date) > new Date()){
+      alert("Please Enter the Date till today")
+    }
     else 
     {
     postData(userData)
@@ -193,7 +196,6 @@ const onDeleteAttendance = async (value) => {
           className="ytmcregister-user-input"
           placeholder="Select Date "
           max = "<?php echo date('Y-m-d'); ?>"
-          value={date}
           onChange={(e) => setAttendanceDate(e.target.value)}
           required
         />
@@ -215,7 +217,7 @@ const onDeleteAttendance = async (value) => {
       {allusers.map((member) => (
         <tr key={member.name} style={{fontSize:'12px'}}>
           <td className={`${(member.person === "admin" || member.person === "subadmin") ? 'normStyle' : ''} value`}>
-            {member.name}
+          {member.person === "admin" ? '**' : member.person === "subadmin" ? '*' : ''} {member.name}
             <br />
             {member.MobNo}
           </td>
@@ -225,7 +227,9 @@ const onDeleteAttendance = async (value) => {
               name={`attendance-${member.name}`}
               value="present"
               checked={member.status === 'present'}
+              className={member.status==="present"?'greenBtn':''}
               onChange={() => handleAttendanceChange(member.name, 'present')}
+              required
             />
           </td>
           <td style={{textAlign:'center'}} className='value'>
@@ -234,7 +238,9 @@ const onDeleteAttendance = async (value) => {
               name={`attendance-${member.name}`}
               value="absent"
               checked={member.status === 'absent'}
+              className={member.status==="absent"?'redBtn':''}
               onChange={() => handleAttendanceChange(member.name, 'absent')}
+              required
             />
           </td>
         </tr>
@@ -243,8 +249,8 @@ const onDeleteAttendance = async (value) => {
     <tfoot>
       <tr>
         <th className='value'>Total</th>
-        <td className='value'>{allusers.filter(member => member.status === 'present').length}</td>
-        <td className='value'>{allusers.filter(member => member.status === 'absent').length}</td>
+        <td style={{textAlign:'center'}} className='value'>{allusers.filter(member => member.status === 'present').length}</td>
+        <td style={{textAlign:'center'}} className='value'>{allusers.filter(member => member.status === 'absent').length}</td>
       </tr>
     </tfoot>
   </table>
@@ -294,6 +300,7 @@ const onDeleteAttendance = async (value) => {
                             <p className='list-d2d-time'>Present: {user.present} & Absent: {user.absent}</p>
                         </div>
                         <p onClick={() => onDeleteAttendance(user.id)}><MdDelete size={20} style={{color:'red'}}/></p>
+
                     </li>
                 ))
             )
@@ -302,11 +309,11 @@ const onDeleteAttendance = async (value) => {
         </ul>
         console.log(users)
         {selectedItem !== null && (
-          <div className="popup" style={{height:'100%',width:'100%'}}>
+          <div className="popup" style={{height:'100%',width:'100%',justifyContent:'center'}}>
             <div className="popup-content">
-              <span className="close" onClick={() => setSelectedItem(null)}>&times;</span>
-             
-              <ul className="userList">
+              <span style={{top:'2px'}} className="close" onClick={() => setSelectedItem(null)}>&times;</span>
+              <h2>Attendance</h2>
+              <ul className="userList" style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
             <li className="users-list" style={{height:'300px',overflowY:'auto'}}>
                 <table className="userTable" style={{ marginTop: "10px", marginBottom: "10px" }}>
                   <thead>
@@ -328,23 +335,27 @@ const onDeleteAttendance = async (value) => {
                     {users[selectedItem].attendance.map((member) => (
                       <tr key={member.name} style={{ fontSize: '12px' }}>
                         <td className={`${(member.person === "admin" || member.person === "subadmin") ? 'normStyle' : ''} value`}>
-                          {member.name}
+                         {member.name}
                           <br />
                           {member.MobNo}
                         </td>
                         <td style={{ textAlign: 'center' }} className='value'>
                           <input
                             type="radio"
+                            className={member.status==="present"?'greenBtn':''}
                             name={`present-${member.name}`}
                             value="present"
+                            disabled={member.status==="absent"}
                             defaultChecked={member.status === 'present'}
                           />
                         </td>
                         <td style={{ textAlign: 'center' }} className='value'>
                           <input
+                          className={member.status==="absent"?'redBtn':''}
                             type="radio"
                             name={`absent-${member.name}`}
                             value="absent"
+                            disabled={member.status==="present"}
                             defaultChecked={member.status === 'absent'}
                           />
                         </td>
@@ -352,10 +363,10 @@ const onDeleteAttendance = async (value) => {
                     ))}
                   </tbody>
                   <tfoot>
-                  <tr>
+                  <tr >
                             <th className='value'>Total</th>
-                            <td className='value'>{allusers.filter(member => member.status === 'present').length}</td>
-                            <td className='value'>{allusers.filter(member => member.status === 'absent').length}</td>
+                            <td style={{textAlign:'center'}} className='value'>{allusers.filter(member => member.status === 'present').length}</td>
+                            <td style={{textAlign:'center'}} className='value'>{allusers.filter(member => member.status === 'absent').length}</td>
                             </tr>
                   </tfoot>
                 </table>

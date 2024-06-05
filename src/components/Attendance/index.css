@@ -1,3 +1,15 @@
 .normStyle{
     font-weight:bold;
 }
+.greenBtn{
+    accent-color: #008000;
+}
+.redBtn{
+    accent-color: red;
+}
+.greenBg{
+    background-color: #6dff0b;
+}
+.redBg{
+    background-color: #b33b4f;
+}

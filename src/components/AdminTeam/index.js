@@ -191,10 +191,14 @@ const AdminTeam = () => {
             <>
           <p>Select the Team Lead</p>
           {members.map((ele) => (
-            <div key={ele.email} className='ytmcregister-user-input'>
-              <input type="radio" name="subadmin" id={ele.email} onChange={() => onChangeMember(ele)} />
-              <label htmlFor={ele.email}><span style={{marginLeft:'20px'}}>{ele.name}</span><br/><span style={{marginLeft:'26px'}}>{ele.mobileno}</span></label>
-            </div>
+            <div style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}} key={ele.email} className='ytmcregister-user-input'>
+            <label htmlFor={ele.email}>
+              <>
+              <span style={{marginRight: '26px'}}>{ele.name}</span><br/>  <span>{ele.mobileno}</span></>
+                </label>
+                <input type="radio" name="subadmin" id={ele.email} onChange={() => onChangeMember(ele)} required/>
+          </div>
+
           ))}
           </>
         )}
