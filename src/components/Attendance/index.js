@@ -5,7 +5,7 @@ import { RiArrowRightSLine } from "react-icons/ri";
 import {v4 as uuidv4} from 'uuid'
 import Footer from '../Footer'
 import Cookies from 'js-cookie'
-import { Popup } from 'react-leaflet';
+import { Popup } from 'reactjs-popup';
 
 import './index.css'; // Import CSS file
 
@@ -17,6 +17,8 @@ const Attendance = () => {
   const [isLoading,setIsLoading] = useState(false); // Track selected item index
   const [isLoading2,setIsLoading2] = useState(false); // Track selected item index
   const campCluster = Cookies.get("campId")
+  const [date,setAttendanceDate] = useState('')
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
   console.log("Camp ID "+campCluster)
 
   useEffect(() => {
@@ -119,12 +121,11 @@ const onDeleteAttendance = async (value) => {
     const response = await fetch(`https://js-member-backend.vercel.app/deleteattendance`,options)
     const data = await response.json()
     console.log(data)
+    window.location.reload()
   }
   catch(Err){
     console.log(`Error Occurred : ${Err}`)
   }
-  const newList = users.filter((ele) => ele.id!==value)
-  setUsers(newList)
 }
 
 
@@ -148,7 +149,6 @@ const onDeleteAttendance = async (value) => {
 
 
   const FormComponent = ({ onSave, onClose }) => {
-    const [date, setAttendanceDate] = useState('');
 
     const handleAttendanceChange = (name, status) => {
       const updatedUsers = allusers.map(member => {
@@ -175,6 +175,7 @@ const onDeleteAttendance = async (value) => {
         absent : allusers.filter(member => member.status === 'absent').length,
         campCluster : Cookies.get("campId")
       });
+      setAttendanceDate('')
     };
   
     const handleCancel = () => {
@@ -184,88 +185,83 @@ const onDeleteAttendance = async (value) => {
 
     return (
       <>
-      <div className="form-container active" style={{ overflow: 'auto' }}> {/* Add overflow style */}
-        <form className="d2d-form" onSubmit={handleSubmit} style={{width:'100%'}}>
-          <h1 className='popup-heading'>Mark Attendance</h1>
-         <label htmlFor="dateinput" className="form-label">Select Date :</label>
-         <br/>
-        <input
-        style={{width:'100%',marginBottom:'10px'}}
-          type="date"
-          id="dateinput"
-          className="ytmcregister-user-input"
-          placeholder="Select Date "
-          max = "<?php echo date('Y-m-d'); ?>"
-          onChange={(e) => setAttendanceDate(e.target.value)}
-          required
-        />
-        <br/>
-  {isLoading===true && (
-    <p>Loading Members</p>
-  )}
-
-{isLoading === false && (
-  <table className="userTable" style={{marginTop:"10px",marginBottom:"10px"}}>
-    <thead>
-      <tr>
-        <th className='parameterHeader'>Name</th>
-        <th className='parameterHeader'>Present</th>
-        <th className='parameterHeader'>Absent</th>
-      </tr>
-    </thead>
-    <tbody>
-      {allusers.map((member) => (
-        <tr key={member.name} style={{fontSize:'12px'}}>
-          <td className={`${(member.person === "admin" || member.person === "subadmin") ? 'normStyle' : ''} value`}>
-          {member.person === "admin" ? '**' : member.person === "subadmin" ? '*' : ''} {member.name}
+      {isLoading && <p>Loading Members</p>}
+      {!isLoading && (
+        <div className="form-container active" style={{ overflow: 'auto' }}>
+          <form className="d2d-form" onSubmit={handleSubmit} style={{ width: '100%' }}>
+            <h1 className='popup-heading'>Mark Attendance</h1>
+            <label htmlFor="dateinput" className="form-label">Select Date:</label>
             <br />
-            {member.MobNo}
-          </td>
-          <td style={{textAlign:'center'}} className='value'>
             <input
-              type="radio"
-              name={`attendance-${member.name}`}
-              value="present"
-              checked={member.status === 'present'}
-              className={member.status==="present"?'greenBtn':''}
-              onChange={() => handleAttendanceChange(member.name, 'present')}
+              style={{ width: '100%', marginBottom: '10px' }}
+              type="date"
+              id="dateinput"
+              className="ytmcregister-user-input"
+              placeholder="Select Date"
+              max={new Date().toISOString().split('T')[0]} // Set max to current date
+              onChange={(e) => setAttendanceDate(e.target.value)}
+              value = {date}
               required
             />
-          </td>
-          <td style={{textAlign:'center'}} className='value'>
-            <input
-              type="radio"
-              name={`attendance-${member.name}`}
-              value="absent"
-              checked={member.status === 'absent'}
-              className={member.status==="absent"?'redBtn':''}
-              onChange={() => handleAttendanceChange(member.name, 'absent')}
-              required
-            />
-          </td>
-        </tr>
-      ))}
-    </tbody>
-    <tfoot>
-      <tr>
-        <th className='value'>Total</th>
-        <td style={{textAlign:'center'}} className='value'>{allusers.filter(member => member.status === 'present').length}</td>
-        <td style={{textAlign:'center'}} className='value'>{allusers.filter(member => member.status === 'absent').length}</td>
-      </tr>
-    </tfoot>
-  </table>
-)}
-
-
-
-          <div style={{marginTop:'10px'}} className='cancel-submit-btn-container'>
-          <button type="button" className="btn-cancel" onClick={handleCancel}>Cancel</button>
-          <button type="submit" className="btn-submit">Submit</button>
-          </div>
-        </form>
-      </div>
-      <Footer/>
-      </>
+            <br />
+            <table className="userTable" style={{ marginTop: "10px", marginBottom: "10px" }}>
+              <thead>
+                <tr>
+                  <th className='parameterHeader'>Name</th>
+                  <th className='parameterHeader'>Present</th>
+                  <th className='parameterHeader'>Absent</th>
+                </tr>
+              </thead>
+              <tbody>
+                {allusers.map((member) => (
+                  <tr key={member.name} style={{ fontSize: '12px' }}>
+                    <td className={`${(member.person === "admin" || member.person === "subadmin") ? 'normStyle' : ''} value`}>
+                      {member.person === "admin" ? '**' : member.person === "subadmin" ? '*' : ''} {member.name}
+                      <br />
+                      {member.MobNo}
+                    </td>
+                    <td style={{ textAlign: 'center' }} className='value'>
+                      <input
+                        type="radio"
+                        name={`attendance-${member.name}`}
+                        value="present"
+                        checked={member.status === 'present'}
+                        className={member.status === "present" ? 'greenBtn' : ''}
+                        onChange={() => handleAttendanceChange(member.name, 'present')}
+                        required
+                      />
+                    </td>
+                    <td style={{ textAlign: 'center' }} className='value'>
+                      <input
+                        type="radio"
+                        name={`attendance-${member.name}`}
+                        value="absent"
+                        checked={member.status === 'absent'}
+                        className={member.status === "absent" ? 'redBtn' : ''}
+                        onChange={() => handleAttendanceChange(member.name, 'absent')}
+                        required
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th className='value'>Total</th>
+                  <td style={{ textAlign: 'center' }} className='value'>{allusers.filter(member => member.status === 'present').length}</td>
+                  <td style={{ textAlign: 'center' }} className='value'>{allusers.filter(member => member.status === 'absent').length}</td>
+                </tr>
+              </tfoot>
+            </table>
+            <div style={{ marginTop: '10px' }} className='cancel-submit-btn-container'>
+              <button type="button" className="btn-cancel" onClick={handleCancel}>Cancel</button>
+              <button type="submit" className="btn-submit">Submit</button>
+            </div>
+          </form>
+        </div>
+      )}
+      <Footer />
+    </>
     );
   };
 
@@ -299,7 +295,7 @@ const onDeleteAttendance = async (value) => {
                             <p className='list-d2d-name'>Date: {user.attendanceDate}</p>
                             <p className='list-d2d-time'>Present: {user.present} & Absent: {user.absent}</p>
                         </div>
-                        <p onClick={() => onDeleteAttendance(user.id)}><MdDelete size={20} style={{color:'red'}}/></p>
+                        <p><RiArrowRightSLine className='side-arrow'/></p>
 
                     </li>
                 ))
@@ -309,71 +305,103 @@ const onDeleteAttendance = async (value) => {
         </ul>
         console.log(users)
         {selectedItem !== null && (
-          <div className="popup" style={{height:'100%',width:'100%',justifyContent:'center'}}>
-            <div className="popup-content">
-              <span style={{top:'2px'}} className="close" onClick={() => setSelectedItem(null)}>&times;</span>
-              <h2>Attendance</h2>
-              <ul className="userList" style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
-            <li className="users-list" style={{height:'300px',overflowY:'auto'}}>
-                <table className="userTable" style={{ marginTop: "10px", marginBottom: "10px" }}>
-                  <thead>
-                  <tr>
-                      <th className="parameterHeader">Parameters</th>
-                      <th colSpan={2} className="valueHeader">Values</th>
-                    </tr>
-                    <tr>
-                      <td className="parameter">Date & Time</td>
-                      <td colSpan={2} className="value">{users[selectedItem].time}</td>
-                    </tr>
-                    <tr>
-                      <th className='parameterHeader'>Name</th>
-                      <th className='parameterHeader'>Present</th>
-                      <th className='parameterHeader'>Absent</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {users[selectedItem].attendance.map((member) => (
-                      <tr key={member.name} style={{ fontSize: '12px' }}>
-                        <td className={`${(member.person === "admin" || member.person === "subadmin") ? 'normStyle' : ''} value`}>
-                         {member.name}
-                          <br />
-                          {member.MobNo}
-                        </td>
-                        <td style={{ textAlign: 'center' }} className='value'>
-                          <input
-                            type="radio"
-                            className={member.status==="present"?'greenBtn':''}
-                            name={`present-${member.name}`}
-                            value="present"
-                            disabled={member.status==="absent"}
-                            defaultChecked={member.status === 'present'}
-                          />
-                        </td>
-                        <td style={{ textAlign: 'center' }} className='value'>
-                          <input
-                          className={member.status==="absent"?'redBtn':''}
-                            type="radio"
-                            name={`absent-${member.name}`}
-                            value="absent"
-                            disabled={member.status==="present"}
-                            defaultChecked={member.status === 'absent'}
-                          />
+          <div className="popup" style={{ height: '100%', width: '100%', justifyContent: 'center' }}>
+          <div className="popup-content">
+            <span style={{ top: '2px' }} className="close" onClick={() => setSelectedItem(null)}>&times;</span>
+            <h2>Attendance</h2>
+            <ul className="userList" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+              <li className="users-list" style={{ height: '300px', overflowY: 'auto' }}>
+                <div className='table-container'>
+                  <table className="userTable" style={{ marginTop: "10px", marginBottom: "10px" }}>
+                    <thead>
+                      <tr>
+                        <th className="parameterHeader">Parameters</th>
+                        <th colSpan={2} className="valueHeader">Values</th>
+                      </tr>
+                      <tr>
+                        <td className="parameter">Date & Time</td>
+                        <td colSpan={2} className="value">{users[selectedItem].time}</td>
+                      </tr>
+                      <tr>
+                        <th className='parameterHeader'>Name</th>
+                        <th className='parameterHeader'>Present</th>
+                        <th className='parameterHeader'>Absent</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {users[selectedItem].attendance.map((member) => (
+                        <tr key={member.name} style={{ fontSize: '12px' }}>
+                          <td className={`${(member.person === "admin" || member.person === "subadmin") ? 'normStyle' : ''} value`}>
+                            {member.name}
+                            <br />
+                            {member.MobNo}
+                          </td>
+                          <td style={{ textAlign: 'center' }} className='value'>
+                            <input
+                              type="radio"
+                              className={member.status === "present" ? 'greenBtn' : ''}
+                              name={`present-${member.name}`}
+                              value="present"
+                              disabled={member.status === "absent"}
+                              defaultChecked={member.status === 'present'}
+                            />
+                          </td>
+                          <td style={{ textAlign: 'center' }} className='value'>
+                            <input
+                              className={member.status === "absent" ? 'redBtn' : ''}
+                              type="radio"
+                              name={`absent-${member.name}`}
+                              value="absent"
+                              disabled={member.status === "present"}
+                              defaultChecked={member.status === 'absent'}
+                            />
+                          </td>
+                        </tr>
+                      ))}
+                      <tr>
+                        <th className='value'>Total</th>
+                        <td style={{ textAlign: 'center' }} className='value'>{users[selectedItem].attendance.filter(member => member.status === 'present').length}</td>
+                        <td style={{ textAlign: 'center' }} className='value'>{users[selectedItem].attendance.filter(member => member.status === 'absent').length}</td>
+                      </tr>
+                      <tr>
+                        <th style={{ textAlign: 'center' }} className='value'>Remove</th>
+                        <td className='value' colSpan={2}>
+                        <Popup
+                    trigger={<button style={{backgroundColor:'transparent',borderWidth:'0',color:'red'}} type="button"><MdDelete size={20}/></button>}
+                    modal
+                    nested
+                    contentStyle={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: '9999' }}
+                    overlayStyle={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: '9998' }}
+                    >
+                    {close => (
+                        <div className="modal rcyt-custom-popup">
+                        <div className="content rcyt-popup-cont">
+                            <h3>Are you sure you want to Remove Attendance?</h3>
+                            <button className="delete-Btn" onClick={() => {
+                            onDeleteAttendance(users[selectedItem].id)
+                            close()
+                            }} type="button">Delete</button>
+                        </div>
+                        <div className="actions">
+                            <button className="button delete-Btn" onClick={() => {
+                            console.log('modal closed');
+                            close();
+                            }}>Cancel</button>
+                        </div>
+                        </div>
+                    )}
+                    </Popup>
                         </td>
                       </tr>
-                    ))}
-                  </tbody>
-                  <tfoot>
-                  <tr >
-                            <th className='value'>Total</th>
-                            <td style={{textAlign:'center'}} className='value'>{allusers.filter(member => member.status === 'present').length}</td>
-                            <td style={{textAlign:'center'}} className='value'>{allusers.filter(member => member.status === 'absent').length}</td>
-                            </tr>
-                  </tfoot>
-                </table>
-            </li>
+                    </tbody>
+                    <tfoot>
+                    </tfoot>
+                  </table>
+                </div>
+              </li>
             </ul>
-            </div>
           </div>
+        </div>
         )}
       </div>
     </div>
