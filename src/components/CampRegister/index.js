@@ -553,9 +553,10 @@ const CampRegister = () => {
             addedToTeam : false
         };
         // console.log(formData)
-        postData(formData);
+        // postData(formData);
         // history.replace("/regpending")
-        navigate("/regpending",{replace:true})
+        navigate("/capturephoto", { state: formData},{replace:true})
+        // navigate("/regpending",{replace:true})
         setRegisteredStatus(!registeredStatus);
       }
     };

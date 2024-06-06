@@ -1,0 +1,20 @@
+.saveBtn{
+  padding:8px;
+  font-size:16px;
+  background-color: #2379f7;
+  border-radius: 5px;
+  color:white;
+  font-family: "Roboto";
+  font-weight:bold;
+  border-width:0;
+}
+.retakeBtn{
+  padding:8px;
+  font-size:16px;
+  background-color: red;
+  border-radius: 5px;
+  color:white;
+  font-family: "Roboto";
+  font-weight:bold;
+  border-width:0;
+}

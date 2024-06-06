@@ -29,6 +29,7 @@ import Attendance from './components/Attendance';
 import Selfie from './components/TopTabs/Selfie';
 import AdminStats from './components/AdminStats';
 import AdminProfile from './components/AdminProfile';
+import CapturePhoto from './components/CapturePhoto';
 
 const App = () => {
   const userexists = Cookies.get("campuseremail");
@@ -50,6 +51,7 @@ const App = () => {
     <Route exact path="/adminteam" element={<AdminTeam/>}/>
     <Route exact path="/adminattendance" element={<Attendance/>}/>
     <Route exact path="/regpending" element={<RegistrationPending/>}/>
+    <Route exact path="/capturephoto" element={<CapturePhoto/>}/>
     <Route exact path="/selectcamp" element={<SelectCamp/>}/>
     <Route path="/d2d" element={<D2D />} />
     <Route path="/yc" element={<YC />} />
