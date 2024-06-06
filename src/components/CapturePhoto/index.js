@@ -81,7 +81,7 @@ const CapturePhoto = () => {
       setUploadedImgUrl(url)
       const finalData = {
         ...UserData,
-        imageData:file
+        imageData:capturedImage
       }
       // console.log(finalData)
       await postData(finalData)
