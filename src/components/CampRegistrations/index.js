@@ -58,15 +58,10 @@ const CampRegistrations = () => {
       const response = await fetch(`https://js-member-backend.vercel.app/deletecampusers/${value}`,options)
       const data = await response.json()
       console.log(data)
+      window.location.reload()
     }
     catch(Err){
       console.log(`Error Occurred : ${Err}`)
-    }
-    finally {
-      const newList = users.filter((ele) => ele.email!==value)
-      if(newList.length===0)
-        setSelectedItem(null)
-      setUsers(newList)
     }
   }
 
