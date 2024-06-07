@@ -26,7 +26,6 @@ const Selfie = () => {
       date : (new Date()).toLocaleDateString('en-GB'),
       time : (new Date()).toLocaleTimeString() // We'll update this with location data later
     };
-    console.log(imageData)
     setCapturedImages(prevImages => [...prevImages, imageData]);
     await getLocation(); // Fetch user's location when capturing the image
     setIsCameraOpen(false)
@@ -52,7 +51,6 @@ const Selfie = () => {
     try {
       const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`);
       const data = await response.json();
-      console.log(data)
       const { city, principalSubdivision, countryName} = data;
       const locationData = { city, region: principalSubdivision, country: countryName ,latitude,longitude};
       updateLastCapturedImageLocation(locationData);
@@ -70,8 +68,6 @@ const Selfie = () => {
       return updatedImages;
     });
   };
-
-  console.log(capturedImages);
   
   return (
     <>
