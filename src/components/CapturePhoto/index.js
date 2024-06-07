@@ -100,13 +100,18 @@ const CapturePhoto = () => {
   return (
     <div style={{ height: '90vh' }}>
       {!isCameraOpen ? (
+        <>
+        <div style={{backgroundColor:'#ffff00'}}>
+          <h1>Selfie</h1>
+        </div>
         <div style={{minHeight:'100vh',fontFamily:"Roboto",display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
           <div className="ytmcregister-form-container" style={{textAlign:'center'}}>
           <h1 style={{margin:'10px'}}>Take Picture</h1>
-          <p style={{margin:'10px'}}>Please click on the below button to upload a photo</p>
+          <p style={{margin:'10px'}}>Please click on the below button to click a photo</p>
           <button style={{margin:'auto',padding:'10px',borderRadius:'5px',borderWidth:'0',backgroundColor:'#2379f7', color:'white'}} onClick={() => setIsCameraOpen(true)}>Open Camera</button>
           </div>
         </div>
+        </>
       ) : (
         <div style={{ height: '100vh', position: 'relative' }}>
           {capturedImage ? (
