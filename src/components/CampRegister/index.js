@@ -395,7 +395,7 @@ const states = [
 ]
 
 const blocks = {
-  "SELECT" : ["SELECT"],
+
   "ARARIA" : ['Araria', 'Bhargama', 'Forbesganj', 'Jokihat', 'Kursakanta', 'Narpatganj', 'Palasi', 'Raniganj', 'Sikti'],
   "ARWAL" : ['Arwal', 'Kaler', 'Karpi', 'Kurtha', 'Sonbhadra Banshi Suryapur'],
   "AURANGABAD":['Barun', 'Daudnagar', 'Deo', 'Goh', 'Haspura', 'Kutumba', 'Madanpur', 'Navinagar', 'Obra', 'Rafiganj'],
@@ -459,14 +459,14 @@ const CampRegister = () => {
     const [name, setName] = useState('');
     const [campCluster, setChannelUrl] = useState('');
     const [state, setState] = useState('Bihar');
-    const [district, setDistrict] = useState('SELECT');
+    const [district, setDistrict] = useState('');
     const [constituency, setConstituency] = useState('SELECT');
     const [photo, setPhoto] = useState('');
     const [mobileno, setMobileNumber] = useState('');
     const [selectedConstituency, setSelectedConstituency] = useState('SELECT');
     const [registeredStatus, setRegisteredStatus] = useState(false);
     const [referral, setReferral] = useState('');
-    const [block,setBlock] = useState('SELECT');
+    const [block,setBlock] = useState('');
     const [dob,setDob] = useState('');
     const [fathername,setFatherName] = useState('');
     const [panchayat, setPanchayat] = useState('');
@@ -636,27 +636,21 @@ const CampRegister = () => {
                    <input placeholder="Enter the State : E.g: Bihar" onChange={onChangeState} type="text" className="ytmchome-user-input" required/> 
               </div> */}
               <div className="ytmcregister-cont-ele">
-                  <label htmlFor="district">{districtlabel}</label>
-                  <br/>
-                  <select onChange={onChangeDistrict} id="district" className="ytmcregister-user-input">
-                      <option disabled>SELECT</option>
-                      {options.map((ele) => <DistrictItem key={ele.OptionId} optionDetails={ele} checked/>)}
-                  </select>
-                  </div>
-                  {/* <div className="ytmcregister-cont-ele">
-                  <label htmlFor="constituency">Constituency</label>
-                  <br/>
-                  <select onChange={onChangeConstituency} id="constituency" className="ytmcregister-user-input" >
-                      {constituencies[district].map((ele) => (<option key={ele} value={ele}>{ele}</option>))}
-                  </select>
-              </div> */}
-              <div className="ytmcregister-cont-ele">
-                  <label htmlFor="block">{blocklabel}</label>
-                  <br/>
-                  <select onChange={onChangeBlock} id="block" className="ytmcregister-user-input" >
-                      {blocks[district].map((ele) => (<option key={ele} value={ele}>{ele}</option>))}
-                  </select>
-                  </div>
+    <label htmlFor="district">{districtlabel}</label>
+    <br/>
+    <select onChange={onChangeDistrict} id="district" className="ytmcregister-user-input" value={district}>
+        <option value="" disabled>SELECT</option>
+        {options.map((ele) => <DistrictItem key={ele.OptionId} optionDetails={ele}/>)}
+    </select>
+</div>
+<div className="ytmcregister-cont-ele">
+    <label htmlFor="block">{blocklabel}</label>
+    <br/>
+    <select onChange={onChangeBlock} id="block" className="ytmcregister-user-input" value={block}>
+        <option value="" disabled>SELECT</option>
+        {district && blocks[district].map((ele) => (<option key={ele} value={ele}>{ele}</option>))}
+    </select>
+</div>
               {/* <div className="ytmcregister-cont-ele">
                   <label htmlFor="photo">Photo</label>
                   <br/>
