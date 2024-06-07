@@ -26,7 +26,7 @@ const Selfie = () => {
     const getVideos = async () => {
       setIsLoading(true)
       try{
-        const response = await fetch(`http://localhost:3001/getselfiedata/${campCluster}`);
+        const response = await fetch(`https://js-member-backend.vercel.app/getselfiedata/${campCluster}`);
         const data = await response.json()
         const filteredList = (data.result).filter((ele) => (ele.campCluster===campCluster && ele.email===email))
         setCapturedImages(filteredList)
@@ -109,7 +109,7 @@ const Selfie = () => {
         },
         body: JSON.stringify({ ...obj, ...{ email: currentUser.email, mobileno: currentUser.MobNo, name: currentUser.name,campCluster:currentUser.campCluster } })
       };
-      const response = await fetch(`http://localhost:3001/addselfiedata`, options);
+      const response = await fetch(`https://js-member-backend.vercel.app/addselfiedata`, options);
       const data = await response.json();
       console.log(data);
     } catch (err) {
