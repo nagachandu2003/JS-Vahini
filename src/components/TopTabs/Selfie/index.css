@@ -1,4 +1,17 @@
 .image-item-size{
     height:100px;
     width:100px;
+    margin-right:10px;
+}
+.image-item-cont{
+    display: flex;
+    box-shadow: 0 0 16 16 #000000;
+    justify-content: space-between;
+    width:100%;
+    margin-top:10px;
+    margin-bottom:10px;
+    background-color: white;
+    color:black;
+    padding:10px;
+    border-radius:8px;
 }
