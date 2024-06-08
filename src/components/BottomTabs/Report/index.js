@@ -53,18 +53,18 @@ const Report = () => {
             <FaMicrophoneAlt className='icon' />
             <h2 className='heading-grid'>BSC/Social Influencer</h2>
           </Link>
-          <Link to='/photos' className='grid-card grid-card-5'>
+          {/* <Link to='/photos' className='grid-card grid-card-5'>
             <MdPhotoSizeSelectActual className='icon' />
             <h2 className='heading-grid'>Photos</h2>
-          </Link>
+          </Link> */}
           <Link to='/youtuber' className='grid-card grid-card-6'>
             <FaYoutube className='icon' />
             <h2 className='heading-grid'>Youtuber</h2>
           </Link>
-          <Link to='/maps' className='grid-card maps'>
+          {/* <Link to='/maps' className='grid-card maps'>
             <FaMapLocationDot className='icon' />
             <h2 className='heading-grid'>Maps</h2>
-          </Link>
+          </Link> */}
   
       </div>
       </div>

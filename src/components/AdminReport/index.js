@@ -109,14 +109,14 @@ const AdminReport = () => {
             <FaMoneyCheckAlt className='icon' />
             <h2 className='heading-grid'>Expenses</h2>
           </Link>
-          <Link to='/feedback' className={`grid-card grid-card-5 ${accessTabItems[12].tab}`}>
+          {/* <Link to='/feedback' className={`grid-card grid-card-5 ${accessTabItems[12].tab}`}>
             <FaCommentDots className='icon' />
             <h2 className='heading-grid'>Feedback</h2>
           </Link>
           <Link to='/helpticket' className={`grid-card grid-card-6 ${accessTabItems[13].tab}`}>
             <FaQuestionCircle className='icon' />
             <h2 className='heading-grid'>Help Ticket</h2>
-          </Link>
+          </Link> */}
 
       </div>
       </div>

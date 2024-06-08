@@ -2,7 +2,7 @@ import './App.css';
 import CampLogin from './components/CampLogin'
 import CampHome from './components/CampHome'
 import {Routes,Route,BrowserRouter, useNavigate} from 'react-router-dom'
-import D2D from './components/D2D';
+import D2D from './components/TopTabs/D2D';
 // import Footer from './components/Footer';
 import Cookies from 'js-cookie'
 import "./index.css"

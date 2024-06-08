@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import { RiArrowRightSLine } from "react-icons/ri";
-import Footer from '../Footer'
+import Footer from '../../Footer'
+import Cookies from 'js-cookie'
+import {v4 as uuidv4} from 'uuid'
 
 import './index.css'; // Import CSS file
 
@@ -9,110 +11,59 @@ const D2D = () => {
   const [showForm, setShowForm] = useState(false);
   const [users, setUsers] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null); // Track selected item index
-
-
-  // const [photo, setPhoto] = useState(null);
-  // const [location, setLocation] = useState(null); // Define location state
-  // const [facingMode, setFacingMode] = useState('user'); // Default to user (front) camera
-  // const videoRef = useRef();
-
-  // const handleStartCamera = () => {
-  //   // Explicitly set facingMode to 'user' (front camera) initially
-  //   setFacingMode('user');
-  //   navigator.mediaDevices.getUserMedia({ video: { facingMode } })
-  //     .then((stream) => {
-  //       videoRef.current.srcObject = stream;
-  //       getLocation();
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error accessing camera:', error);
-  //     });
-  // };
-
-  // const handleCapture = () => {
-  //   console.log("Capturing image...");
-  //   const canvas = document.createElement('canvas');
-  //   canvas.width = videoRef.current.videoWidth;
-  //   canvas.height = videoRef.current.videoHeight;
-  //   canvas.getContext('2d').drawImage(videoRef.current, 0, 0, canvas.width, canvas.height); // Ensure the entire image is captured
-  //   const capturedImg = canvas.toDataURL('image/png');
-  //   console.log("Captured image:", capturedImg);
-  //   setPhoto({ imgSrc: capturedImg, location });
-  // };
-  // const getLocation = () => {
-  //   if (navigator.geolocation) {
-  //     navigator.geolocation.getCurrentPosition((position) => {
-  //       const latitude = position.coords.latitude;
-  //       const longitude = position.coords.longitude;
-  //       const locationString = `Latitude: ${latitude}, Longitude: ${longitude}`;
-  //       setLocation(locationString);
-  //     });
-  //   } else {
-  //     setLocation('Geolocation is not supported by this browser.');
-  //   }
-  // };
-
-  // const toggleCameraFacingMode = () => {
-  //   setFacingMode((prevMode) => (prevMode === 'user' ? 'environment' : 'user'));
-  // };
-
-  // useEffect(() => {
-  //   const startCamera = async () => {
-  //     await handleStartCamera();
-  //   };
-  //   startCamera();
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [facingMode]); // Restart camera when facing mode changes
+  const campCluster = Cookies.get("campId")
 
   function handleSave(userData) {
-    if (userData) {
-      // Set the default name as d2d1, d2d2, d2d3, ...
-      const defaultName = `D2D${users.length + 1}`;
-      // const userWithPhotos = { ...userData, name: defaultName, photo };
-      const d2dName = { ...userData, name: defaultName };
-      setUsers([...users, d2dName]);
+      setUsers([userData,...users]);
       // setPhoto(null); 
-    }
     setShowForm(false);
   }
 
   const FormComponent = ({ onSave, onClose }) => {
-    const [villageName, setVillageName] = useState('');
-    const [villagePopulation, setVillagePopulation] = useState('');
-    const [totalHouseholdCovered, setTotalHouseholdCovered] = useState('');
-    const [youtubeSubscription, setYoutubeSubscription] = useState('');
-    const [totalWhatsAppGroupAdded, setTotalWhatsAppGroupAdded] = useState('');
-    const [totalFoundingMemberAdded, setTotalFoundingMemberAdded] = useState('');
-    const [district, setDistrict] = useState('');
-    const [block, setBlock] = useState('');
-    const [panchayat, setPanchayat] = useState('');
+    const [teamLeadName, setTeamLeadName] = useState('');
+    const [householdscovered, setHouseholdsCovered] = useState('');
+    const [SSMade, setSSMade] = useState('');
+    const [digitalInfluencersOnboarded, setDigitalInfluencersOnboarded] = useState('');
+    // const [villageName, setVillageName] = useState('');
+    // const [villagePopulation, setVillagePopulation] = useState('');
+    // const [totalHouseholdCovered, setTotalHouseholdCovered] = useState('');
+    // const [youtubeSubscription, setYoutubeSubscription] = useState('');
+    // const [totalWhatsAppGroupAdded, setTotalWhatsAppGroupAdded] = useState('');
+    // const [totalFoundingMemberAdded, setTotalFoundingMemberAdded] = useState('');
+    // const [district, setDistrict] = useState('');
+    // const [block, setBlock] = useState('');
+    // const [panchayat, setPanchayat] = useState('');
 
   
     const handleSubmit = (e) => {
       e.preventDefault();
-      const currentTime = new Date().toLocaleString();
+      const currentDate = (new Date()).toLocaleDateString('en-GB');
+      const currentTime = (new Date()).toLocaleTimeString();
       onSave({
-        villageName,
-        villagePopulation,
-        totalHouseholdCovered,
-        youtubeSubscription,
-        totalWhatsAppGroupAdded,
-        totalFoundingMemberAdded,
-        district,
-        block,
-        panchayat,
-        time: currentTime
+        id:uuidv4(),
+        teamLeadName,
+        householdscovered,
+        SSMade,
+        digitalInfluencersOnboarded,
+        date : currentDate,
+        time : currentTime,
+        campCluster
       });
+
       // Reset input fields after submission
-      setVillageName('');
-      setVillagePopulation('');
-      setTotalHouseholdCovered('');
-      setYoutubeSubscription('');
-      setTotalWhatsAppGroupAdded('');
-      setTotalFoundingMemberAdded('');
-      setDistrict('');
-      setBlock('');
-      setPanchayat('');
+      setTeamLeadName('');
+      setHouseholdsCovered('');
+      setSSMade('');
+      setDigitalInfluencersOnboarded('');
+      // setVillageName('');
+      // setVillagePopulation('');
+      // setTotalHouseholdCovered('');
+      // setYoutubeSubscription('');
+      // setTotalWhatsAppGroupAdded('');
+      // setTotalFoundingMemberAdded('');
+      // setDistrict('');
+      // setBlock('');
+      // setPanchayat('');
     };
   
     const handleCancel = () => {
@@ -122,30 +73,50 @@ const D2D = () => {
 
     return (
       <>
-      <div className="form-container active" style={{ overflow: 'auto' }}> {/* Add overflow style */}
+      <div className="form-container active"> {/* Add overflow style */}
         <form className="d2d-form" onSubmit={handleSubmit}>
           <h1 className='popup-heading'>Enter the D2D Details</h1>
-          {/* <div className="camera-container">
-            <div className="camera-preview">
-              <video
-                ref={videoRef}
-                autoPlay
-                playsInline
-                className="video-preview"
-              />
-            </div>
-            <div className="camera-controls">
-              <button className="btn-toggle-camera" onClick={toggleCameraFacingMode}>Start Camera<MdCameraswitch className='camera-icons' /></button>
-              <button className="btn-capture" onClick={handleCapture}>Capture<FaCamera className='camera-icons' /></button>
-            </div>
-            {photo && (
-              <div className="photo-preview">
-                <img src={photo.imgSrc} alt="Captured" className='captured-image'/>
-                <p>{photo.location}</p>
-              </div>
-            )}
-          </div> */}
-         <label htmlFor="villageName" className="form-label">Village Name:</label>
+          <label htmlFor="teamleadname" className="form-label">Team Name:</label>
+        <input
+          type="text"
+          id="teamleadname"
+          className="ytmcregister-user-input"
+          placeholder="Enter Team Lead Name "
+          value={teamLeadName}
+          onChange={(e) => setTeamLeadName(e.target.value)}
+          required
+        />
+        <label htmlFor="teamleadname" className="form-label">House Holds Covered :</label>
+        <input
+          type="text"
+          id="householdscovered"
+          className="ytmcregister-user-input"
+          placeholder="Enter House Holds Covered"
+          value={householdscovered}
+          onChange={(e) => setHouseholdsCovered(e.target.value)}
+          required
+        />
+        <label htmlFor="ssmade" className="form-label">SS Made :</label>
+        <input
+          type="text"
+          id="ssmade"
+          className="ytmcregister-user-input"
+          placeholder="Enter SS Made "
+          value={SSMade}
+          onChange={(e) => setSSMade(e.target.value)}
+          required
+        />
+        <label htmlFor="digitalinfluencersonboarded" className="form-label">Digital Influencers Onboarded :</label>
+        <input
+          type="text"
+          id="digitalinfluencersonboarded"
+          className="ytmcregister-user-input"
+          placeholder="Enter Digital Influencers Onboarded"
+          value={digitalInfluencersOnboarded}
+          onChange={(e) => setDigitalInfluencersOnboarded(e.target.value)}
+          required
+        />
+         {/* <label htmlFor="villageName" className="form-label">Village Name:</label>
         <input
           type="text"
           id="villageName"
@@ -243,8 +214,8 @@ const D2D = () => {
           value={block}
           onChange={(e) => setBlock(e.target.value)}
           required
-        />
-          <div className='cancel-submit-btn-container'>
+        /> */}
+          <div style={{marginTop:'10px'}} className='cancel-submit-btn-container'>
           <button type="button" className="btn-cancel" onClick={handleCancel}>Cancel</button>
           <button type="submit" className="btn-submit">Submit</button>
           </div>
@@ -283,7 +254,7 @@ const D2D = () => {
                   </div>
                 ) */}
                 <div className='d2d-list-column'>
-                <p className='list-d2d-name'>D2D : {user.block},{user.district}</p>
+                <p className='list-d2d-name'>D2D : {user.teamLeadName}</p>
                 <p className='list-d2d-time'>Date & Time: {user.time}</p>
                 </div>
                 <p><RiArrowRightSLine className='side-arrow' /></p>             
@@ -297,13 +268,37 @@ const D2D = () => {
               <span className="close" onClick={() => setSelectedItem(null)}>&times;</span>
              
               <ul className="userList">
-  <li className="users-list">
+  <li className="users-list" style={{height:'300px',overflowY:'auto'}}>
     <table className="userTable">
+      <thead>
       <tr>
         <th className="parameterHeader">Parameters</th>
         <th className="valueHeader">Values</th>
       </tr>
+      </thead>
+      <tbody>
       <tr>
+        <td className="parameter">Date & Time</td>
+        <td className="value">{users[selectedItem].date} & {users[selectedItem].time}</td>
+      </tr>
+      <tr>
+        <td className="parameter">Team Lead Name</td>
+        <td className="value">{users[selectedItem].teamLeadName}</td>
+      </tr>
+      <tr>
+        <td className="parameter">House Holds Covered</td>
+        <td className="value">{users[selectedItem].householdscovered}</td>
+      </tr>
+      <tr>
+        <td className="parameter">SS Made</td>
+        <td className="value">{users[selectedItem].SSMade}</td>
+      </tr>
+      <tr>
+        <td className="parameter">Digital Influencers Onboarded</td>
+        <td className="value">{users[selectedItem].digitalInfluencersOnboarded}</td>
+      </tr>
+      </tbody>
+      {/* <tr>
         <td className="parameter">Village Name</td>
         <td className="value">{users[selectedItem].villageName}</td>
       </tr>
@@ -350,7 +345,7 @@ const D2D = () => {
       <tr>
         <td className="parameter">Panchayat</td>
         <td className="value">{users[selectedItem].pachayat}</td>
-      </tr>
+      </tr> */}
     </table>
   </li>
 </ul>
