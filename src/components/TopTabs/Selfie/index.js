@@ -226,10 +226,15 @@ const Selfie = () => {
                           <FaCamera size={30} />
                         </button>
                       </div>
-                      <div style={{ backgroundColor: 'black', color: 'white', width: '100%' }} className="image-list-container">
-                        {capturedImages.length === 0 && <p>Please add photos to capture</p>}
+
+                        {capturedImages.length === 0 && (
+                          <div style={{minHeight:'100vh'}} className='image-list-container'>
+                          <p>No Selfie Yet! Click on Camera button to add a Selfie</p>
+                          </div>)
+                          }
                         {capturedImages.length !== 0 && (
                           <>
+                          <div style={{ backgroundColor: 'black', color: 'white', width: '100%' }} className="image-list-container">
                             {capturedImages.map((image, index) => (
                               <div className="image-item-cont" key={index}>
                                 <img src={image.src} alt={`captured
@@ -324,9 +329,9 @@ const Selfie = () => {
                                 )}
                               </div>
                             ))}
+                            </div>
                           </>
                         )}
-                      </div>
                     </div>
                   </div>
                   {/* Content for Maps tab */}
