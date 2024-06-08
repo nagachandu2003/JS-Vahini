@@ -83,7 +83,7 @@ const AdminReport = () => {
             <FaPalette className='icon' />
             <h2 className='heading-grid'>Culture</h2>
           </Link>
-          <Link to='/youtuber' className={`grid-card grid-card-6 ${accessTabItems[6].tab}`}>
+          <Link to='/activity' className={`grid-card grid-card-6 ${accessTabItems[6].tab}`}>
             <FaRunning className='icon' />
             <h2 className='heading-grid'>Activity</h2>
           </Link>

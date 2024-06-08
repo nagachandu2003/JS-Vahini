@@ -33,14 +33,14 @@ const Report = () => {
             <FaDoorOpen className='icon' />
             <h2 className='heading-grid'>Door 2 Door</h2>
           </Link>
-          <Link to='/yc' className='grid-card grid-card-2'>
+          {/* <Link to='/yc' className='grid-card grid-card-2'>
             <FaUserFriends className='icon' />
             <h2 className='heading-grid'>
               Youth
               <br />
               Club
             </h2>
-          </Link>
+          </Link> */}
           <Link to='/ss' className='grid-card grid-card-3'>
             <FaUserCheck className='icon' />
             <h2 className='heading-grid'>Sansthapak Sadasaya</h2>
@@ -49,18 +49,18 @@ const Report = () => {
             <IoLogoWhatsapp className='icon' />
             <h2 className='heading-grid'>Whatsapp</h2>
           </Link>
-          <Link to='/si' className='grid-card grid-card-4'>
+          {/* <Link to='/digitalinfluencer' className='grid-card grid-card-4'>
             <FaMicrophoneAlt className='icon' />
-            <h2 className='heading-grid'>BSC/Social Influencer</h2>
-          </Link>
+            <h2 className='heading-grid'>Digital Influencer</h2>
+          </Link> */}
           {/* <Link to='/photos' className='grid-card grid-card-5'>
             <MdPhotoSizeSelectActual className='icon' />
             <h2 className='heading-grid'>Photos</h2>
           </Link> */}
-          <Link to='/youtuber' className='grid-card grid-card-6'>
+          {/* <Link to='/youtuber' className='grid-card grid-card-6'>
             <FaYoutube className='icon' />
             <h2 className='heading-grid'>Youtuber</h2>
-          </Link>
+          </Link> */}
           {/* <Link to='/maps' className='grid-card maps'>
             <FaMapLocationDot className='icon' />
             <h2 className='heading-grid'>Maps</h2>

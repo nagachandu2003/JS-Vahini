@@ -6,6 +6,7 @@ import D2D from './components/TopTabs/D2D';
 // import Footer from './components/Footer';
 import Cookies from 'js-cookie'
 import "./index.css"
+import Collateral from './components/AdminTabs/Collateral';
 import YC from './components/TopTabs/YC';
 import SI from './components/TopTabs/SI';
 import SS from './components/TopTabs/SS';
@@ -30,6 +31,7 @@ import Selfie from './components/TopTabs/Selfie';
 import AdminStats from './components/AdminStats';
 import AdminProfile from './components/AdminProfile';
 import CapturePhoto from './components/CapturePhoto';
+import Activity from './components/AdminTabs/Activity';
 
 const App = () => {
   const userexists = Cookies.get("campuseremail");
@@ -67,6 +69,8 @@ const App = () => {
     <Route path="/profile" element={<Profile />} />
     <Route path="/maps" element={<Maps />} />
     <Route path="/whatsapp" element={<Whatsapp />} />
+    <Route path="/activity" element={<Activity/>}/>
+    <Route path="/collateral" element={<Collateral/>}/>
   </Routes>
   </BrowserRouter>
   )
