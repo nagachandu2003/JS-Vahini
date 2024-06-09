@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import {
   FaDoorOpen, FaUserFriends, FaUserCheck,
 } from 'react-icons/fa';
+import { FaFlag } from "react-icons/fa";
 import { TbCoinRupeeFilled } from "react-icons/tb";
 import { FaYoutube } from "react-icons/fa6";
 import { FaMicrophoneAlt } from "react-icons/fa";
@@ -93,7 +94,7 @@ const AdminReport = () => {
             <h2 className='heading-grid'>Camp Visitor</h2>
           </Link> */}
           <Link to='/collateral'  className={`grid-card grid-card-1 ${accessTabItems[8].tab}`}>
-            <FaFolderOpen className='icon' />
+            <FaFlag className='icon' />
             <h2 className='heading-grid'>Collaterals</h2>
           </Link>
           {/* <Link to='/cabs' className={`grid-card grid-card-2 ${accessTabItems[9].tab}`}>

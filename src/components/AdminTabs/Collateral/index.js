@@ -15,12 +15,12 @@ const Collateral = () => {
   const [selectedItem, setSelectedItem] = useState(null); // Track selected item index
   const campCluster = Cookies.get("campId")
 
-  useEffect(() => {
-    const getSS = localStorage.getItem("collateraldata");
-    if (getSS) {
-      setUsers(JSON.parse(getSS));
-    }
-  }, []); 
+  // useEffect(() => {
+  //   const getSS = localStorage.getItem("collateraldata");
+  //   if (getSS) {
+  //     setUsers(JSON.parse(getSS));
+  //   }
+  // }, []); 
 
   const onDeleteCollateral = (value) => {
     const filteredList = users.filter((ele) => ele.id!==value)
@@ -274,36 +274,6 @@ const Collateral = () => {
       <tr>
         <td className="parameter">Certificate</td>
         <td className="value">{users[selectedItem].certificate}</td>
-      </tr>
-      <tr>
-        <td>Remove</td>
-        <td>
-        <Popup
-                    trigger={<button style={{backgroundColor:'transparent',borderWidth:'0',color:'red'}} type="button"><MdDelete size={20}/></button>}
-                    modal
-                    nested
-                    contentStyle={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: '9999' }}
-                    overlayStyle={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: '9998' }}
-                    >
-                    {close => (
-                        <div className="modal rcyt-custom-popup">
-                        <div className="content rcyt-popup-cont">
-                            <h3>Are you sure you want to Delete?</h3>
-                            <button className="delete-Btn" onClick={() => {
-                            onDeleteCollateral(users[selectedItem].id)
-                            close()
-                            }} type="button">Delete</button>
-                        </div>
-                        <div className="actions">
-                            <button className="button delete-Btn" onClick={() => {
-                            console.log('modal closed');
-                            close();
-                            }}>Cancel</button>
-                        </div>
-                        </div>
-                    )}
-                    </Popup>
-        </td>
       </tr>
       </tbody>
       {/* <tr>
