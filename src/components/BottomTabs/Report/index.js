@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { FaUserEdit } from "react-icons/fa";
 import {
+  
   FaDoorOpen,
   FaUserFriends,
   FaUserCheck,
@@ -19,11 +21,11 @@ import './index.css';
 const Report = () => {
   return (
     <>
-    <div>
+    <div style={{minHeight:'100vh',backgroundColor:'black'}}>
       <div className='main-header-container'>
         <h1 className='main-heading'>Report</h1>
       </div>
-      <div className='grid-container'>
+      <div  className='grid-container'>
         <div className='grid-row'>
         <Link to='/selfie' className='grid-card grid-card-6'>
             <FaCamera className='icon' />
@@ -49,18 +51,18 @@ const Report = () => {
             <IoLogoWhatsapp className='icon' />
             <h2 className='heading-grid'>Whatsapp</h2>
           </Link>
-          {/* <Link to='/digitalinfluencer' className='grid-card grid-card-4'>
+          <Link to='/digitalinfluencer' className='grid-card grid-card-4'>
             <FaMicrophoneAlt className='icon' />
             <h2 className='heading-grid'>Digital Influencer</h2>
-          </Link> */}
-          {/* <Link to='/photos' className='grid-card grid-card-5'>
+          </Link>
+          <Link to='/coaching' className='grid-card grid-card-5'>
             <MdPhotoSizeSelectActual className='icon' />
-            <h2 className='heading-grid'>Photos</h2>
-          </Link> */}
-          {/* <Link to='/youtuber' className='grid-card grid-card-6'>
-            <FaYoutube className='icon' />
-            <h2 className='heading-grid'>Youtuber</h2>
-          </Link> */}
+            <h2 className='heading-grid'>Coaching</h2>
+          </Link>
+          <Link to='/hello' className='grid-card grid-card-6'>
+            <FaUserEdit className='icon' />
+            <h2 className='heading-grid'>SS Vitran</h2>
+          </Link>
           {/* <Link to='/maps' className='grid-card maps'>
             <FaMapLocationDot className='icon' />
             <h2 className='heading-grid'>Maps</h2>

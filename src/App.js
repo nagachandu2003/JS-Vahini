@@ -32,6 +32,11 @@ import AdminStats from './components/AdminStats';
 import AdminProfile from './components/AdminProfile';
 import CapturePhoto from './components/CapturePhoto';
 import Activity from './components/AdminTabs/Activity';
+import Expenses from './components/AdminTabs/Expenses';
+import DigitalInfluencer from './components/TopTabs/DigitalInfluencer';
+import Coaching from './components/TopTabs/Coaching';
+import SSVitran from './components/TopTabs/SSVitran';
+import D2DIncharge from './components/AdminTabs/D2DIncharge';
 
 const App = () => {
   const userexists = Cookies.get("campuseremail");
@@ -71,6 +76,11 @@ const App = () => {
     <Route path="/whatsapp" element={<Whatsapp />} />
     <Route path="/activity" element={<Activity/>}/>
     <Route path="/collateral" element={<Collateral/>}/>
+    <Route path="/expenses" element={<Expenses/>}/>
+    <Route path="/digitalinfluencer" element={<DigitalInfluencer/>}/>
+    <Route path="/coaching" element={<Coaching/>}/>
+    <Route path="/ssvitran" element={<SSVitran/>}/>
+    <Route path="/d2dincharge" element={<D2DIncharge/>}/>
   </Routes>
   </BrowserRouter>
   )

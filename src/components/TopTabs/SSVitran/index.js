@@ -89,7 +89,7 @@ const options = [
   { OptionId: "VAISHALI" }
 ];
 
-const Coaching = () => {
+const SSVitran = () => {
   const [showForm, setShowForm] = useState(false);
   const [users, setUsers] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
@@ -105,9 +105,6 @@ const Coaching = () => {
 
 
   function handleSave(userData) {
-    // console.log(userData)
-      // const defaultName = `SS${users.length + 1}`;
-      // const ssName = { ...userData, name: defaultName };
       const newData = [userData,...users] 
       setUsers(newData);
       localStorage.setItem("ssdata",JSON.stringify(newData))
@@ -123,31 +120,24 @@ const onChangeLanguage = () => {
   setLanguage("english")
 }
 
-const coachingOnboardingFormLabel = language === "english" ? "Coaching Onboarding Form" : "कोचिंग संस्थान पंजीकरण";
+const sansthapakDistributionFormLabel = language === "english" ? "Sansthapak Sadasya Distribution Form" : "संस्थापक सदस्य किट वितरण फॉर्म";
 const dateLabel = language === "english" ? "Date" : "दिनांक";
-const coachingCentreNameLabel = language === "english" ? "Name of the Coaching Centre" : "कोचिंग संस्थान का नाम";
-const teacherDirectorNameLabel = language === "english" ? "Name of the Teacher/Director" : "टीचर/डायरेक्टर का नाम";
+const vahiniNameLabel = language === "english" ? "Name of the Vahini" : "वाहिनी सदस्य / पदयात्री का नाम";
+const vahiniMobileLabel = language === "english" ? "Mobile Number of Vahini" : "वाहिनी सदस्य / पदयात्री का मोबाइल नंबर";
+const jsIdLabel = language === "english" ? "JSID" : "संस्थापक क्रमांक /JSID";
+const sansthapakMobileLabel = language === "english" ? "Mobile Number of the Sansthapak Sadasya" : "संस्थापक सदस्य का मोबाइल नंबर";
 const districtLabel = language === "english" ? "District" : "जिला";
-const blockLabel = language === "english" ? "Block" : "ब्लॉक";
-const panchayatLabel = language === "english" ? "Panchayat" : "पंचायत";
-const teacherDirectorMobileLabel = language === "english" ? "Mobile Number of Teacher/Director" : "शिक्षक/प्रभनधक का मोबाइल नंबर";
-const studentsEnrolledLabel = language === "english" ? "Students Enrolled" : "कितने बच्चे पढ़ते हैं";
-const vahiniNameLabel = language === "english" ? "Name of the Vahini" : "वाहिनी का नाम";
-const vahiniMobileLabel = language === "english" ? "Mobile Number of the Vahini" : "वाहिनी का मोबाईल नंबर";
-const photographsOfEventLabel = language === "english" ? "Photographs of the Event" : "कार्यक्रम का फोटोग्राफ";
+const blockLabel = language === "english" ? "Block" : "प्रखण्ड";
+
 
 
   const FormComponent = ({ onSave, onClose }) => {
-    const [coachingcentrename, setCoachingCentreName] = useState('');
-    const [teachername, setTeacherName] = useState('');
+    const [vahininame,setVahiniName] = useState('');
+    const [vahinimobilenumber, setVahiniNumber] = useState('');
+    const [jsid, setJSID] = useState('');
+    const [ssmobileno, setSSMobileNo] = useState('');
     const [district, setDistrict] = useState('');
-    const [block, setBlock] = useState('');
-    const [panchayat, setPanchayat] = useState('');
-    const [teachermobileno, setTeacherMobile] = useState('');
-    const [studentsenrolled, setStudentsEnrolled] = useState('');
-    const [vahininame, setNameOfVahini] = useState('');
-    const [vahinimobile, setMobileOfVahini] = useState('');
-    const [photographs, setPhotographs] = useState(null);
+    const [block,setBlock] = useState('');
 
     const onChangeDistrict = (event) => {
       setDistrict(event.target.value);
@@ -163,15 +153,12 @@ const photographsOfEventLabel = language === "english" ? "Photographs of the Eve
       const currentDate = (new Date()).toLocaleDateString('en-GB');
       const currentTime = (new Date()).toLocaleTimeString();
       onSave({
-        coachingcentrename,
-        teachername, 
+        vahininame,
+        vahinimobilenumber,
+        jsid,
+        ssmobileno,
         district,
         block,
-        panchayat,
-        teachermobileno,
-        studentsenrolled,
-        vahininame,
-        vahinimobile,
         campCluster,
         email:Cookies.get("campuseremail"),
         date : currentDate,
@@ -194,33 +181,57 @@ const photographsOfEventLabel = language === "english" ? "Photographs of the Eve
 
     return (
       <>
-        <div className="form-container active" style={{ overflow: 'auto' }}> {/* Add overflow style */}
+        <div className="form-container active" style={{ overflow: 'auto' }}> 
           <form className="ss-form" onSubmit={handleSubmit}>
             <div style={{display:'flex',justifyContent:'space-between'}}>
-            <h1 className='popup-heading'>{coachingOnboardingFormLabel}</h1>
+            <h1 className='popup-heading'>{sansthapakDistributionFormLabel}</h1>
             <p onClick={onChangeLanguage} style={{textAlign:'right'}}><IoLanguage/></p>
             </div>
-            <label htmlFor="coachingcentrename" className="form-label">{coachingCentreNameLabel}</label>
+            <label htmlFor="vahininame" className="form-label">{vahiniNameLabel}</label>
       <br/>
       <input
         type="text"
-        id="coachingcentrename"
+        id="vahininame"
         className="ytmcregister-user-input"
-        placeholder="Enter the Name of Coaching Centre"
-        value={coachingcentrename}
-        onChange={(e) => setCoachingCentreName(e.target.value)}
+        placeholder="Enter the Name of Vahini"
+        value={vahininame}
+        onChange={(e) => setVahiniName(e.target.value)}
         required
       />
       <br/>
-      <label htmlFor="teachername" className="form-label">{teacherDirectorNameLabel}</label>
+      <label htmlFor="vahinimobile" className="form-label">{vahiniMobileLabel}</label>
       <br/>
       <input
         type="text"
-        id="teachername"
+        id="vahinimobile"
         className="ytmcregister-user-input"
-        placeholder="Enter the Name of Teacher"
-        value={teachername}
-        onChange={(e) => setTeacherName(e.target.value)}
+        placeholder="Enter the Mobile No of Vahini"
+        value={vahinimobilenumber}
+        onChange={(e) => setVahiniNumber(e.target.value)}
+        required
+      />
+      <br/>
+      <label htmlFor="jsid" className="form-label">{jsIdLabel}</label>
+      <br/>
+      <input
+        type="text"
+        id="jsid"
+        className="ytmcregister-user-input"
+        placeholder="Enter the JSID"
+        value={jsid}
+        onChange={(e) => setJSID(e.target.value)}
+        required
+      />
+      <br/>
+      <label htmlFor="ssmobile" className="form-label">{sansthapakMobileLabel}</label>
+      <br/>
+      <input
+        type="text"
+        id="ssmobile"
+        className="ytmcregister-user-input"
+        placeholder="Enter the SS Mobile No"
+        value={ssmobileno}
+        onChange={(e) => setSSMobileNo(e.target.value)}
         required
       />
       <br/>
@@ -241,75 +252,6 @@ const photographsOfEventLabel = language === "english" ? "Photographs of the Eve
         </select>
       </div>
 
-      <label htmlFor="panchayat" className="form-label">{panchayatLabel}</label>
-      <br/>
-      <input
-        type="text"
-        id="panchayat"
-        className="ytmcregister-user-input"
-        placeholder="Enter the Name of the Panchayat"
-        value={panchayat}
-        onChange={(e) => setPanchayat(e.target.value)}
-        required
-      />
-      <label htmlFor="teachermobile" className="form-label">{teacherDirectorMobileLabel}</label>
-      <br/>
-      <input
-        type="tel"
-        id="teachermobile"
-        className="ytmcregister-user-input"
-        placeholder="Enter the Mobile No of the Teacher"
-        value={teachermobileno}
-        onChange={(e) => setTeacherMobile(e.target.value)}
-        required
-      />
-
-<label htmlFor="studentsenrolled" className="form-label">{studentsEnrolledLabel}</label>
-      <br/>
-      <input
-        type="text"
-        id="studentsenrolled"
-        className="ytmcregister-user-input"
-        placeholder="Enter the Students Enrolled"
-        value={studentsenrolled}
-        onChange={(e) => setStudentsEnrolled(e.target.value)}
-        required
-      />
-
-<label htmlFor="vahininame" className="form-label">{vahiniNameLabel}</label>
-      <br/>
-      <input
-        type="text"
-        id="vahininame"
-        className="ytmcregister-user-input"
-        placeholder="Enter the Name of Vahini"
-        value={vahininame}
-        onChange={(e) => setNameOfVahini(e.target.value)}
-        required
-      />
-
-<label htmlFor="vahinimobile" className="form-label">{vahiniMobileLabel}</label>
-      <br/>
-      <input
-        type="text"
-        id="vahinimobile"
-        className="ytmcregister-user-input"
-        placeholder="Enter the Mobile No of Vahini"
-        value={vahinimobile}
-        onChange={(e) => setMobileOfVahini(e.target.value)}
-        required
-      />
-
-<label htmlFor="photographs" className="form-label">{photographsOfEventLabel}</label>
-      <br/>
-      <input
-        type="file"
-        id="photographs"
-        className="ytmcregister-user-input"
-        placeholder="Upload the Photographs"
-        onChange={(e) => setPhotographs(e.target.files[0])}
-        required
-      />
 
             <div style={{marginTop:'10px'}} className='cancel-submit-btn-container'>
               <button type="button" className="btn-cancel" onClick={handleCancel}>Cancel</button>
@@ -326,7 +268,7 @@ const photographsOfEventLabel = language === "english" ? "Photographs of the Eve
     <>
       <div>
         <div className='main-header-container'>
-          <h1 className='main-ss'>Coaching</h1>
+          <h1 className='main-ss'>SS Vitran</h1>
         </div>
         <div className='ss-container'>
           <div className={showForm ? "overlay" : "overlay hidden"} onClick={() => setShowForm(false)}></div>
@@ -338,13 +280,13 @@ const photographsOfEventLabel = language === "english" ? "Photographs of the Eve
           <ul className={selectedItem !== null ? "userList popup" : "userList"}>
             {users.length === 0 ? (
               <div className='empty-list-container'>
-                <li className="empty-list">The Coaching List is Empty. Click on the New to Add Coaching</li>
+                <li className="empty-list">The SS Vitran List is Empty. Click on the New to Add SS Vitran</li>
               </div>
             ) : (
               users.map((user, index) => (
                 <li key={index} className="ss-users-list" onClick={() => setSelectedItem(index)}>
                   <div className='ss-list-column'>
-                    <p className='list-ss-name'>Coaching : {user.coachingcentrename}</p>
+                    <p className='list-ss-name'>SS Vitran : {user.vahininame}</p>
                     <p className='list-ss-time'>Date & Time: {user.date} & {user.time}</p>
                   </div>
                   <p><RiArrowRightSLine className='side-arrow' /></p>
@@ -367,12 +309,20 @@ const photographsOfEventLabel = language === "english" ? "Photographs of the Eve
       </thead>
       <tbody>
       <tr>
-        <td className="parameter">Name of Coaching Centre</td>
-        <td className="value">{users[selectedItem].coachingcentrename}</td>
+        <td className="parameter">Name of Vahini</td>
+        <td className="value">{users[selectedItem].vahininame}</td>
       </tr>
       <tr>
-        <td className="parameter">Name of Teacher/Director</td>
-        <td className="value">{users[selectedItem].teachername}</td>
+        <td className="parameter">Mobile No of Vahini</td>
+        <td className="value">{users[selectedItem].vahinimobilenumber}</td>
+      </tr>
+      <tr>
+        <td className="parameter">JSID</td>
+        <td className="value">{users[selectedItem].jsid}</td>
+      </tr>
+      <tr>
+        <td className="parameter">Mobile No of SS</td>
+        <td className="value">{users[selectedItem].ssmobileno}</td>
       </tr>
       <tr>
         <td className="parameter">District</td>
@@ -381,30 +331,6 @@ const photographsOfEventLabel = language === "english" ? "Photographs of the Eve
       <tr>
         <td className="parameter">Block</td>
         <td className="value">{users[selectedItem].block}</td>
-      </tr>
-      <tr>
-        <td className="parameter">Panchayat</td>
-        <td className="value">{users[selectedItem].panchayat}</td>
-      </tr>
-      <tr>
-        <td className="parameter">Mobile Number of Teacher/Director</td>
-        <td className="value">{users[selectedItem].teachermobileno}</td>
-      </tr>
-      <tr>
-        <td className="parameter">Students Enrolled</td>
-        <td className="value">{users[selectedItem].studentsenrolled}</td>
-      </tr>
-      <tr>
-        <td className="parameter">Name of Vahini</td>
-        <td className="value">{(users[selectedItem].vahininame)}</td>
-      </tr>
-      <tr>
-        <td className="parameter">Mobile No of Vahini</td>
-        <td className="value">{users[selectedItem].vahinimobile}</td>
-      </tr>
-      <tr>
-        <td className='parameter'>Photographs of event</td>
-        <td className='value'>{users[selectedItem].photographs}</td>
       </tr>
       </tbody>
     </table>
@@ -421,4 +347,4 @@ const photographsOfEventLabel = language === "english" ? "Photographs of the Eve
   );
 }
 
-export default Coaching;
+export default SSVitran;

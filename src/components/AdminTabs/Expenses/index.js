@@ -5,11 +5,11 @@ import Footer from '../../Footer'
 import Cookies from 'js-cookie'
 import {v4 as uuidv4} from 'uuid'
 import {Popup} from 'reactjs-popup'
-import { MdDelete } from 'react-icons/md';
+import { MdDelete, MdExposureNeg1 } from 'react-icons/md';
 
 import './index.css'; // Import CSS file
 
-const Collateral = () => {
+const Expenses = () => {
   const [showForm, setShowForm] = useState(false);
   const [users, setUsers] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null); // Track selected item index
@@ -37,15 +37,12 @@ const Collateral = () => {
   }
 
   const FormComponent = ({ onSave, onClose }) => {
-    const [collateralDate, setActivityDate] = useState('');
-  const [visitingCard, setVisitingCard] = useState('');
-  const [nameSticker, setNameSticker] = useState('');
-  const [mobileSticker, setMobileSticker] = useState('');
-  const [pamphlet, setPamphlet] = useState('');
-  const [doorSticker, setDoorSticker] = useState('');
-  const [flag, setFlag] = useState('');
-  const [medal, setMedal] = useState('');
-  const [certificate, setCertificate] = useState('');
+    const [expensesDate, setExpensesDate] = useState('');
+    const [purpose, setPurpose] = useState('');
+    const [item, setItem] = useState('');
+    const [amount, setAmount] = useState('');
+    const [verifiedBy, setVerifiedBy] = useState('');
+    const [copyOfTheBill, setCopyOfTheBill] = useState(''); 
 
   
     const handleSubmit = (e) => {
@@ -54,15 +51,12 @@ const Collateral = () => {
       const currentTime = (new Date()).toLocaleTimeString();
       onSave({
         id:uuidv4(),
-        collateralDate,
-        visitingCard,
-        nameSticker,
-        mobileSticker,
-        pamphlet,
-        doorSticker,
-        flag,
-        medal,
-        certificate,
+        expensesDate,
+        purpose,
+        item,
+        amount,
+        verifiedBy,
+        copyOfTheBill,
         date : currentDate,
         time : currentTime,
         campCluster,
@@ -82,95 +76,65 @@ const Collateral = () => {
       <>
       <div className="form-container active"> {/* Add overflow style */}
         <form className="d2d-form" onSubmit={handleSubmit}>
-          <h1 className='popup-heading'>Collateral Used Report</h1>
-          <label htmlFor="activityDate" className="form-label">Select Date:</label>
+          <h1 className='popup-heading'>Daily Camp Expense</h1>
+          <label htmlFor="expensesDate" className="form-label">Select Date:</label>
           <input
             type="date"
-            id="activityDate"
+            id="expensesDate"
             placeholder='Enter the date'
             className="ytmcregister-user-input"
-            value={collateralDate}
-            onChange={(e) => setActivityDate(e.target.value)}
+            value={expensesDate}
+            onChange={(e) => setExpensesDate(e.target.value)}
             required
           />
-          <label htmlFor="visitingCard" className="form-label">Visiting Card:</label>
+          <label htmlFor="purpose" className="form-label">Purpose:</label>
           <input
-          placeholder='Enter Visiting Card'
+          placeholder='Enter the Purpose'
             type="text"
-            id="visitingCard"
+            id="purpose"
             className="ytmcregister-user-input"
-            value={visitingCard}
-            onChange={(e) => setVisitingCard(e.target.value)}
+            value={purpose}
+            onChange={(e) => setPurpose(e.target.value)}
             required
           />
-          <label htmlFor="nameSticker" className="form-label">Name Sticker:</label>
+          <label htmlFor="item" className="form-label">Item :</label>
           <input
-          placeholder='Enter Name Sticker'
+          placeholder='Enter the Item'
             type="text"
-            id="nameSticker"
+            id="item"
             className="ytmcregister-user-input"
-            value={nameSticker}
-            onChange={(e) => setNameSticker(e.target.value)}
+            value={item}
+            onChange={(e) => setItem(e.target.value)}
             required
           />
-          <label htmlFor="mobileSticker" className="form-label">Mobile Sticker:</label>
+          <label htmlFor="amount" className="form-label">Amount :</label>
           <input
             type="text"
-            placeholder='Enter Mobile Sticker'
-            id="mobileSticker"
+            placeholder='Enter Amount'
+            id="amount"
             className="ytmcregister-user-input"
-            value={mobileSticker}
-            onChange={(e) => setMobileSticker(e.target.value)}
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
             required
           />
-          <label htmlFor="pamphlet" className="form-label">Pamphlet:</label>
+          <label htmlFor="verifiedby" className="form-label">Verified By:</label>
           <input
             type="text"
-            id="pamphlet"
-            placeholder='Enter the Pamphlet'
+            id="verifiedby"
+            placeholder='Enter Verified By'
             className="ytmcregister-user-input"
-            value={pamphlet}
-            onChange={(e) => setPamphlet(e.target.value)}
+            value={verifiedBy}
+            onChange={(e) => setVerifiedBy(e.target.value)}
             required
           />
-          <label htmlFor="doorSticker" className="form-label">Door Sticker:</label>
+          <label htmlFor="copyofthebill" className="form-label">Copy of the Bill:</label>
           <input
-            type="text"
-            id="doorSticker"
-            placeholder='Enter the Door Sticker'
+            type="file"
+            id="copyofthebill"
+            placeholder='Enter the Copy of the Bill'
             className="ytmcregister-user-input"
-            value={doorSticker}
-            onChange={(e) => setDoorSticker(e.target.value)}
-            required
-          />
-          <label htmlFor="flag" className="form-label">Flag:</label>
-          <input
-            type="text"
-            id="flag"
-            placeholder='Enter the flag'
-            className="ytmcregister-user-input"
-            value={flag}
-            onChange={(e) => setFlag(e.target.value)}
-            required
-          />
-          <label htmlFor="medal" className="form-label">Medal:</label>
-          <input
-            type="text"
-            id="medal"
-            placeholder='Enter the Medal'
-            className="ytmcregister-user-input"
-            value={medal}
-            onChange={(e) => setMedal(e.target.value)}
-            required
-          />
-          <label htmlFor="certificate" className="form-label">Certificate:</label>
-          <input
-          placeholder='Enter the Certificate'
-            type="text"
-            id="certificate"
-            className="ytmcregister-user-input"
-            value={certificate}
-            onChange={(e) => setCertificate(e.target.value)}
+            value={copyOfTheBill}
+            onChange={(e) => setCopyOfTheBill(e.target.value)}
             required
           />
           <div style={{marginTop:'10px'}} className='cancel-submit-btn-container'>
@@ -188,7 +152,7 @@ const Collateral = () => {
     <>
     <div>
       <div className='main-header-container'>
-        <h1 className='main-d2d'>Collateral</h1>
+        <h1 className='main-d2d'>Expenses</h1>
       </div>
       <div className='d2d-container'>
         <div className={showForm ? "overlay" : "overlay hidden"} onClick={() => setShowForm(false)}></div>
@@ -200,7 +164,7 @@ const Collateral = () => {
         <ul className={selectedItem !== null ? "userList popup" : "userList"}>
           {users.length === 0 ? (
             <div className='empty-list-container'>
-              <li className="empty-list">The Collateral List is Empty. Click on the New to Add Collateral</li>
+              <li className="empty-list">The Expenses List is Empty. Click on the New to Add Expenses</li>
             </div>
           ) : (
             users.map((user, index) => (
@@ -367,4 +331,4 @@ const Collateral = () => {
     </>
   );
 }
-export default Collateral;
+export default Expenses;
