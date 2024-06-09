@@ -14,7 +14,7 @@ import { MdPhotoSizeSelectActual } from "react-icons/md";
 import { FaMapLocationDot } from "react-icons/fa6";
 import { FaCamera } from "react-icons/fa";
 import Footer from '../../Footer'
-
+import { BiSolidInstitution } from "react-icons/bi";
 
 import './index.css';
 
@@ -56,7 +56,7 @@ const Report = () => {
             <h2 className='heading-grid'>Digital Influencer</h2>
           </Link>
           <Link to='/coaching' className='grid-card grid-card-5'>
-            <MdPhotoSizeSelectActual className='icon' />
+            <BiSolidInstitution className='icon' />
             <h2 className='heading-grid'>Coaching</h2>
           </Link>
           <Link to='/ssvitran' className='grid-card grid-card-6'>

@@ -24,7 +24,7 @@ const Whatsapp = () => {
           className={`whatsapp-upper-tab ${activeTab === 0 ? 'active' : ''}`}
           onClick={() => handleTabClick(0)}
         >
-          My Code
+          QR Code
         </div>
         <div
           className={`whatsapp-upper-tab ${activeTab === 1 ? 'active' : ''}`}
@@ -40,7 +40,7 @@ const Whatsapp = () => {
             <div className="whatsapp-qr-container">
               <h2 className="whatsapp-qr-heading">Scan the QR Code to Message on WhatsApp</h2>
               <QRCode value={whatsappURL} size={200} className='qr-code'/>
-              <p className="whatsapp-info">Scan this QR code with WhatsApp to send a message to {phoneNumber}</p>
+              <p className="whatsapp-info">Scan this QR code with WhatsApp to join group</p>
             </div>
           </div>
         </div>

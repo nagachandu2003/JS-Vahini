@@ -7,6 +7,7 @@ import {v4 as uuidv4} from 'uuid'
 import {Popup} from 'reactjs-popup'
 import { MdDelete } from 'react-icons/md';
 
+
 import './index.css'; // Import CSS file
 
 const Collateral = () => {
