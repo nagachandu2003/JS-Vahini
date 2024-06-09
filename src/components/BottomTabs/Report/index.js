@@ -59,7 +59,7 @@ const Report = () => {
             <MdPhotoSizeSelectActual className='icon' />
             <h2 className='heading-grid'>Coaching</h2>
           </Link>
-          <Link to='/hello' className='grid-card grid-card-6'>
+          <Link to='/ssvitran' className='grid-card grid-card-6'>
             <FaUserEdit className='icon' />
             <h2 className='heading-grid'>SS Vitran</h2>
           </Link>

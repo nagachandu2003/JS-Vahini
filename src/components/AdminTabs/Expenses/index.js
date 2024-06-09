@@ -16,7 +16,7 @@ const Expenses = () => {
   const campCluster = Cookies.get("campId")
 
   useEffect(() => {
-    const getSS = localStorage.getItem("collateraldata");
+    const getSS = localStorage.getItem("expensesdata");
     if (getSS) {
       setUsers(JSON.parse(getSS));
     }
@@ -25,12 +25,12 @@ const Expenses = () => {
   const onDeleteCollateral = (value) => {
     const filteredList = users.filter((ele) => ele.id!==value)
     setUsers(filteredList)
-    localStorage.setItem("collateraldata", JSON.stringify(filteredList))
+    localStorage.setItem("expensesdata", JSON.stringify(filteredList))
   }
 
   function handleSave(userData) {
     const newData = [userData,...users] 
-    localStorage.setItem("collateraldata", JSON.stringify(userData))
+    localStorage.setItem("expensesdata", JSON.stringify(userData))
       setUsers(newData);
       // setPhoto(null); 
     setShowForm(false);
@@ -203,45 +203,39 @@ const Expenses = () => {
         <td className="parameter">Date & Time</td>
         <td className="value">{users[selectedItem].date} & {users[selectedItem].time}</td>
       </tr>
+      expensesDate,
+        purpose,
+        item,
+        amount,
+        verifiedBy,
+        copyOfTheBill,
       <tr>
-        <td className="parameter">Collateral Date</td>
-        <td className="value">{users[selectedItem].collateralDate}</td>
+        <td className="parameter">Expenses Date</td>
+        <td className="value">{users[selectedItem].expensesDate}</td>
       </tr>
       <tr>
-        <td className="parameter">Visiting Card</td>
-        <td className="value">{users[selectedItem].visitingCard}</td>
+        <td className="parameter">Purpose</td>
+        <td className="value">{users[selectedItem].purpose}</td>
       </tr>
       <tr>
-        <td className="parameter">Name Sticker</td>
-        <td className="value">{users[selectedItem].nameSticker}</td>
+        <td className="parameter">Item</td>
+        <td className="value">{users[selectedItem].item}</td>
       </tr>
       <tr>
-        <td className="parameter">Mobile Sticker</td>
-        <td className="value">{users[selectedItem].mobileSticker}</td>
+        <td className="parameter">Amount</td>
+        <td className="value">{users[selectedItem].amount}</td>
       </tr>
       <tr>
-        <td className="parameter">Pamphlet</td>
-        <td className="value">{users[selectedItem].pamphlet}</td>
+        <td className="parameter">Verified By</td>
+        <td className="value">{users[selectedItem].verifiedBy}</td>
       </tr>
       <tr>
-        <td className="parameter">Door Sticker</td>
-        <td className="value">{users[selectedItem].doorSticker}</td>
+        <td className="parameter">Copy of the Bill</td>
+        <td className="value">{users[selectedItem].copyOfTheBill}</td>
       </tr>
       <tr>
-        <td className="parameter">Flag</td>
-        <td className="value">{users[selectedItem].flag}</td>
-      </tr>
-      <tr>
-        <td className="parameter">Medal</td>
-        <td className="value">{users[selectedItem].medal}</td>
-      </tr>
-      <tr>
-        <td className="parameter">Certificate</td>
-        <td className="value">{users[selectedItem].certificate}</td>
-      </tr>
-      <tr>
-        <td>Remove</td>
-        <td>
+        <td className='parameter'>Remove</td>
+        <td className='value'>
         <Popup
                     trigger={<button style={{backgroundColor:'transparent',borderWidth:'0',color:'red'}} type="button"><MdDelete size={20}/></button>}
                     modal

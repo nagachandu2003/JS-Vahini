@@ -148,6 +148,7 @@ const  isVillageComplete2Label = language === "english" ? "Is the Village Comple
   const FormComponent = ({ onSave, onClose }) => {
     const [teamlead, setTeamLead] = useState('');
     const [district, setDistrict] = useState('');
+    const [d2ddate, setD2DDate] = useState('');
     const [block, setBlock] = useState('');
     const [panchayat1, setPanchayat1] = useState('');
     const [nameofvillage1, setNameOfVillage1] = useState('');
@@ -234,6 +235,18 @@ const  isVillageComplete2Label = language === "english" ? "Is the Village Comple
         placeholder="Enter the Team Lead"
         value={teamlead}
         onChange={(e) => setTeamLead(e.target.value)}
+        required
+      />
+      <br/>
+    <label htmlFor="d2dDate" className="form-label">{dateLabel}</label>
+      <br/>
+      <input
+        type="text"
+        id="d2dDate"
+        className="ytmcregister-user-input"
+        placeholder="Enter the D2D date"
+        value={d2ddate}
+        onChange={(e) => setD2DDate(e.target.value)}
         required
       />
       <br/>
@@ -427,8 +440,8 @@ const  isVillageComplete2Label = language === "english" ? "Is the Village Comple
               users.map((user, index) => (
                 <li key={index} className="ss-users-list" onClick={() => setSelectedItem(index)}>
                   <div className='ss-list-column'>
-                    <p className='list-ss-name'>D2D Incharge : {user.teamlead}</p>
-                    <p className='list-ss-time'>Date & Time: {user.date} & {user.time}</p>
+                    <p className='list-ss-name'>Date : {user.d2ddate}</p>
+                    <p className='list-ss-time'>D2D Incharge : {user.teamlead}</p>
                   </div>
                   <p><RiArrowRightSLine className='side-arrow' /></p>
                 </li>
@@ -452,6 +465,10 @@ const  isVillageComplete2Label = language === "english" ? "Is the Village Comple
       <tr>
         <td className="parameter">Team Lead</td>
         <td className="value">{users[selectedItem].teamlead}</td>
+      </tr>
+      <tr>
+        <td className="parameter">Date</td>
+        <td className="value">{users[selectedItem].d2ddate}</td>
       </tr>
       <tr>
         <td className="parameter">District</td>

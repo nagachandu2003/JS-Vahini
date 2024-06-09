@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import {
   FaDoorOpen, FaUserFriends, FaUserCheck,
 } from 'react-icons/fa';
+import { TbCoinRupeeFilled } from "react-icons/tb";
 import { FaYoutube } from "react-icons/fa6";
 import { FaMicrophoneAlt } from "react-icons/fa";
 import { IoLogoWhatsapp } from "react-icons/io";
@@ -79,23 +80,23 @@ const AdminReport = () => {
             <FaHome className='icon' />
             <h2 className='heading-grid'>D2D Incharge</h2>
           </Link>
-          <Link to='/photos' className={`grid-card grid-card-5 ${accessTabItems[5].tab}`}>
+          {/* <Link to='/photos' className={`grid-card grid-card-5 ${accessTabItems[5].tab}`}>
             <FaPalette className='icon' />
             <h2 className='heading-grid'>Culture</h2>
-          </Link>
+          </Link> */}
           <Link to='/activity' className={`grid-card grid-card-6 ${accessTabItems[6].tab}`}>
             <FaRunning className='icon' />
             <h2 className='heading-grid'>Activity</h2>
           </Link>
-          <Link to='/maps' className={`grid-card maps ${accessTabItems[7].tab}`}>
+          {/* <Link to='/maps' className={`grid-card maps ${accessTabItems[7].tab}`}>
             <FaCampground className='icon' />
             <h2 className='heading-grid'>Camp Visitor</h2>
-          </Link>
+          </Link> */}
           <Link to='/collateral'  className={`grid-card grid-card-1 ${accessTabItems[8].tab}`}>
             <FaFolderOpen className='icon' />
             <h2 className='heading-grid'>Collaterals</h2>
           </Link>
-          <Link to='/cabs' className={`grid-card grid-card-2 ${accessTabItems[9].tab}`}>
+          {/* <Link to='/cabs' className={`grid-card grid-card-2 ${accessTabItems[9].tab}`}>
           <FaTaxi className="icon"/>
             <h2 className='heading-grid'>
               Cabs
@@ -104,9 +105,9 @@ const AdminReport = () => {
           <Link to='/kitchen' className={`grid-card grid-card-3 ${accessTabItems[10].tab}`}>
             <FaUtensils className='icon' />
             <h2 className='heading-grid'>Kitchen</h2>
-          </Link>
+          </Link> */}
           <Link to='/expenses' className={`whatsapp grid-card ${accessTabItems[11].tab}`}>
-            <FaMoneyCheckAlt className='icon' />
+            <TbCoinRupeeFilled className='icon' />
             <h2 className='heading-grid'>Expenses</h2>
           </Link>
           {/* <Link to='/feedback' className={`grid-card grid-card-5 ${accessTabItems[12].tab}`}>
