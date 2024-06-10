@@ -96,19 +96,50 @@ const D2DIncharge = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [language,setLanguage] = useState('english'); // Track selected item index
   const campCluster = Cookies.get("campId");
+  const [isLoading, setIsLoading] = useState(false)
 
-//   useEffect(() => {
-//     const getSS = localStorage.getItem("ssdata");
-//     if (getSS) {
-//       setUsers(JSON.parse(getSS));
-//     }
-//   }, []); 
+  useEffect(() => {
+    const getVideos = async () => {
+      setIsLoading(true)
+      try{
+        const response = await fetch(`https://js-member-backend.vercel.app/getd2dinchargereportdata/${campCluster}`);
+            const data = await response.json() 
+            const filteredList = (data.result).filter((ele) => (ele.campCluster===campCluster && ele.addedByemail===Cookies.get("campuseremail")))
+            setUsers(filteredList)
+            // setUsers(data)
+            setIsLoading(false)
+      }
+      catch(Err){
+        console.log(`Error Occurred : ${Err}`);
+      }
+    };
 
+    // Call getVideos only once on mount
+    getVideos();
+  }, []); // Empty dependency array means it runs only once on mount
+
+  const postData = async (obj) => {
+    try{
+      const options = {
+        method : "POST",
+        headers : {
+          "Content-Type" : "application/json"
+        },
+        body : JSON.stringify(obj)
+      }
+      const response = await fetch(`https://js-member-backend.vercel.app/addreportd2dinchargelist`,options);
+      const data = await response.json()
+      console.log(data)
+    }
+    catch(Err){
+      console.log(`Error Occurred : ${Err}`);
+    }
+  }
 
   function handleSave(userData) {
+    postData(userData)
       const newData = [userData,...users] 
       setUsers(newData);
-      localStorage.setItem("ssdata",JSON.stringify(newData))
 
     setShowForm(false);
   }
@@ -156,14 +187,14 @@ const  isVillageComplete2Label = language === "english" ? "Is the Village Comple
     const [totalssmade1, setTotalSSMade1] = useState('');
     const [socialmediainfluencersonboarded1, setSocialMediaInfluencersOnboarded1] = useState('');
     const [whatsappjoined1, setWhatsAppJoined1] = useState('');
-    const [isvillagecomplete1, setIsVillageComplete1] = useState('');
+    const [villagecompleted1, setIsVillageComplete1] = useState('');
     const [panchayat2, setPanchayat2] = useState('');
     const [nameofvillage2, setNameOfVillage2] = useState('');
     const [totalhouseholdscovered2, setTotalHouseholdsCovered2] = useState('');
     const [totalssmade2, setTotalSSMade2] = useState('');
     const [socialmediainfluencersonboarded2, setSocialMediaInfluencersOnboarded2] = useState('');
     const [whatsappjoined2, setWhatsAppJoined2] = useState('');
-    const [isvillagecomplete2, setIsVillageComplete2] = useState('');
+    const [villagecompleted2, setIsVillageComplete2] = useState('');
     
 
  
@@ -182,6 +213,7 @@ const  isVillageComplete2Label = language === "english" ? "Is the Village Comple
       const currentTime = (new Date()).toLocaleTimeString();
       onSave({
         teamlead,
+        d2ddate,
         district,
         block,
         villageanalysis : {
@@ -191,15 +223,17 @@ const  isVillageComplete2Label = language === "english" ? "Is the Village Comple
             totalssmade1,
             socialmediainfluencersonboarded1,
             whatsappjoined1,
+            villagecompleted1,
             panchayat2,
             nameofvillage2,
             totalhouseholdscovered2,
             totalssmade2,
             socialmediainfluencersonboarded2,
             whatsappjoined2,
+            villagecompleted2
         },
         campCluster,
-        email:Cookies.get("campuseremail"),
+        addedByemail:Cookies.get("campuseremail"),
         date : currentDate,
         time : currentTime
       });
@@ -241,7 +275,7 @@ const  isVillageComplete2Label = language === "english" ? "Is the Village Comple
     <label htmlFor="d2dDate" className="form-label">{dateLabel}</label>
       <br/>
       <input
-        type="text"
+        type="date"
         id="d2dDate"
         className="ytmcregister-user-input"
         placeholder="Enter the D2D date"
@@ -326,11 +360,23 @@ const  isVillageComplete2Label = language === "english" ? "Is the Village Comple
         onChange={(e) => setSocialMediaInfluencersOnboarded1(e.target.value)}
         required
       />
+            <br/>
+      <label htmlFor="whatsappjoined1" className="form-label">{whatsappJoined1Label}</label>
+      <br/>
+      <input
+        type="text"
+        id="whatsappjoined1"
+        className="ytmcregister-user-input"
+        placeholder="Are you joined in WhatsApp? "
+        value={whatsappjoined1}
+        onChange={(e) => setWhatsAppJoined1(e.target.value)}
+        required
+      />
       <br/>
       <div className="ytmcregister-cont-ele">
-        <label className='form-label' htmlFor="whatsappjoined1">{whatsappJoined1Label}</label>
+        <label className='form-label' htmlFor="villagecompleted1">{isVillageComplete1Label}</label>
         <br/>
-        <select onChange={(e) => setWhatsAppJoined1(e.target.value)} id="whatsappjoined1" className="ytmcregister-user-input" value={whatsappjoined1}>
+        <select onChange={(e) => setIsVillageComplete1(e.target.value)} id="villagecompleted1" className="ytmcregister-user-input" value={villagecompleted1}>
           <option value="" disabled>SELECT</option>
           <option value="completed">{language==="english"?"Completed":"पूरा हो गया है"}</option>
           <option value="completed">{language==="english"?"Not Completed":"अभी बचा हुआ है"}</option>
@@ -396,10 +442,22 @@ const  isVillageComplete2Label = language === "english" ? "Is the Village Comple
         required
       />
       <br/>
+      <label htmlFor="whatsappjoined2" className="form-label">{whatsappJoined2Label}</label>
+      <br/>
+      <input
+        type="text"
+        id="whatsappjoined2"
+        className="ytmcregister-user-input"
+        placeholder="Are you joined in WhatsApp? "
+        value={whatsappjoined2}
+        onChange={(e) => setWhatsAppJoined2(e.target.value)}
+        required
+      />
+      <br/>
       <div className="ytmcregister-cont-ele">
-        <label className='form-label' htmlFor="whatsappjoined2">{whatsappJoined2Label}</label>
+        <label className='form-label' htmlFor="villagecompleted2">{isVillageComplete2Label}</label>
         <br/>
-        <select onChange={(e) => setWhatsAppJoined2(e.target.value)} id="whatsappjoined2" className="ytmcregister-user-input" value={whatsappjoined2}>
+        <select onChange={(e) => setIsVillageComplete2(e.target.value)} id="villagecompleted2" className="ytmcregister-user-input" value={villagecompleted2}>
           <option value="" disabled>SELECT</option>
           <option value="completed">{language==="english"?"Completed":"पूरा हो गया है"}</option>
           <option value="completed">{language==="english"?"Not Completed":"अभी बचा हुआ है"}</option>
@@ -503,6 +561,10 @@ const  isVillageComplete2Label = language === "english" ? "Is the Village Comple
         <td className="value">{(users[selectedItem].villageanalysis).whatsappjoined1}</td>
       </tr>
       <tr>
+        <td className="parameter">Is the Village Complete</td>
+        <td className="value">{(users[selectedItem].villageanalysis).villagecompleted1}</td>
+      </tr>
+      <tr>
         <td className="parameter">Name of the Village2</td>
         <td className="value">{(users[selectedItem].villageanalysis).nameofvillage2}</td>
       </tr>
@@ -521,6 +583,10 @@ const  isVillageComplete2Label = language === "english" ? "Is the Village Comple
       <tr>
         <td className="parameter">WhatsApp Joined</td>
         <td className="value">{(users[selectedItem].villageanalysis).whatsappjoined2}</td>
+      </tr>
+      <tr>
+        <td className="parameter">Is the Village Complete</td>
+        <td className="value">{(users[selectedItem].villageanalysis).villagecompleted2}</td>
       </tr>
 
       </tbody>

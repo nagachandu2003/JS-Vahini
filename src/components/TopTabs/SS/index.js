@@ -96,25 +96,98 @@ const SS = () => {
   const [language,setLanguage] = useState('english'); // Track selected item index
   const campCluster = Cookies.get("campId");
 
+  const [isLoading, setIsLoading] = useState(false)
+
   useEffect(() => {
-    const getSS = localStorage.getItem("ssdata");
-    if (getSS) {
-      setUsers(JSON.parse(getSS));
+    const getVideos = async () => {
+      setIsLoading(true)
+      try{
+        const response = await fetch(`https://js-member-backend.vercel.app/getssreportdata/${campCluster}`);
+            const data = await response.json() 
+            const filteredList = (data.result).filter((ele) => (ele.campCluster===campCluster && ele.addedByemail===Cookies.get("campuseremail")))
+            setUsers(filteredList)
+            // setUsers(data)
+            setIsLoading(false)
+      }
+      catch(Err){
+        console.log(`Error Occurred : ${Err}`);
+      }
+    };
+
+    // Call getVideos only once on mount
+    getVideos();
+  }, []); // Empty dependency array means it runs only once on mount
+
+  const postData = async (obj) => {
+    try{
+      const options = {
+        method : "POST",
+        headers : {
+          "Content-Type" : "application/json"
+        },
+        body : JSON.stringify(obj)
+      }
+      const response = await fetch(`https://js-member-backend.vercel.app/addreportsslist`,options);
+      const data = await response.json()
+      console.log(data)
     }
-  }, []); 
+    catch(Err){
+      console.log(`Error Occurred : ${Err}`);
+    }
+  }
 
 
   function handleSave(userData) {
     // console.log(userData)
       // const defaultName = `SS${users.length + 1}`;
       // const ssName = { ...userData, name: defaultName };
+      postData(userData)
       const newData = [userData,...users] 
       setUsers(newData);
-      localStorage.setItem("ssdata",JSON.stringify(newData))
 
     setShowForm(false);
   }
-
+const occupationsInEnglish = ["Doctor",
+  "Teacher- Retired/Private",
+  "Army/Police",
+  "Lawyer",
+  "Post Man",
+  "Shopkeeper",
+  "PDS Dealer",
+  "Local Healer",
+  "Aanganbadi Sevika",
+  "ANM Didi",
+  "Jeevika Didi",
+  "Aaasha Worker",
+  "Business Man",
+  "Rojgar Sevak",
+  "Vikas Sevak",
+  "Tola Sevak",
+  "Ward Member",
+  "Sarpanch",
+  "Mukhiya",
+  "Ward Candidate",
+  "Sarpanch Candidate",
+  "Mukhiya Candidate",
+  "Ex Ward",
+  "Ex Sarpanch",
+  "Ex Mukhiya",
+  "CSC/CSV",
+  "Retired Government Officer",
+  "Panch",
+  "Panchayat Samiti",
+  "Ex Panchayat Samiti",
+  "Ex Panch",
+  "Salon/ Beauty Parlour",
+  "Party Office Bearer",
+  "Youth Leader",
+  "Social Worker",
+  "Religious Preacher","Others"]
+const canssberecommendedInEnglish = [
+  "Block/Panchayat Committee",
+  "Youth Club",
+  "Jan Suraaj Influencer in the Village"
+]
 const sansthapakSadasyaFormLabel = language === "english" ? "Sansthapak Sadasya Registration Form" : "संस्थापक सदस्य जानकारी फ़ार्म";
 const dateLabel = language === "english" ? "Date" : "दिनांक";
 const sansthapakNameLabel = language === "english" ? "Name of the Sansthapak Sadasya" : "संस्थापक सदस्य का नाम";
@@ -285,7 +358,7 @@ const onChangeLanguage = () => {
         campCluster,
         personname,
         personnumber,
-        email:Cookies.get("campuseremail"),
+        addedByemail:Cookies.get("campuseremail"),
         date : currentDate,
         time : currentTime
       });
@@ -364,7 +437,7 @@ const onChangeLanguage = () => {
       >
         <option value="" disabled>Select Occupation</option>
         {occupationOptions.map((name, index) => (
-          <option key={index} value={name}>{name}</option>
+          <option key={index} value={occupationsInEnglish[index]}>{name}</option>
         ))}
       </select>
       {(occupation === "Other" || occupation=== "अन्य" )&& (
@@ -384,9 +457,9 @@ const onChangeLanguage = () => {
       )}
       <label htmlFor="accessitems" className="form-label">{recommendationLabel}</label>
       <br/>
-      {checkboxOptions.map(option => (
+      {checkboxOptions.map((option,index) => (
         <div className="ytmcregister-user-input" key={option}>
-          <input style={{ marginRight: '10px' }} type="checkbox" id={option} value={option} onChange={onChangeRecommendedItems}/>
+          <input style={{ marginRight: '10px' }} type="checkbox" id={option} value={canssberecommendedInEnglish[index]} onChange={onChangeRecommendedItems}/>
           <label className='form-label' htmlFor={option}>{option}</label>
         </div>
       ))}

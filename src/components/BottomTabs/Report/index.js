@@ -33,7 +33,7 @@ const Report = () => {
           </Link>
           <Link to='/d2d' className='grid-card grid-card-1'>
             <FaDoorOpen className='icon' />
-            <h2 className='heading-grid'>Door 2 Door</h2>
+            <h2 className='heading-grid'>D2D Report</h2>
           </Link>
           {/* <Link to='/yc' className='grid-card grid-card-2'>
             <FaUserFriends className='icon' />

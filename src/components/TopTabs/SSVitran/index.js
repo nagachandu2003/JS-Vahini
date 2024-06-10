@@ -96,18 +96,52 @@ const SSVitran = () => {
   const [language,setLanguage] = useState('english'); // Track selected item index
   const campCluster = Cookies.get("campId");
 
-//   useEffect(() => {
-//     const getSS = localStorage.getItem("ssdata");
-//     if (getSS) {
-//       setUsers(JSON.parse(getSS));
-//     }
-//   }, []); 
+
+  const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    const getVideos = async () => {
+      setIsLoading(true)
+      try{
+        const response = await fetch(`https://js-member-backend.vercel.app/getssvitranreportdata/${campCluster}`);
+            const data = await response.json() 
+            const filteredList = (data.result).filter((ele) => (ele.campCluster===campCluster && ele.addedByemail===Cookies.get("campuseremail")))
+            setUsers(filteredList)
+            // setUsers(data)
+            setIsLoading(false)
+      }
+      catch(Err){
+        console.log(`Error Occurred : ${Err}`);
+      }
+    };
+
+    // Call getVideos only once on mount
+    getVideos();
+  }, []); // Empty dependency array means it runs only once on mount
+
+  const postData = async (obj) => {
+    try{
+      const options = {
+        method : "POST",
+        headers : {
+          "Content-Type" : "application/json"
+        },
+        body : JSON.stringify(obj)
+      }
+      const response = await fetch(`https://js-member-backend.vercel.app/addreportssvitranlist`,options);
+      const data = await response.json()
+      console.log(data)
+    }
+    catch(Err){
+      console.log(`Error Occurred : ${Err}`);
+    }
+  }
 
 
   function handleSave(userData) {
+    postData(userData)
       const newData = [userData,...users] 
       setUsers(newData);
-      localStorage.setItem("ssdata",JSON.stringify(newData))
 
     setShowForm(false);
   }
@@ -160,7 +194,7 @@ const blockLabel = language === "english" ? "Block" : "प्रखण्ड";
         district,
         block,
         campCluster,
-        email:Cookies.get("campuseremail"),
+        addedByemail:Cookies.get("campuseremail"),
         date : currentDate,
         time : currentTime
       });

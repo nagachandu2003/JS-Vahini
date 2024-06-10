@@ -16,22 +16,50 @@ const Collateral = () => {
   const [selectedItem, setSelectedItem] = useState(null); // Track selected item index
   const campCluster = Cookies.get("campId")
 
-  // useEffect(() => {
-  //   const getSS = localStorage.getItem("collateraldata");
-  //   if (getSS) {
-  //     setUsers(JSON.parse(getSS));
-  //   }
-  // }, []); 
+  const [isLoading, setIsLoading] = useState(false)
 
-  const onDeleteCollateral = (value) => {
-    const filteredList = users.filter((ele) => ele.id!==value)
-    setUsers(filteredList)
-    localStorage.setItem("collateraldata", JSON.stringify(filteredList))
+  useEffect(() => {
+    const getVideos = async () => {
+      setIsLoading(true)
+      try{
+        const response = await fetch(`https://js-member-backend.vercel.app/getcollateralreportdata/${campCluster}`);
+            const data = await response.json() 
+            const filteredList = (data.result).filter((ele) => (ele.campCluster===campCluster && ele.addedByemail===Cookies.get("campuseremail")))
+            setUsers(filteredList)
+            // setUsers(data)
+            setIsLoading(false)
+      }
+      catch(Err){
+        console.log(`Error Occurred : ${Err}`);
+      }
+    };
+
+    // Call getVideos only once on mount
+    getVideos();
+  }, []); // Empty dependency array means it runs only once on mount
+
+
+  const postData = async (obj) => {
+    try{
+      const options = {
+        method : "POST",
+        headers : {
+          "Content-Type" : "application/json"
+        },
+        body : JSON.stringify(obj)
+      }
+      const response = await fetch(`https://js-member-backend.vercel.app/addreportcollaterallist`,options);
+      const data = await response.json()
+      console.log(data)
+    }
+    catch(Err){
+      console.log(`Error Occurred : ${Err}`);
+    }
   }
 
   function handleSave(userData) {
+    postData(userData)
     const newData = [userData,...users] 
-    localStorage.setItem("collateraldata", JSON.stringify(userData))
       setUsers(newData);
       // setPhoto(null); 
     setShowForm(false);
@@ -67,7 +95,7 @@ const Collateral = () => {
         date : currentDate,
         time : currentTime,
         campCluster,
-        email:Cookies.get("campuseremail")
+        addedByemail:Cookies.get("campuseremail")
       });
 
       // Reset input fields after submission

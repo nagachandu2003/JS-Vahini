@@ -96,15 +96,49 @@ const DigitalInfluencer = () => {
   const [language,setLanguage] = useState('english'); // Track selected item index
   const campCluster = Cookies.get("campId");
 
-//   useEffect(() => {
-//     const getSS = localStorage.getItem("ssdata");
-//     if (getSS) {
-//       setUsers(JSON.parse(getSS));
-//     }
-//   }, []); 
+  const [isLoading, setIsLoading] = useState(false)
 
+  useEffect(() => {
+    const getVideos = async () => {
+      setIsLoading(true)
+      try{
+        const response = await fetch(`https://js-member-backend.vercel.app/getdigitalinfluencerreportdata/${campCluster}`);
+            const data = await response.json() 
+            const filteredList = (data.result).filter((ele) => (ele.campCluster===campCluster && ele.addedByemail===Cookies.get("campuseremail")))
+            setUsers(filteredList)
+            // setUsers(data)
+            setIsLoading(false)
+      }
+      catch(Err){
+        console.log(`Error Occurred : ${Err}`);
+      }
+    };
+
+    // Call getVideos only once on mount
+    getVideos();
+  }, []); // Empty dependency array means it runs only once on mount
+
+
+  const postData = async (obj) => {
+    try{
+      const options = {
+        method : "POST",
+        headers : {
+          "Content-Type" : "application/json"
+        },
+        body : JSON.stringify(obj)
+      }
+      const response = await fetch(`https://js-member-backend.vercel.app/addreportdigitalinfluencerlist`,options);
+      const data = await response.json()
+      console.log(data)
+    }
+    catch(Err){
+      console.log(`Error Occurred : ${Err}`);
+    }
+  }
 
   function handleSave(userData) {
+    postData(userData)
     // console.log(userData)
       // const defaultName = `SS${users.length + 1}`;
       // const ssName = { ...userData, name: defaultName };
@@ -175,7 +209,7 @@ const onChangeLanguage = () => {
         activeSocialMediaItems,
         nameofaccount,
         campCluster,
-        email:Cookies.get("campuseremail"),
+        addedByemail:Cookies.get("campuseremail"),
         date : currentDate,
         time : currentTime
       });
@@ -255,11 +289,11 @@ const onChangeLanguage = () => {
         </div>
         <div className="ytmcregister-user-input" >
           <input style={{ marginRight: '10px' }} type="checkbox" id="facebook" value="Facebook" onChange={onChangeActiveSocialMediaItems}/>
-          <label className='form-label' htmlFor="youtube">{facebookLabel}</label>
+          <label className='form-label' htmlFor="facebook">{facebookLabel}</label>
         </div>
         <div className="ytmcregister-user-input" >
           <input style={{ marginRight: '10px' }} type="checkbox" id="twitter" value="Twitter" onChange={onChangeActiveSocialMediaItems}/>
-          <label className='form-label' htmlFor="youtube">{twitterLabel}</label>
+          <label className='form-label' htmlFor="twitter">{twitterLabel}</label>
         </div>
 
       <label htmlFor="nameofaccount" className="form-label">{accountNameLabel}</label>
@@ -298,6 +332,9 @@ const onChangeLanguage = () => {
             <FaPlus className="plus-icon" />
           </div>
           <ul className={selectedItem !== null ? "userList popup" : "userList"}>
+            {isLoading===true && <p>Loading Digital Influencer</p>}
+            {isLoading===false && (
+              <>
             {users.length === 0 ? (
               <div className='empty-list-container'>
                 <li className="empty-list">The Digital Influencer List is Empty. Click on the New to Add Digital Influencer</li>
@@ -312,6 +349,8 @@ const onChangeLanguage = () => {
                   <p><RiArrowRightSLine className='side-arrow' /></p>
                 </li>
               ))
+            )}
+            </>
             )}
           </ul>
           {selectedItem !== null && (

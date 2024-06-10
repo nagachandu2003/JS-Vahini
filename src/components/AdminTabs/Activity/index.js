@@ -12,17 +12,52 @@ const Activity = () => {
   const [users, setUsers] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null); // Track selected item index
   const campCluster = Cookies.get("campId")
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    const getSS = localStorage.getItem("activitydata");
-    if (getSS) {
-      setUsers(JSON.parse(getSS));
+    const getVideos = async () => {
+      setIsLoading(true)
+      try{
+        const response = await fetch(`https://js-member-backend.vercel.app/getactivityreportdata/${campCluster}`);
+            const data = await response.json() 
+            const filteredList = (data.result).filter((ele) => (ele.campCluster===campCluster && ele.addedByemail===Cookies.get("campuseremail")))
+            setUsers(filteredList)
+            // setUsers(data)
+            setIsLoading(false)
+      }
+      catch(Err){
+        console.log(`Error Occurred : ${Err}`);
+      }
+    };
+
+    // Call getVideos only once on mount
+    getVideos();
+  }, []); // Empty dependency array means it runs only once on mount
+
+
+  const postData = async (obj) => {
+    try{
+      const options = {
+        method : "POST",
+        headers : {
+          "Content-Type" : "application/json"
+        },
+        body : JSON.stringify(obj)
+      }
+      const response = await fetch(`https://js-member-backend.vercel.app/addreportactivitylist`,options);
+      const data = await response.json()
+      console.log(data)
     }
-  }, []); 
+    catch(Err){
+      console.log(`Error Occurred : ${Err}`);
+    }
+  }
+
+
 
   function handleSave(userData) {
+    postData(userData)
     const newData = [userData,...users] 
-    localStorage.setItem("activitydata", JSON.stringify(newData))
       setUsers(newData);
       // setPhoto(null); 
     setShowForm(false);
@@ -62,7 +97,7 @@ const Activity = () => {
         date : currentDate,
         time : currentTime,
         campCluster,
-        email:Cookies.get("campuseremail")
+        addedByemail:Cookies.get("campuseremail")
       });
 
       // Reset input fields after submission
@@ -251,25 +286,50 @@ const Activity = () => {
       </thead>
       <tbody>
       <tr>
-        <td className="parameter">Date & Time</td>
-        <td className="value">{users[selectedItem].date} & {users[selectedItem].time}</td>
+        <td className="parameter">Date</td>
+        <td className="value">{users[selectedItem].activityDate}</td>
       </tr>
       <tr>
-        <td className="parameter">Team Lead Name</td>
-        <td className="value">{users[selectedItem].teamLeadName}</td>
+        <td className="parameter">D2D Teams</td>
+        <td className="value">{users[selectedItem].d2dteams}</td>
       </tr>
       <tr>
-        <td className="parameter">House Holds Covered</td>
-        <td className="value">{users[selectedItem].householdscovered}</td>
+        <td className="parameter">D2D Members</td>
+        <td className="value">{users[selectedItem].d2dmembers}</td>
       </tr>
       <tr>
-        <td className="parameter">SS Made</td>
-        <td className="value">{users[selectedItem].SSMade}</td>
+        <td className="parameter">Village Targeted</td>
+        <td className="value">{users[selectedItem].villagetargeted}</td>
       </tr>
       <tr>
-        <td className="parameter">Digital Influencers Onboarded</td>
-        <td className="value">{users[selectedItem].digitalInfluencersOnboarded}</td>
+        <td className="parameter">Culture</td>
+        <td className="value">{users[selectedItem].culture}</td>
       </tr>
+      <tr>
+        <td className="parameter">Digital Content</td>
+        <td className="value">{users[selectedItem].digitalcontent}</td>
+      </tr>
+      <tr>
+        <td className="parameter">Verification/<br/>Expansion</td>
+        <td className="value">{users[selectedItem].verificationorexpansion}</td>
+      </tr>
+      <tr>
+        <td className="parameter">{['Admin','Sangathan','Operations'].join("/\n")}</td>
+        <td className="value">{users[selectedItem].adminoperations}</td>
+      </tr>
+      <tr>
+        <td className="parameter">Sabhas Planned</td>
+        <td className="value">{users[selectedItem].sabhasplanned}</td>
+      </tr>
+      <tr>
+        <td className="parameter">Camp Event Planned</td>
+        <td className="value">{users[selectedItem].campeventplanned}</td>
+      </tr>
+      <tr>
+        <td className="parameter">On Leave</td>
+        <td className="value">{users[selectedItem].onleave}</td>
+      </tr>
+
       </tbody>
       {/* <tr>
         <td className="parameter">Village Name</td>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import { RiArrowRightSLine } from "react-icons/ri";
 import Footer from '../../Footer'
@@ -12,8 +12,48 @@ const D2D = () => {
   const [users, setUsers] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null); // Track selected item index
   const campCluster = Cookies.get("campId")
+  const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    const getVideos = async () => {
+      setIsLoading(true)
+      try{
+        const response = await fetch(`https://js-member-backend.vercel.app/getd2dreportdata/${campCluster}`);
+            const data = await response.json() 
+            const filteredList = (data.result).filter((ele) => (ele.campCluster===campCluster && ele.addedByemail===Cookies.get("campuseremail")))
+            setUsers(filteredList)
+            // setUsers(data)
+            setIsLoading(false)
+      }
+      catch(Err){
+        console.log(`Error Occurred : ${Err}`);
+      }
+    };
+
+    // Call getVideos only once on mount
+    getVideos();
+  }, []); // Empty dependency array means it runs only once on mount
+
+  const postData = async (obj) => {
+    try{
+      const options = {
+        method : "POST",
+        headers : {
+          "Content-Type" : "application/json"
+        },
+        body : JSON.stringify(obj)
+      }
+      const response = await fetch(`https://js-member-backend.vercel.app/addreportd2dlist`,options);
+      const data = await response.json()
+      console.log(data)
+    }
+    catch(Err){
+      console.log(`Error Occurred : ${Err}`);
+    }
+  }
 
   function handleSave(userData) {
+    postData(userData)
       setUsers([userData,...users]);
       // setPhoto(null); 
     setShowForm(false);
@@ -47,7 +87,8 @@ const D2D = () => {
         digitalInfluencersOnboarded,
         date : currentDate,
         time : currentTime,
-        campCluster
+        campCluster,
+        addedByemail: Cookies.get("campuseremail")
       });
 
       // Reset input fields after submission
