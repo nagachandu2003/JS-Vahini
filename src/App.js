@@ -37,6 +37,7 @@ import DigitalInfluencer from './components/TopTabs/DigitalInfluencer';
 import Coaching from './components/TopTabs/Coaching';
 import SSVitran from './components/TopTabs/SSVitran';
 import D2DIncharge from './components/AdminTabs/D2DIncharge';
+import AdminWhatsapp from './components/AdminWhatsapp';
 
 const App = () => {
   const userexists = Cookies.get("campuseremail");
@@ -81,6 +82,7 @@ const App = () => {
     <Route path="/coaching" element={<Coaching/>}/>
     <Route path="/ssvitran" element={<SSVitran/>}/>
     <Route path="/d2dincharge" element={<D2DIncharge/>}/>
+    <Route path="/adminwhatsapp" element={<AdminWhatsapp/>}/>
   </Routes>
   </BrowserRouter>
   )

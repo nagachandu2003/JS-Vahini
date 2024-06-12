@@ -15,10 +15,12 @@ import { FaMapLocationDot } from "react-icons/fa6";
 import { FaCamera } from "react-icons/fa";
 import Footer from '../../Footer'
 import { BiSolidInstitution } from "react-icons/bi";
+import Cookies from 'js-cookie'
 
 import './index.css';
 
 const Report = () => {
+  const isAdmin = Cookies.get("isAdmin");
   return (
     <>
     <div style={{minHeight:'100vh',backgroundColor:'black'}}>
@@ -47,7 +49,7 @@ const Report = () => {
             <FaUserCheck className='icon' />
             <h2 className='heading-grid'>Sansthapak Sadasaya</h2>
           </Link>
-          <Link to='/whatsapp' className='whatsapp grid-card'>
+          <Link to={isAdmin?'/adminwhatsapp':'/whatsapp'} className='whatsapp grid-card'>
             <IoLogoWhatsapp className='icon' />
             <h2 className='heading-grid'>Whatsapp</h2>
           </Link>

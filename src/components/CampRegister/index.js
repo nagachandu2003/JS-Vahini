@@ -325,7 +325,7 @@ const constituencies = {
       "Chakai"
     ]
   }  
-  const options = [
+const options = [
     { OptionId: "ARARIA" },
     { OptionId: "ARWAL" },
     { OptionId: "AURANGABAD" },
