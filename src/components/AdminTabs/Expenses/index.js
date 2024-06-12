@@ -15,22 +15,57 @@ const Expenses = () => {
   const [selectedItem, setSelectedItem] = useState(null); // Track selected item index
   const campCluster = Cookies.get("campId")
 
-  useEffect(() => {
-    const getSS = localStorage.getItem("expensesdata");
-    if (getSS) {
-      setUsers(JSON.parse(getSS));
-    }
-  }, []); 
 
-  const onDeleteCollateral = (value) => {
-    const filteredList = users.filter((ele) => ele.id!==value)
-    setUsers(filteredList)
-    localStorage.setItem("expensesdata", JSON.stringify(filteredList))
+
+
+
+  const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    const getVideos = async () => {
+      setIsLoading(true)
+      try{
+        const response = await fetch(`http://localhost:3001/getexpensesreportdata/${campCluster}`);
+            const data = await response.json() 
+            const filteredList = (data.result).filter((ele) => (ele.campCluster===campCluster && ele.addedByemail===Cookies.get("campuseremail")))
+            setUsers(filteredList)
+            // setUsers(data)
+            setIsLoading(false)
+      }
+      catch(Err){
+        console.log(`Error Occurred : ${Err}`);
+      }
+    };
+
+    // Call getVideos only once on mount
+    getVideos();
+  }, []); // Empty dependency array means it runs only once on mount
+
+
+  const postData = async (obj) => {
+    try {
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(obj)
+      };
+      const response = await fetch(`http://localhost:3001/addreportexpenseslist`, options);
+      const data = await response.json();
+      console.log(data);
+    } catch (err) {
+      console.log(`Error Occurred: ${err}`);
+    }
   }
 
+
+  const onDeleteCollateral = (value) => {
+   }
+
   function handleSave(userData) {
+    postData(userData)
     const newData = [userData,...users] 
-    localStorage.setItem("expensesdata", JSON.stringify(userData))
       setUsers(newData);
       // setPhoto(null); 
     setShowForm(false);
@@ -51,16 +86,16 @@ const Expenses = () => {
       const currentTime = (new Date()).toLocaleTimeString();
       onSave({
         id:uuidv4(),
-        expensesDate,
+        expensesDate : (new Date(expensesDate)).toLocaleDateString('en-GB'),
         purpose,
         item,
         amount,
         verifiedBy,
-        copyOfTheBill,
+        copyOfTheBill:'',
         date : currentDate,
         time : currentTime,
         campCluster,
-        email:Cookies.get("campuseremail")
+        addedByemail:Cookies.get("campuseremail")
       });
 
       // Reset input fields after submission
@@ -199,16 +234,6 @@ const Expenses = () => {
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <td className="parameter">Date & Time</td>
-        <td className="value">{users[selectedItem].date} & {users[selectedItem].time}</td>
-      </tr>
-      expensesDate,
-        purpose,
-        item,
-        amount,
-        verifiedBy,
-        copyOfTheBill,
       <tr>
         <td className="parameter">Expenses Date</td>
         <td className="value">{users[selectedItem].expensesDate}</td>

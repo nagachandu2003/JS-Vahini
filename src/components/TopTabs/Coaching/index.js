@@ -6,6 +6,7 @@ import { IoLanguage } from 'react-icons/io5';
 import Cookies from 'js-cookie'
 import DistrictItem from '../../DistrictItem';
 import {v4 as uuidv4} from 'uuid'
+import { Popup } from 'reactjs-popup';
 
 import './index.css'; // Import CSS file
 
@@ -96,21 +97,54 @@ const Coaching = () => {
   const [language,setLanguage] = useState('english'); // Track selected item index
   const campCluster = Cookies.get("campId");
 
-//   useEffect(() => {
-//     const getSS = localStorage.getItem("ssdata");
-//     if (getSS) {
-//       setUsers(JSON.parse(getSS));
-//     }
-//   }, []); 
+  const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    const getVideos = async () => {
+      setIsLoading(true)
+      try{
+        const response = await fetch(`https://js-member-backend.vercel.app/getcoachingreportdata/${campCluster}`);
+            const data = await response.json() 
+            const filteredList = (data.result).filter((ele) => (ele.campCluster===campCluster && ele.addedByemail===Cookies.get("campuseremail")))
+            setUsers(filteredList)
+            // setUsers(data)
+            setIsLoading(false)
+      }
+      catch(Err){
+        console.log(`Error Occurred : ${Err}`);
+      }
+    };
+
+    // Call getVideos only once on mount
+    getVideos();
+  }, []); // Empty dependency array means it runs only once on mount
+
+
+  const postData = async (obj) => {
+    try {
+      const options = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(obj)
+      };
+      const response = await fetch(`https://js-member-backend.vercel.app/addreportcoachinglist`, options);
+      const data = await response.json();
+      console.log(data);
+    } catch (err) {
+      console.log(`Error Occurred: ${err}`);
+    }
+  }
 
 
   function handleSave(userData) {
     // console.log(userData)
       // const defaultName = `SS${users.length + 1}`;
       // const ssName = { ...userData, name: defaultName };
+      postData(userData)
       const newData = [userData,...users] 
       setUsers(newData);
-      localStorage.setItem("ssdata",JSON.stringify(newData))
 
     setShowForm(false);
   }
@@ -148,6 +182,7 @@ const photographsOfEventLabel = language === "english" ? "Photographs of the Eve
     const [vahininame, setNameOfVahini] = useState('');
     const [vahinimobile, setMobileOfVahini] = useState('');
     const [photographs, setPhotographs] = useState(null);
+    const [base64Img, setBase64Img] = useState('');
 
     const onChangeDistrict = (event) => {
       setDistrict(event.target.value);
@@ -158,11 +193,26 @@ const photographsOfEventLabel = language === "english" ? "Photographs of the Eve
   };
   const onChangeBlock = (event) => setBlock(event.target.value)
 
-    const handleSubmit = (e) => {
+  const readFileAsDataURL = (file) => {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            const base64String = reader.result.replace("data:", "").replace(/^.+,/, "");
+            resolve(`data:${file.type};base64,${base64String}`);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+};
+
+    const handleSubmit = async (e) => {
       e.preventDefault();
       const currentDate = (new Date()).toLocaleDateString('en-GB');
       const currentTime = (new Date()).toLocaleTimeString();
+      
+
       onSave({
+        id:uuidv4(),
         coachingcentrename,
         teachername, 
         district,
@@ -173,7 +223,8 @@ const photographsOfEventLabel = language === "english" ? "Photographs of the Eve
         vahininame,
         vahinimobile,
         campCluster,
-        email:Cookies.get("campuseremail"),
+        photographsofevent:"",
+        addedByemail:Cookies.get("campuseremail"),
         date : currentDate,
         time : currentTime
       });
@@ -404,8 +455,32 @@ const photographsOfEventLabel = language === "english" ? "Photographs of the Eve
       </tr>
       <tr>
         <td className='parameter'>Photographs of event</td>
-        <td className='value'>{users[selectedItem].photographs}</td>
-      </tr>
+        <td className='value'></td>
+        {/* <td className='value'>
+        <Popup
+                    trigger={<button className="edit-Btn" type="button">View</button>}
+                    modal
+                    nested
+                    contentStyle={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: '9999' }}
+                    overlayStyle={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: '9998' }}
+                    >
+                    {close => (
+                        <div style={{backgroundColor:'yellow'}} className="modal rcyt-custom-popup">
+                        <div className="content rcyt-popup-cont">
+                          <h3>Photographs of Event</h3>
+                          <img style={{border:'5px solid white'}} src={users[selectedItem].photographsofevent} height="200" width="200" alt="photographofevent"/>
+                        </div>
+                        <div className="actions">
+                            <button className="button delete-Btn" onClick={() => {
+                            console.log('modal closed');
+                            close();
+                            }}>Close</button>
+                        </div>
+                        </div>
+                    )}
+                    </Popup>
+          </td> */}
+          </tr>
       </tbody>
     </table>
   </li>
