@@ -25,7 +25,7 @@ const Expenses = () => {
     const getVideos = async () => {
       setIsLoading(true)
       try{
-        const response = await fetch(`http://localhost:3001/getexpensesreportdata/${campCluster}`);
+        const response = await fetch(`https://js-member-backend.vercel.app/getexpensesreportdata/${campCluster}`);
             const data = await response.json() 
             const filteredList = (data.result).filter((ele) => (ele.campCluster===campCluster && ele.addedByemail===Cookies.get("campuseremail")))
             setUsers(filteredList)
@@ -51,7 +51,7 @@ const Expenses = () => {
         },
         body: JSON.stringify(obj)
       };
-      const response = await fetch(`http://localhost:3001/addreportexpenseslist`, options);
+      const response = await fetch(`https://js-member-backend.vercel.app/addreportexpenseslist`, options);
       const data = await response.json();
       console.log(data);
     } catch (err) {
