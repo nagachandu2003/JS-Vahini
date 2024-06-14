@@ -99,25 +99,25 @@ const AdminWhatsapp = () => {
 
   
 
-//   useEffect(() => {
-//     const getVideos = async () => {
-//       setIsLoading(true)
-//       try{
-//         const response = await fetch(`https://js-member-backend.vercel.app/getd2dreportdata/${campCluster}`);
-//             const data = await response.json() 
-//             const filteredList = (data.result).filter((ele) => (ele.campCluster===campCluster && ele.addedByemail===Cookies.get("campuseremail")))
-//             setUsers(filteredList)
-//             // setUsers(data)
-//             setIsLoading(false)
-//       }
-//       catch(Err){
-//         console.log(`Error Occurred : ${Err}`);
-//       }
-//     };
+  useEffect(() => {
+    const getVideos = async () => {
+      setIsLoading(true)
+      try{
+        const response = await fetch(`https://js-member-backend.vercel.app/getwhatsappreportdata/${campCluster}`);
+            const data = await response.json() 
+            const filteredList = (data.result).filter((ele) => (ele.campCluster===campCluster && ele.addedByemail===Cookies.get("campuseremail")))
+            setUsers(filteredList)
+            // setUsers(data)
+            setIsLoading(false)
+      }
+      catch(Err){
+        console.log(`Error Occurred : ${Err}`);
+      }
+    };
 
-//     // Call getVideos only once on mount
-//     getVideos();
-//   }, []); // Empty dependency array means it runs only once on mount
+    // Call getVideos only once on mount
+    getVideos();
+  }, []); // Empty dependency array means it runs only once on mount
 
   const postData = async (obj) => {
     try{
@@ -128,7 +128,7 @@ const AdminWhatsapp = () => {
         },
         body : JSON.stringify(obj)
       }
-      const response = await fetch(`http://localhost:3001/addreportwhatsapplist`,options);
+      const response = await fetch(`https://js-member-backend.vercel.app/addreportwhatsapplist`,options);
       const data = await response.json()
       console.log(data)
     }
@@ -138,8 +138,8 @@ const AdminWhatsapp = () => {
   }
 
   function handleSave(userData) {
-    // postData(userData)
-        console.log(userData);
+    postData(userData)
+        // console.log(userData);
       setUsers([userData,...users]);
       // setPhoto(null); 
     setShowForm(false);
@@ -172,11 +172,26 @@ const AdminWhatsapp = () => {
         console.log(blocks[event.target.value]);
     };
     const onChangeBlock = (event) => setBlock(event.target.value);
+
+    const getUrl = async (file) => {
+      const formData = new FormData();
+      formData.append('file', file);
+  
+      try {
+        const response = await fetch('https://js-member-backend.vercel.app/upload', {method:"POST",body:formData});
+        const data = await response.json()
+        return data.Location
+      } catch (error) {
+        alert("File Upload Failed")
+        console.error('Error uploading file:', error.response ? error.response.data : error.message);
+      }
+    }
+
     const handleFileChange = async (e) => {
         const file = e.target.files[0];
-        setWhatsAppQRCode(file);
-        const base64 = await convertToBase64(file);
-        setQRCodeBase64(base64)
+        const fileUrl = await getUrl(file)
+        // console.log(fileUrl)
+        setQRCodeBase64(fileUrl)
       };
 
   
@@ -184,6 +199,7 @@ const AdminWhatsapp = () => {
       e.preventDefault();
       const currentDate = (new Date()).toLocaleDateString('en-GB');
       const currentTime = (new Date()).toLocaleTimeString();
+      if(qrCodeBase64){
       onSave({
         id:uuidv4(),
         district,
@@ -195,12 +211,17 @@ const AdminWhatsapp = () => {
         campCluster,
         addedByemail: Cookies.get("campuseremail")
       });
-
-      // Reset input fields after submission
       setDistrict('');
       setBlock('');
       setWhatsAppQRCode('');
       setWhatsAppGroupLink('');
+    }
+    else
+    {
+      alert("Please wait the file is uploading")
+    }
+
+      // Reset input fields after submission
     };
   
     const handleCancel = () => {
@@ -242,7 +263,8 @@ const AdminWhatsapp = () => {
         />
         <label htmlFor="grouplink" className="form-label">Whatsapp Group Link :</label>
         <input
-          type="text"
+        // pattern = "/^https:\/\/chat\.whatsapp\.com\/[A-Za-z0-9]+$/"
+          type="link"
           id="digitalinfluencersonboarded"
           className="ytmcregister-user-input"
           placeholder="Add WhatsApp group link"
@@ -289,7 +311,7 @@ const AdminWhatsapp = () => {
                   </div>
                 ) */}
                 <div className='d2d-list-column'>
-                <p className='list-d2d-name'>D2D : {user.teamLeadName}</p>
+                <p className='list-d2d-name'>District : {user.district}</p>
                 <p className='list-d2d-time'>Date & Time: {user.time}</p>
                 </div>
                 <p><RiArrowRightSLine className='side-arrow' /></p>             
@@ -353,7 +375,7 @@ const AdminWhatsapp = () => {
       </tr>
       <tr>
         <td className="parameter">WhatsApp Group Link</td>
-        <td className="value">{users[selectedItem].whatsappgrouplink}</td>
+        <td className="value"><a target="_blank" rel="noreferrer" href={users[selectedItem].whatsappgrouplink}>Group Link</a></td>
       </tr>
       </tbody>
     </table>
