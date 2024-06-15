@@ -49,7 +49,7 @@ const Report = () => {
             <FaUserCheck className='icon' />
             <h2 className='heading-grid'>Sansthapak Sadasaya</h2>
           </Link>
-          <Link to={isAdmin?'/adminwhatsapp':'/whatsapp'} className='whatsapp grid-card'>
+          <Link to={'/whatsapp'} className='whatsapp grid-card'>
             <IoLogoWhatsapp className='icon' />
             <h2 className='heading-grid'>Whatsapp</h2>
           </Link>

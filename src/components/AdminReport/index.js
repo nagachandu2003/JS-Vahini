@@ -23,7 +23,8 @@ import { FaRegListAlt, FaUserShield, FaUsers, FaClipboardList, FaHome, FaPalette
 const accessTabs = [
   'Registration', 'Sub Admin', 'Team', 'Attendance', 'D2D Incharge', 
   'Culture', 'Activity', 'Camp Visitor', 'Collaterals', 
-  'Cabs', 'Kitchen', 'Expenses', 'Feedback', 'Help Ticket'
+  'Cabs', 'Kitchen', 'Expenses', 'Feedback', 'Help Ticket',
+  'WhatsApp'
 ];
 
 const AdminReport = () => {
@@ -107,9 +108,13 @@ const AdminReport = () => {
             <FaUtensils className='icon' />
             <h2 className='heading-grid'>Kitchen</h2>
           </Link> */}
-          <Link to='/expenses' className={`whatsapp grid-card ${accessTabItems[11].tab}`}>
+          <Link to='/expenses' className={`grid-card-3 grid-card ${accessTabItems[11].tab}`}>
             <TbCoinRupeeFilled className='icon' />
             <h2 className='heading-grid'>Expenses</h2>
+          </Link>
+          <Link to={'/adminwhatsapp'} className={`whatsapp grid-card ${accessTabItems[12].tab}`}>
+            <IoLogoWhatsapp className='icon' />
+            <h2 className='heading-grid'>Admin Whatsapp</h2>
           </Link>
           {/* <Link to='/feedback' className={`grid-card grid-card-5 ${accessTabItems[12].tab}`}>
             <FaCommentDots className='icon' />
