@@ -71,19 +71,43 @@ const Expenses = () => {
     setShowForm(false);
   }
 
+  const getUrl = async (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const response = await fetch('https://js-member-backend.vercel.app/upload', {method:"POST",body:formData});
+      const data = await response.json()
+      return data.Location
+    } catch (error) {
+      alert("File Upload Failed")
+      console.error('Error uploading file:', error.response ? error.response.data : error.message);
+    }
+  }
+
   const FormComponent = ({ onSave, onClose }) => {
     const [expensesDate, setExpensesDate] = useState('');
     const [purpose, setPurpose] = useState('');
     const [item, setItem] = useState('');
     const [amount, setAmount] = useState('');
     const [verifiedBy, setVerifiedBy] = useState('');
-    const [copyOfTheBill, setCopyOfTheBill] = useState(''); 
+    // const [copyOfTheBill, setCopyOfTheBill] = useState(''); 
+    const [expensesBill,setExpensesBill] = useState('');
+
+    const onChangeCopyOfTheBill = async (e) => {
+      const file = e.target.files[0];
+      const fileUrl = await getUrl(file)
+      // console.log(fileUrl)
+      setExpensesBill(fileUrl)
+    }
 
   
     const handleSubmit = (e) => {
       e.preventDefault();
       const currentDate = (new Date()).toLocaleDateString('en-GB');
       const currentTime = (new Date()).toLocaleTimeString();
+      if(expensesBill)
+        {
       onSave({
         id:uuidv4(),
         expensesDate : (new Date(expensesDate)).toLocaleDateString('en-GB'),
@@ -91,12 +115,13 @@ const Expenses = () => {
         item,
         amount,
         verifiedBy,
-        copyOfTheBill:'',
+        copyOfTheBill:expensesBill,
         date : currentDate,
         time : currentTime,
         campCluster,
         addedByemail:Cookies.get("campuseremail")
       });
+    }
 
       // Reset input fields after submission
 
@@ -168,8 +193,7 @@ const Expenses = () => {
             id="copyofthebill"
             placeholder='Enter the Copy of the Bill'
             className="ytmcregister-user-input"
-            value={copyOfTheBill}
-            onChange={(e) => setCopyOfTheBill(e.target.value)}
+            onChange={onChangeCopyOfTheBill}
             required
           />
           <div style={{marginTop:'10px'}} className='cancel-submit-btn-container'>

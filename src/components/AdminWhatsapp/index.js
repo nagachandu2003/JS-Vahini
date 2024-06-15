@@ -213,7 +213,7 @@ const AdminWhatsapp = () => {
       });
       setDistrict('');
       setBlock('');
-      setWhatsAppQRCode('');
+      setQRCodeBase64('');
       setWhatsAppGroupLink('');
     }
     else
