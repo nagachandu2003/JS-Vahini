@@ -212,7 +212,7 @@ const SubAdmin = () => {
           <span>New</span>
           <FaPlus className="plus-icon" />
         </div>
-        <ul className={selectedItem !== null ? "userList popup" : "userList"}>
+        <ul className={selectedItem !== null ? "userList" : "userList"}>
 
         {isLoading ? (
             <div className='empty-list-container'>

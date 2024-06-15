@@ -489,7 +489,7 @@ const  isVillageComplete2Label = language === "english" ? "Is the Village Comple
             <span>New</span>
             <FaPlus className="plus-icon" />
           </div>
-          <ul className={selectedItem !== null ? "userList popup" : "userList"}>
+          <ul className={selectedItem !== null ? "userList" : "userList"}>
             {users.length === 0 ? (
               <div className='empty-list-container'>
                 <li className="empty-list">The D2D Incharge List is Empty. Click on the New to Add items to list</li>

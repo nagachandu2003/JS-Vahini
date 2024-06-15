@@ -311,7 +311,7 @@ const blockLabel = language === "english" ? "Block" : "प्रखण्ड";
             <span>New</span>
             <FaPlus className="plus-icon" />
           </div>
-          <ul className={selectedItem !== null ? "userList popup" : "userList"}>
+          <ul className={selectedItem !== null ? "userList" : "userList"}>
             {users.length === 0 ? (
               <div className='empty-list-container'>
                 <li className="empty-list">The SS Vitran List is Empty. Click on the New to Add SS Vitran</li>

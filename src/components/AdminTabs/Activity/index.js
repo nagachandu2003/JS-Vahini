@@ -247,7 +247,7 @@ const Activity = () => {
           <span>New</span>
           <FaPlus className="plus-icon" />
         </div>
-        <ul className={selectedItem !== null ? "userList popup" : "userList"}>
+        <ul className={selectedItem !== null ? "userList" : "userList"}>
           {users.length === 0 ? (
             <div className='empty-list-container'>
               <li className="empty-list">The Activity List is Empty. Click on the New to Add Activity</li>

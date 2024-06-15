@@ -248,7 +248,7 @@ const AdminTeam = () => {
           <span>Add</span>
           <FaPlus className="plus-icon" />
         </div>
-        <ul className={selectedItem !== null ? "userList popup" : "userList"}>
+        <ul className={selectedItem !== null ? "userList" : "userList"}>
                 {isLoading ? (
             <div className='empty-list-container'>
                 <li className="empty-list">Loading Team</li>

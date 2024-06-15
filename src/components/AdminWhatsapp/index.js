@@ -106,6 +106,7 @@ const AdminWhatsapp = () => {
         const response = await fetch(`https://js-member-backend.vercel.app/getwhatsappreportdata/${campCluster}`);
             const data = await response.json() 
             const filteredList = (data.result).filter((ele) => (ele.campCluster===campCluster && ele.addedByemail===Cookies.get("campuseremail")))
+            console.log(filteredList)
             setUsers(filteredList)
             // setUsers(data)
             setIsLoading(false)
@@ -214,6 +215,7 @@ const AdminWhatsapp = () => {
       setDistrict('');
       setBlock('');
       setQRCodeBase64('');
+      setWhatsAppQRCode('')
       setWhatsAppGroupLink('');
     }
     else
@@ -296,7 +298,7 @@ const AdminWhatsapp = () => {
           <span>New</span>
           <FaPlus className="plus-icon" />
         </div>
-        <ul className={selectedItem !== null ? "userList popup" : "userList"}>
+        <ul className={selectedItem !== null ? "userList" : "userList"}>
           {users.length === 0 ? (
             <div className='empty-list-container'>
               <li className="empty-list">The Whatsapp QR Codes are Empty</li>

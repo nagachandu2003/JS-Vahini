@@ -192,25 +192,43 @@ const photographsOfEventLabel = language === "english" ? "Photographs of the Eve
       console.log(blocks[event.target.value])
   };
   const onChangeBlock = (event) => setBlock(event.target.value)
+  const getUrl = async (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
 
-  const readFileAsDataURL = (file) => {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            const base64String = reader.result.replace("data:", "").replace(/^.+,/, "");
-            resolve(`data:${file.type};base64,${base64String}`);
-        };
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-    });
-};
+    try {
+      const response = await fetch('https://js-member-backend.vercel.app/upload', {method:"POST",body:formData});
+      const data = await response.json()
+      return data.Location
+    } catch (error) {
+      alert("File Upload Failed")
+      console.error('Error uploading file:', error.response ? error.response.data : error.message);
+    }
+  }
+  const onChangePhotographs = async (e) => {
+            const file = e.target.files[0];
+        const fileUrl = await getUrl(file)
+        setPhotographs(fileUrl)
+  }
+
+//   const readFileAsDataURL = (file) => {
+//     return new Promise((resolve, reject) => {
+//         const reader = new FileReader();
+//         reader.onloadend = () => {
+//             const base64String = reader.result.replace("data:", "").replace(/^.+,/, "");
+//             resolve(`data:${file.type};base64,${base64String}`);
+//         };
+//         reader.onerror = reject;
+//         reader.readAsDataURL(file);
+//     });
+// };
 
     const handleSubmit = async (e) => {
       e.preventDefault();
       const currentDate = (new Date()).toLocaleDateString('en-GB');
       const currentTime = (new Date()).toLocaleTimeString();
       
-
+      if(photographs){
       onSave({
         id:uuidv4(),
         coachingcentrename,
@@ -223,11 +241,25 @@ const photographsOfEventLabel = language === "english" ? "Photographs of the Eve
         vahininame,
         vahinimobile,
         campCluster,
-        photographsofevent:"",
+        photographsofevent:photographs,
         addedByemail:Cookies.get("campuseremail"),
         date : currentDate,
         time : currentTime
       });
+      setCoachingCentreName('')
+      setTeacherName('')
+      setTeacherMobile('')
+      setDistrict('')
+      setBlock('')
+      setPanchayat('')
+      setStudentsEnrolled('')
+      setNameOfVahini('')
+      setMobileOfVahini('')
+      setPhotographs('')
+    }
+    else{
+      alert("File is uploading")
+    }
       // Reset input fields after submission
       // setFounderName('');
       // setFounderMobile('');
@@ -358,7 +390,7 @@ const photographsOfEventLabel = language === "english" ? "Photographs of the Eve
         id="photographs"
         className="ytmcregister-user-input"
         placeholder="Upload the Photographs"
-        onChange={(e) => setPhotographs(e.target.files[0])}
+        onChange={onChangePhotographs}
         required
       />
 
@@ -386,7 +418,7 @@ const photographsOfEventLabel = language === "english" ? "Photographs of the Eve
             <span>New</span>
             <FaPlus className="plus-icon" />
           </div>
-          <ul className={selectedItem !== null ? "userList popup" : "userList"}>
+          <ul className={selectedItem !== null ? "userList" : "userList"}>
             {users.length === 0 ? (
               <div className='empty-list-container'>
                 <li className="empty-list">The Coaching List is Empty. Click on the New to Add Coaching</li>
@@ -455,8 +487,7 @@ const photographsOfEventLabel = language === "english" ? "Photographs of the Eve
       </tr>
       <tr>
         <td className='parameter'>Photographs of event</td>
-        <td className='value'></td>
-        {/* <td className='value'>
+        <td className='value'>
         <Popup
                     trigger={<button className="edit-Btn" type="button">View</button>}
                     modal
@@ -479,7 +510,7 @@ const photographsOfEventLabel = language === "english" ? "Photographs of the Eve
                         </div>
                     )}
                     </Popup>
-          </td> */}
+          </td>
           </tr>
       </tbody>
     </table>

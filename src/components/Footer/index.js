@@ -8,6 +8,7 @@ import { FaFileAlt, FaBell, FaTasks, FaUsers, FaUser } from 'react-icons/fa';
 const Footer = () => {
   const [activeTab, setActiveTab] = useState('Admin'); // Initially set to 'Report'
   const isAdmin = Cookies.get("isAdmin");
+  const isSubAdmin = Cookies.get("isSubAdmin");
 
   const handleClick = (tabName) => {
     setActiveTab(tabName);
@@ -37,7 +38,7 @@ const Footer = () => {
           </nav>
         </div>
       )}
-      {isAdmin === "true" && (
+      {(isAdmin === "true"||isSubAdmin==="true") && (
         <div className='footer-container'>
           <nav className='bottom-tabs-container'>
             {renderTab("/adminreport", 'Admin', RiAdminFill, 'Admin')}

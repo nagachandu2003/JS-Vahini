@@ -331,7 +331,7 @@ const onChangeLanguage = () => {
             <span>New</span>
             <FaPlus className="plus-icon" />
           </div>
-          <ul className={selectedItem !== null ? "userList popup" : "userList"}>
+          <ul className={selectedItem !== null ? "userList " : "userList"}>
             {isLoading===true && <p>Loading Digital Influencer</p>}
             {isLoading===false && (
               <>
