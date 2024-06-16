@@ -89,7 +89,7 @@ const Whatsapp = () => {
             ) : (
               <ul style={{paddingLeft:0,listStyleType:'none'}}>
                 {videosList.map((ele) => (
-                  <li style={{backgroundColor:'white',textAlign:'center',padding:'10px',margin:'10px',borderRadius:'8px'}}>
+                  <li style={{textAlign:'center',padding:'10px',margin:'10px',borderRadius:'8px'}}>
                     <img src={ele.whatsappqrcode} height="200" width="200" alt="whatsappqr"/>
                   </li>
                 ))}
