@@ -6,6 +6,7 @@ import {v4 as uuidv4} from 'uuid'
 import Footer from '../Footer'
 import Cookies from 'js-cookie'
 import Popup from 'reactjs-popup';
+import { IoIosAddCircle } from "react-icons/io";
 
 import './index.css'; // Import CSS file
 
@@ -14,8 +15,42 @@ const AdminTeam = () => {
   const [users, setUsers] = useState([]);
   const [selectedItem, setSelectedItem] = useState(null);
   const [isLoading,setIsLoading] = useState(false);
-  const [members, setMembers] = useState([]) 
+  const [members, setMembers] = useState([])
+  const [selectedMembers, setSelectedMembers] = useState([]);
   const campCluster = Cookies.get("campId")
+
+
+  const handleCheckboxChange = (ele) => {
+    if (selectedMembers.includes(ele)) {
+      setSelectedMembers(selectedMembers.filter(member => member !== ele));
+    } else {
+      setSelectedMembers([...selectedMembers, ele]);
+    }
+  };
+
+  const addMembers = async (obj) => {
+    try{
+      const options = {
+        method : "PUT",
+        headers : {
+          "Content-Type" : "application/json"
+        },
+        body : JSON.stringify({id:obj.id,selectedMembers:obj.selectedMembers,teamName:obj.teamname})
+      }
+      const response = await fetch(`https://js-member-backend.vercel.app/addmembers`,options);
+      const data = await response.json()
+      console.log(data)
+    }
+    catch(Err){
+      console.log(`Error Occurred : ${Err}`)
+    }
+  }
+
+  const onSubmitMembers = async (event,id,teamname) => {
+    event.preventDefault()
+    addMembers({selectedMembers,id,teamname})
+    window.location.reload()
+  }
 
   useEffect(() => {
     const getVideos = async () => {
@@ -38,19 +73,18 @@ const AdminTeam = () => {
       }
     };
 
-    // Call getVideos only once on mount
     getVideos();
-  }, []); // Empty dependency array means it runs only once on mount
+  }, []); 
 
 
-  const updateMemberStatus = async (email,arg) => {
+  const updateMemberStatus = async (email,arg,teamName) => {
     try{
       const options = {
         method : "PUT",
         headers : {
           "Content-Type" : "application/json"
         },
-        body : JSON.stringify({email,addedToTeam:arg})
+        body : JSON.stringify({email,addedToTeam:arg,teamName})
       }
       const response = await fetch(`https://js-member-backend.vercel.app/updatemembertoteamlead`,options);
       const data = await response.json()
@@ -63,8 +97,7 @@ const AdminTeam = () => {
 
 
   const postData = async (obj) => {
-    console.log(obj)
-    const filteredList = users.filter((ele) => ele.teamNumber===obj.teamNumber)
+    const filteredList = users.filter((ele) => (ele.teamNumber===obj.teamNumber && ele.teamName===obj.teamName))
     if(filteredList.length>0)
       alert("Team already exists")
     else{
@@ -83,21 +116,18 @@ const AdminTeam = () => {
     catch(Err){
         console.log(`Error Occurred : ${Err}`);
     }
+    window.location.reload()
   }
   }
 
-  const onDeleteTeam = async (value) => {
-    const reqitem = users.filter((ele) => ele.id===value)[0];
-    await updateMemberStatus(reqitem.teamLeadEmail,false)
-    const newList = users.filter((ele) => ele.id!==value)
-    setUsers(newList)
+  const onDeleteTeam = async (value,obj,email) => {
     try{
         const options = {
             method : "DELETE",
             headers : {
                 "Content-Type" : "application/json"
             },
-            body : JSON.stringify({id:value})
+            body : JSON.stringify({id:value,teammembers:obj,email})
         }
         const response = await fetch(`https://js-member-backend.vercel.app/deleteteaminadmin`,options);
         const data = await response.json();
@@ -106,13 +136,13 @@ const AdminTeam = () => {
     catch(Err){
         console.log(`Error Occurred : ${Err}`)
     }
+    window.location.reload()
   }
 
 
 
   const handleSave = async (userData) => {
     await postData(userData)
-    await updateMemberStatus(userData.teamLeadEmail,true)
     const newList = [userData,...users]
     setUsers(newList)
     setShowForm(false);
@@ -142,7 +172,8 @@ const AdminTeam = () => {
         teamLeadMobile : item.mobileno,
         teamLeadEmail : item.email,
         time: `${currentDate} & ${currentTime}`,
-        campCluster
+        campCluster,
+        teammembers:[]
       });
       setTeamName('');
       setTeamLeadName('');
@@ -267,30 +298,54 @@ const AdminTeam = () => {
                             <p className='list-d2d-time'>Date & Time: {user.time}</p>
                         </div>
                         <Popup
-                    trigger={<button style={{backgroundColor:'transparent',borderWidth:'0',color:'red'}} type="button"><MdDelete size={20}/></button>}
+                    trigger={<button style={{backgroundColor:'transparent',borderWidth:'0'}} type="button"><IoIosAddCircle style={{color:'white'}} size={30}/></button>}
                     modal
                     nested
                     contentStyle={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: '9999' }}
                     overlayStyle={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: '9998' }}
                     >
                     {close => (
-                        <div className="modal rcyt-custom-popup">
-                        <div className="content rcyt-popup-cont">
-                            <h3>Are you sure you want to Delete Team?</h3>
-                            <button className="delete-Btn" onClick={() => {
-                            onDeleteTeam(user.id)
-                            close()
-                            }} type="button">Delete</button>
-                        </div>
-                        <div className="actions">
-                            <button className="button delete-Btn" onClick={() => {
+                        <div style={{height:'100vh',width:'100vw',backgroundColor:'white',overflowY:'auto'}} className="modal rcyt-custom-popup">
+                            <div className='main-header-container'>
+                              <h1 style={{textAlign:'left'}} className='main-d2d'>Add Members</h1>
+                            </div>
+                            <form className="d2d-form" style={{display:'flex',flexDirection:'column',justifyContent:'center',padding:'20px',marginTop:'20px'}} onSubmit={(event) => onSubmitMembers(event,user.id,user.teamName)}>
+                {members.length === 0 && <p>No Registered Members</p>}
+            {members.length !== 0 && (
+              <>
+              <p style={{textAlign:'left'}}>Team Name : {user.teamName}</p>
+              <p style={{textAlign:'left'}}>Team Number : {user.teamNumber}</p>
+                {members.map((ele) => (
+                  <div style={{margin:'auto',marginTop:'5px',marginBottom:'5px', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }} key={ele.email} className='ytmcregister-user-input'>
+                    <label htmlFor={ele.email}>
+                      <>
+                        <span style={{ marginRight: '26px' }}>{ele.name}</span><br />
+                        <span>{ele.mobileno}</span>
+                      </>
+                    </label>
+                    <input
+                      type="checkbox"
+                      id={ele.email}
+                      onChange={() => handleCheckboxChange(ele)}
+                      checked={selectedMembers.includes(ele)}
+                    />
+                  </div>
+                ))}
+        </>
+      )}
+          <div style={{marginTop:'20px'}} className='cancel-submit-btn-container'>
+          <div className="actions">
+                            <button className="button btn-cancel" onClick={() => {
                             console.log('modal closed');
                             close();
                             }}>Cancel</button>
                         </div>
-                        </div>
-                    )}
-                    </Popup>
+          <button type="submit" className="btn-submit">Submit</button>
+          </div>
+        </form>
+        </div>
+        )}
+      </Popup>
                     </li>
                 ))
             )
@@ -305,7 +360,22 @@ const AdminTeam = () => {
               <ul className="userList">
             <li className="users-list" style={{height:'300px',overflowY:'auto'}}>
                 <table className="userTable">
-                  <thead>
+                <thead>
+                <tr>
+                  <th style={{backgroundColor:'violet'}} className='parameterHeader'>Member</th>
+                  <th style={{backgroundColor:'violet'}} className='valueHeader'>Mobile No</th>
+                </tr>
+                {(users[selectedItem].teammembers).length===0 &&  (
+                  <tr>
+                    <td colSpan={2} className='parameter'>No Members Added Yet</td>
+                  </tr>
+                )}
+                {(users[selectedItem].teammembers).length!==0 && (users[selectedItem].teammembers).map((ele,index) => (
+                  <tr key={index}>
+                    <td className='parameter'>{ele.name}</td>
+                    <td className='value'>{ele.mobileno}</td>
+                  </tr>
+                ))}
                 <tr>
                     <th className="parameterHeader">Parameters</th>
                     <th className="valueHeader">Values</th>
@@ -332,6 +402,47 @@ const AdminTeam = () => {
                     <td className="parameter">Team Lead Mobile No</td>
                     <td className="value">{users[selectedItem].teamLeadMobile}</td>
                 </tr>
+
+                {/* <tr>
+                    <td className="parameter">Team Members</td>
+                    <td className="value">{(users[selectedItem].teammembers).map((ele,index) => (
+                      <div key={index}>
+                      <p>{ele.name}</p>
+                      <p>{ele.mobileno}</p>
+                      </div>
+                    ))}</td>
+                </tr> */}
+                <tr>
+                    <td className="parameter">Remove</td>
+                    <td className="value">
+                    <Popup
+                    trigger={<button style={{backgroundColor:'transparent',borderWidth:'0',color:'red'}} type="button"><MdDelete size={20}/></button>}
+                    modal
+                    nested
+                    contentStyle={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: '9999' }}
+                    overlayStyle={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: '9998' }}
+                    >
+                    {close => (
+                        <div className="modal rcyt-custom-popup">
+                        <div className="content rcyt-popup-cont">
+                            <h3>Are you sure you want to Delete Team?</h3>
+                            <button className="delete-Btn" onClick={() => {
+                            onDeleteTeam(users[selectedItem].id,users[selectedItem].teammembers,users[selectedItem].teamLeadEmail)
+                            close()
+                            }} type="button">Delete</button>
+                        </div>
+                        <div className="actions">
+                            <button className="button delete-Btn" onClick={() => {
+                            console.log('modal closed');
+                            close();
+                            }}>Cancel</button>
+                        </div>
+                        </div>
+                    )}
+                    </Popup>
+                    </td>
+                </tr>
+
                 </tbody>
                 </table>
             </li>
