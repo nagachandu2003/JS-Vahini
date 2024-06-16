@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Popup from 'reactjs-popup';
 import { IoClose } from "react-icons/io5";
 import Cookies from 'js-cookie';
+import { MdDelete } from 'react-icons/md';
 
 const Selfie = () => {
   const [activeTab, setActiveTab] = useState(0); // State to manage active tab
@@ -115,6 +116,25 @@ const Selfie = () => {
     } catch (err) {
       console.log(`Error Occurred: ${err}`);
     }
+  }
+
+  const onDeleteSelfie = async (value) => {
+    try{
+      const options = {
+          method : "DELETE",
+          headers : {
+              "Content-Type" : "application/json"
+          },
+          body : JSON.stringify({id:value})
+      }
+      const response = await fetch(`https://js-member-backend.vercel.app/deleteselfie`,options);
+      const data = await response.json();
+      console.log(data)
+  }
+  catch(Err){
+      console.log(`Error Occurred : ${Err}`)
+  }
+  window.location.reload()
   }
 
   const captureImage = async () => {
@@ -245,6 +265,7 @@ const Selfie = () => {
                                     <p>
                                       <span>{image.location.latitude} & {image.location.longitude}</span>
                                     </p>
+                                    <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
                                     <Popup
                                       trigger={<button className="edit-Btn" style={{ borderRadius: '3px' }} type="button">View</button>}
                                       modal
@@ -325,6 +346,32 @@ const Selfie = () => {
                                         </div>
                                       )}
                                     </Popup>
+                                    <Popup
+                    trigger={<button style={{backgroundColor:'transparent',borderWidth:'0',color:'red'}} type="button"><MdDelete size={25}/></button>}
+                    modal
+                    nested
+                    contentStyle={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: '9999' }}
+                    overlayStyle={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0, 0, 0, 0.5)', zIndex: '9998' }}
+                    >
+                    {close => (
+                        <div className="modal rcyt-custom-popup">
+                        <div className="content rcyt-popup-cont">
+                            <h3>Are you sure you want to Delete Selfie?</h3>
+                            <button className="delete-Btn" onClick={() => {
+                              onDeleteSelfie(image.id)
+                            close()
+                            }} type="button">Delete</button>
+                        </div>
+                        <div className="actions">
+                            <button className="button delete-Btn" onClick={() => {
+                            console.log('modal closed');
+                            close();
+                            }}>Cancel</button>
+                        </div>
+                        </div>
+                    )}
+                    </Popup>
+                    </div>
                                   </div>
                                 )}
                               </div>
