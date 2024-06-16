@@ -313,7 +313,7 @@ const AdminWhatsapp = () => {
                   </div>
                 ) */}
                 <div className='d2d-list-column'>
-                <p className='list-d2d-name'>District : {user.district}</p>
+                <p className='list-d2d-name'>District : {user.district} & Block : {user.block}</p>
                 <p className='list-d2d-time'>Date & Time: {user.time}</p>
                 </div>
                 <p><RiArrowRightSLine className='side-arrow' /></p>             
