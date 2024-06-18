@@ -13,10 +13,9 @@
       "sizes": "192x192"
     },
     {
-      "src": "https://res.cloudinary.com/dylh46szw/image/upload/v1711793425/favicon2_pef2lb.jpg",
+      "src": "./logoicon.png",
       "sizes": "512x512",
-      "type": "image/jpg",
-      "purpose": "maskable"
+      "type": "image/png"
   }
   ],
   "start_url": ".",
