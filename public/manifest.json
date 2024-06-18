@@ -14,9 +14,10 @@
     },
     {
       "src": "https://res.cloudinary.com/dylh46szw/image/upload/v1711793425/favicon2_pef2lb.jpg",
+      "sizes": "512x512",
       "type": "image/jpg",
-      "sizes": "512x512"
-    }
+      "purpose": "maskable"
+  }
   ],
   "start_url": ".",
   "display": "standalone",
