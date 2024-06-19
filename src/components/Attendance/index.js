@@ -151,8 +151,8 @@ const onDeleteAttendance = async (value) => {
   const FormComponent = ({ onSave, onClose }) => {
 
     const handleAttendanceChange = (name, status) => {
-      const updatedUsers = allusers.map(member => {
-        if (member.name === name) {
+      const updatedUsers = allusers.map((member,index) => {
+        if (index === name) {
           return { ...member, status };
         }
         return member;
@@ -168,7 +168,7 @@ const onDeleteAttendance = async (value) => {
       const currentTime = (new Date()).toLocaleTimeString();
       onSave({
         id:uuidv4(),
-        attendance : allusers,
+        attendance : allusers.map((ele) => ({name:ele.name,MobNo:ele.MobNo,status:ele.status})),
         attendanceDate:(new Date(date)).toLocaleDateString('en-GB'),
         time : `${currentDate} & ${currentTime}`,
         present : allusers.filter(member => member.status === 'present').length,
@@ -213,8 +213,8 @@ const onDeleteAttendance = async (value) => {
                 </tr>
               </thead>
               <tbody>
-                {allusers.map((member) => (
-                  <tr key={member.name} style={{ fontSize: '12px' }}>
+                {allusers.map((member,index) => (
+                  <tr key={index} style={{ fontSize: '12px' }}>
                     <td className={`${(member.person === "admin" || member.person === "subadmin") ? 'normStyle' : ''} value`}>
                       {member.person === "admin" ? '**' : member.person === "subadmin" ? '*' : ''} {member.name}
                       <br />
@@ -223,22 +223,22 @@ const onDeleteAttendance = async (value) => {
                     <td style={{ textAlign: 'center' }} className='value'>
                       <input
                         type="radio"
-                        name={`attendance-${member.name}`}
+                        name={`attendance-${index}`}
                         value="present"
                         checked={member.status === 'present'}
                         className={member.status === "present" ? 'greenBtn' : ''}
-                        onChange={() => handleAttendanceChange(member.name, 'present')}
+                        onChange={() => handleAttendanceChange(index, 'present')}
                         required
                       />
                     </td>
                     <td style={{ textAlign: 'center' }} className='value'>
                       <input
                         type="radio"
-                        name={`attendance-${member.name}`}
+                        name={`attendance-${index}`}
                         value="absent"
                         checked={member.status === 'absent'}
                         className={member.status === "absent" ? 'redBtn' : ''}
-                        onChange={() => handleAttendanceChange(member.name, 'absent')}
+                        onChange={() => handleAttendanceChange(index, 'absent')}
                         required
                       />
                     </td>
@@ -329,8 +329,8 @@ const onDeleteAttendance = async (value) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {users[selectedItem].attendance.map((member) => (
-                        <tr key={member.name} style={{ fontSize: '12px' }}>
+                      {users[selectedItem].attendance.map((member,index) => (
+                        <tr key={index} style={{ fontSize: '12px' }}>
                           <td className={`${(member.person === "admin" || member.person === "subadmin") ? 'normStyle' : ''} value`}>
                             {member.name}
                             <br />

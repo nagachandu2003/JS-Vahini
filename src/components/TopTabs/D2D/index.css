@@ -33,9 +33,7 @@
   display: flex;
   background-color: black;
   padding-top: 20px;
-  min-height: 100vh;
   flex-direction: column;
-  overflow-y:auto;
 }
 
 /* Floating Button */
@@ -326,6 +324,10 @@ border-radius: 5px;
 .userList {
   padding: 0;
   list-style-type: none;
+}
+.scrollable-container{
+  height:80%;
+  overflow-y: auto;
 }
 .list-d2d-time {
   color: black;

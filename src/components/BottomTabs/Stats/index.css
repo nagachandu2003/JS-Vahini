@@ -1,0 +1,43 @@
+.datefilter{
+    width:50%;
+    padding:10px;
+    outline:none;
+    border:none;
+}
+.avg-cards{
+    background-color: white;
+    border-radius: 5px;
+    padding:10px;
+    text-align: center;
+}
+.stats-section-heading{
+    color:white;
+}
+.stats-section-container{
+    padding:2px;
+    margin-top:10px;
+    margin-bottom:10px;
+}
+table {
+    border-collapse: collapse;
+    border-radius:20px;
+    background-color: white;
+    color:black;
+    margin:auto;
+    min-width: 300px;
+    width:80%;
+}
+table thead tr{
+    background-color: #ffcd1a;
+    color:black;
+    text-align:left;
+    font-weight:bold;
+}
+
+table tbody tr{
+    border-bottom:1px solid #dddddd;
+}
+
+table tbody tr:nth-of-type(even){
+    background-color: #f3f3f3;
+}

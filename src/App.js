@@ -28,7 +28,7 @@ import SubAdmin from './components/SubAdmin'
 import AdminTeam from './components/AdminTeam';
 import Attendance from './components/Attendance';
 import Selfie from './components/TopTabs/Selfie';
-import AdminStats from './components/AdminStats';
+import Stats from './components/BottomTabs/Stats';
 import AdminProfile from './components/AdminProfile';
 import CapturePhoto from './components/CapturePhoto';
 import Activity from './components/AdminTabs/Activity';
@@ -50,7 +50,7 @@ const App = () => {
     {(userexists && (isadmin!=="true" && issubadmin!=="true")) && <Route exact path="/" element={<Report/>}/>}
     {(userexists && (isadmin==="true" || issubadmin==="true")) && <Route exact path="/" element={<AdminReport/>}/>}
     <Route exact path="/adminreport" element={<AdminReport/>}/>
-    <Route exact path="/adminstats" element={<AdminStats/>}/>
+    <Route exact path="/stats" element={<Stats/>}/>
     <Route exact path="/adminprofile" element={<AdminProfile/>}/>
     <Route exact path="/campregistrations" element={<CampRegistrations/>}/>
     <Route exact path="/camphome" element={<CampHome/>}/>
