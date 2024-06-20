@@ -302,7 +302,7 @@ const BarChart = ({ data }) => {
                     </div>
                     <div className="avg-cards">
                         <h2 style={{color:'red'}}>{monthlyavg}</h2>
-                        <p style={{fontSize:'12px'}}>Monthly Avg.</p>
+                        <p>Monthly Avg.</p>
                     </div>
                     </div>
                 </div>

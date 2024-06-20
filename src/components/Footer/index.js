@@ -4,6 +4,7 @@ import Cookies from 'js-cookie';
 import "./index.css";
 import { RiAdminFill } from 'react-icons/ri';
 import { FaFileAlt, FaBell, FaTasks, FaUsers, FaUser } from 'react-icons/fa';
+import { GrTasks } from "react-icons/gr";
 
 const Footer = () => {
   const [activeTab, setActiveTab] = useState('Admin'); // Initially set to 'Report'
@@ -32,7 +33,8 @@ const Footer = () => {
           <nav className='bottom-tabs-container'>
             {renderTab("/report", 'Report', FaFileAlt, 'Report')}
             {renderTab("/trainings", 'Trainings', FaBell, 'Trainings')}
-            {renderTab("/task", 'Task', FaTasks, 'Task')}
+            {renderTab("/stats", 'Stats', FaTasks, 'Stats')}
+            {renderTab("/task", 'Task', GrTasks, 'Task')}
             {renderTab("/team", 'Team', FaUsers, 'Team')}
             {renderTab("/profile", 'Profile', FaUser, 'Profile')}
           </nav>
