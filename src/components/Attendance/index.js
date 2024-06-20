@@ -6,6 +6,8 @@ import {v4 as uuidv4} from 'uuid'
 import Footer from '../Footer'
 import Cookies from 'js-cookie'
 import { Popup } from 'reactjs-popup';
+import { IoStatsChartSharp } from "react-icons/io5";
+import { Link } from 'react-router-dom';
 
 import './index.css'; // Import CSS file
 
@@ -161,6 +163,7 @@ const onDeleteAttendance = async (value) => {
       // Assuming you have a state updater function for allusers
       setAllUsers(updatedUsers);
     }
+    
   
     const handleSubmit = (e) => {
       e.preventDefault();
@@ -268,9 +271,14 @@ const onDeleteAttendance = async (value) => {
   return (
     <>
     <div>
-      <div className='main-header-container'>
-        <h1 className='main-d2d'>Attendance</h1>
-      </div>
+    <div className='main-header-container'>
+  <h1 className='main-d2d'>
+    Attendance
+    <Link to="/attendancestats" style={{color:'black',textDecoration:'none'}}>
+    <span className='header-icon'><IoStatsChartSharp size={20} /></span>
+    </Link>
+  </h1>
+</div>
       <div className='d2d-container'>
         <div className={showForm ? "overlay" : "overlay hidden"} onClick={() => setShowForm(false)}></div>
         {showForm && <FormComponent onSave={handleSave} onClose={() => setShowForm(false)} />}

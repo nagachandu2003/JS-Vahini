@@ -1,13 +1,13 @@
 /* Mobile-first approach */
 
 /* Main Header Container */
-.main-header-container {
+/* .main-header-container {
   background-color: yellow;
   padding-top: 40px; /* Add padding-top to create space for the fixed heading */
-}
+/* } */
 
 /* Main D2D Heading */
-.main-d2d {
+/* .main-d2d {
   font-family: "Open Sans", sans-serif;
   font-optical-sizing: auto;
   padding-top: 8px;
@@ -16,18 +16,46 @@
   font-weight: 550;
   position: fixed;
   z-index: 500;
-  top: 0; /* Position the heading at the top of the viewport */
+  top: 0; 
   left: 0;
   bottom: 999;
   padding-bottom: 14px;
   padding-top: 14px;
   width: 100%;
   margin-bottom: 30px;
-  font-size: 26px; /* Reduced font size for mobile */
+  font-size: 26px; 
   color: black;
   font-style: normal;
+}  */
+.main-header-container {
+  background-color: yellow;
+  padding-top: 40px;
 }
 
+.main-d2d {
+  font-family: "Open Sans", sans-serif;
+  font-optical-sizing: auto;
+  padding: 14px 8px;
+  background-color: yellow;
+  font-weight: 550;
+  position: fixed;
+  z-index: 500;
+  top: 0;
+  left: 0;
+  width: 100%;
+  margin-bottom: 30px;
+  font-size: 26px;
+  color: black;
+  font-style: normal;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-icon {
+  display: inline-flex;
+  align-items: center;
+}
 /* D2D Container */
 .d2d-container {
   display: flex;
