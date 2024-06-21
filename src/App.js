@@ -39,6 +39,7 @@ import SSVitran from './components/TopTabs/SSVitran';
 import D2DIncharge from './components/AdminTabs/D2DIncharge';
 import AdminWhatsapp from './components/AdminWhatsapp';
 import AttendanceStats from './components/AttendanceStats';
+import SelfieStats from './components/SelfieStats';
 
 const App = () => {
   const userexists = Cookies.get("campuseremail");
@@ -85,6 +86,7 @@ const App = () => {
     <Route path="/d2dincharge" element={<D2DIncharge/>}/>
     <Route path="/adminwhatsapp" element={<AdminWhatsapp/>}/>
     <Route path="/attendancestats" element={<AttendanceStats/>}/>
+    <Route path="/selfiestats" element={<SelfieStats/>}/>
   </Routes>
   </BrowserRouter>
   )

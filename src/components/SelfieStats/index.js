@@ -7,23 +7,17 @@ import { Chart as ChartJS, CategoryScale, LinearScale,PointElement, BarElement, 
 
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, PointElement, LineElement, Title, Tooltip, Legend);
-const BarChart = ({ data }) => {
-    const processedData = processData(data);
+const BarChart = ({ data, DataBasedOnDate }) => {
+    const processedData = processData(data, DataBasedOnDate);
   
     const chartData = {
       labels: processedData.map(item => item.date),
       datasets: [
         {
-          label: 'Present',
-          data: processedData.map(item => item.present),
+          label: 'Selfies',
+          data: processedData.map(item => item.totalselfies),
           backgroundColor: 'rgba(40, 167, 69, 0.7)',
           color:'white' // Green color
-        },
-        {
-          label: 'Absent',
-          data: processedData.map(item => item.absent),
-          backgroundColor: 'rgba(220, 53, 69, 0.7)',
-          color:'white' // Red color
         },
       ],
     };
@@ -36,7 +30,7 @@ const BarChart = ({ data }) => {
         },
         title: {
           display: true,
-          text: 'Attendance Chart',
+          text: 'Selfie Bar Chart',
         },
       },
     };
@@ -44,26 +38,19 @@ const BarChart = ({ data }) => {
     return <Bar data={chartData} options={options} />;
   };
 
-  const LineChart = ({ data }) => {
-    const processedData = processData(data);
+  const LineChart = ({ data, DataBasedOnDate }) => {
+    const processedData = processData(data, DataBasedOnDate);
   
     const chartData = {
       labels: processedData.map(item => item.date),
       datasets: [
         {
-          label: 'Present',
-          data: processedData.map(item => item.present),
+          label: 'Selfies',
+          data: processedData.map(item => item.totalselfies),
           borderColor: 'rgba(40, 167, 69, 0.7)', // Green color
           backgroundColor: 'rgba(40, 167, 69, 0.2)', // Light green background
           fill: true,
-        },
-        {
-          label: 'Absent',
-          data: processedData.map(item => item.absent),
-          borderColor: 'rgba(220, 53, 69, 0.7)', // Red color
-          backgroundColor: 'rgba(220, 53, 69, 0.2)', // Light red background
-          fill: true,
-        },
+        }
       ],
     };
   
@@ -75,7 +62,7 @@ const BarChart = ({ data }) => {
         },
         title: {
           display: true,
-          text: 'Attendance Line Chart',
+          text: 'Selfie Line Chart',
         },
       },
     };
@@ -84,15 +71,14 @@ const BarChart = ({ data }) => {
   };
   
   
-  const processData = (data) => {
+  const processData = (data,DataBasedOnDate) => {
     return data.map(item => ({
-      date: item.attendanceDate,
-      present: item.present,
-      absent: item.absent,
+      date: item.date,
+      totalselfies : DataBasedOnDate[item.date].length
     }));
   };
 
-  const AttendanceStats = () => {
+  const SelfieStats = () => {
     const [endDate,setEndDate] = useState((new Date()).toISOString().split('T')[0]);
     const [startDate,setStartDate] = useState(() => {
         const date = new Date();
@@ -105,6 +91,7 @@ const BarChart = ({ data }) => {
     const [isLoading, setIsLoading] = useState(false);
     const campCluster = Cookies.get("campId");
     const [attendancedata, setAttendanceData] = useState([]);
+    const [DataBasedOnDate, setGroupByDate] = useState([])
     const [filtereddata, setFilteredData] = useState([]);
     const rowsPerPage = 10;
     const [currentPage, setCurrentPage] = useState(0);
@@ -112,26 +99,34 @@ const BarChart = ({ data }) => {
     const startIdx = currentPage * rowsPerPage;
     const endIdx = startIdx + rowsPerPage;
 
-    console.log(startDate)
-    console.log(endDate)
+    // console.log(startDate)
+    // console.log(endDate)
 
     useEffect(() => {
         const getAttendanceData = async () => {
           setIsLoading(true);
           try {
-            const response = await fetch(`https://js-member-backend.vercel.app/getattendanceadmin/${campCluster}`);
+            const response = await fetch(`https://js-member-backend.vercel.app/getselfiedata/${campCluster}`);
             const data = await response.json();
-            const { AttendanceList } = data;
-            
+            const { result } = data;
             // Sort the AttendanceList based on attendanceDate in descending order
-            AttendanceList.sort((a, b) => {
-              const dateA = new Date(a.attendanceDate.split('/').reverse().join('-'));
-              const dateB = new Date(b.attendanceDate.split('/').reverse().join('-'));
+            result.sort((a, b) => {
+              const dateA = new Date(a.date.split('/').reverse());
+              const dateB = new Date(b.date.split('/').reverse());
               return dateB - dateA;
             });
-      
-            setAttendanceData(AttendanceList);
-            filterAttendanceData(AttendanceList, startDate, endDate);
+
+            const groupedByDate = result.reduce((acc, item) => {
+                if (!acc[item.date]) {
+                    acc[item.date] = [];
+                }
+                acc[item.date].push(item);
+                return acc;
+            }, {});
+
+            setGroupByDate(groupedByDate)
+            setAttendanceData(result);
+            filterAttendanceData(result, startDate, endDate);
             setIsLoading(false);
           } catch (err) {
             console.log(`Error Occurred : ${err}`);
@@ -141,6 +136,7 @@ const BarChart = ({ data }) => {
       
         getAttendanceData();
       }, [campCluster, startDate, endDate]);
+
       
       const filterAttendanceData = (data, start, end) => {
         const sd = new Date(start);
@@ -149,14 +145,13 @@ const BarChart = ({ data }) => {
         ed.setHours(23, 59, 59, 999); // Set time to end of day for accurate comparison
 
         const filteredData = data.filter((ele) => {
-          const [day, month, year] = ele.attendanceDate.split('/');
+          const [day, month, year] = ele.date.split('/');
           const dateObject = new Date(year, month - 1, day);
           dateObject.setHours(0, 0, 0, 0); // Set time to midnight for accurate comparison
-          
-          
           return dateObject >= sd && dateObject <= ed;
         });
-        const totalPresent = filteredData.reduce((sum, ele) => sum + ele.present, 0);
+
+        const totalPresent = filteredData.length
         const daysDiff = Math.ceil((ed - sd) / (1000 * 60 * 60 * 24)) + 1; // +1 to include both start and end dates
         const weeksDiff = daysDiff / 7;
         const monthsDiff = (ed.getFullYear() - sd.getFullYear()) * 12 + ed.getMonth() - sd.getMonth() + 1;
@@ -183,51 +178,8 @@ const BarChart = ({ data }) => {
         setEndDate(newEndDate);
         filterAttendanceData(attendancedata, startDate, newEndDate);
       };
-
-    // useEffect(() => {
-    //     const getAttendanceData = async () => {
-    //       setIsLoading(true);
-    //       try {
-    //         const response = await fetch(http://localhost:3001/getattendanceadmin/${campCluster});
-    //         const data = await response.json();
-    //         const { AttendanceList } = data;
-            
-    //         // Sort the AttendanceList based on attendanceDate
-    //         AttendanceList.sort((a, b) => {
-    //           const dateA = new Date(a.attendanceDate);
-    //           const dateB = new Date(b.attendanceDate);
-    //           return dateA - dateB;
-    //         });
       
-    //         // Filter the sorted list based on startDate and endDate
-    //         const filteredData = AttendanceList.filter((ele) => {
-    //           const parts = ele.attendanceDate.split('/');
-    //           const day = parseInt(parts[0], 10);
-    //           const month = parseInt(parts[1], 10) - 1; // Subtract 1 as months are zero-indexed
-    //           const year = parseInt(parts[2], 10);
-    //           const dateObject = new Date(year, month, day);
-    //           const sd = new Date(startDate);
-    //           const ed = new Date(endDate);
-    //           if(ele.attendanceDate==="21/05/2024"){
-    //           console.log(dateObject >= sd)
-    //           console.log(ele)
-    //           }
-    //           return dateObject >= sd && dateObject <= ed;
-    //         });
-      
-    //         setFilteredData(filteredData);
-    //         setAttendanceData(AttendanceList);
-    //         setIsLoading(false);
-    //       } catch (err) {
-    //         console.log(Error Occurred : ${err});
-    //       }
-    //     };
-      
-    //     // Call getAttendanceData only once on mount
-    //     getAttendanceData();
-    //   }, []); // Empty dependency array means it runs only once on mount
-      
-      console.log(filtereddata);
+    //   console.log(filtereddata);
       
       const displayedItems = filtereddata.slice(startIdx, endIdx);
       
@@ -242,44 +194,12 @@ const BarChart = ({ data }) => {
           setCurrentPage(currentPage + 1);
         }
       };
-      
-    //   const onChangeStartDate = (event) => {
-    //     setStartDate(event.target.value)
-
-    //     const filteredData = attendancedata.filter((ele) => {
-    //         const parts = ele.attendanceDate.split('/');
-    //         const day = parseInt(parts[0], 10);
-    //         const month = parseInt(parts[1], 10) - 1; // Subtract 1 as months are zero-indexed
-    //         const year = parseInt(parts[2], 10);
-    //         const dateObject = new Date(year, month, day);
-    //         const sd = new Date(event.target.value);;
-    //         const ed = new Date(endDate);
-    //         return dateObject >= sd && dateObject <= ed;
-    //     });
-    //     setFilteredData(filteredData);
-    //   };
-      
-    //   const onChangeEndDate = (event) => {
-    //     setEndDate(event.target.value);
-    //     const filteredData = attendancedata.filter((ele) => {
-    //       const parts = ele.attendanceDate.split('/');
-    //       const day = parseInt(parts[0], 10);
-    //       const month = parseInt(parts[1], 10) - 1; // Subtract 1 as months are zero-indexed
-    //       const year = parseInt(parts[2], 10);
-    //       const dateObject = new Date(year, month, day);
-    //       const sd = new Date(startDate);
-    //       const ed = new Date(event.target.value);
-    //       return dateObject >= sd && dateObject <= ed;
-    //     });
-    //     setFilteredData(filteredData);
-    //   };
-      
 
     return (
         <>
         <div style={{backgroundColor:'black'}}>
         <div className='main-header-container'>
-            <h1 className='main-d2d'>Attendance Stats</h1>
+            <h1 className='main-d2d'>Selfie Stats</h1>
         </div>
         <div className="scrollable-container">
             <div className="d2d-container">
@@ -313,17 +233,15 @@ const BarChart = ({ data }) => {
                     <tr>
                     <th>S.NO.</th>
                     <th>Date</th>
-                    <th>Present</th>
-                    <th>Absent</th>
+                    <th>Total Selfies</th>
                     </tr>
                 </thead>
                 <tbody>
                     {displayedItems.length!==0 && (displayedItems.map((ele,index) => (
                         <tr key={index}>
                             <td>{index+1}</td>
-                            <td>{ele.attendanceDate}</td>
-                            <td>{ele.present}</td>
-                            <td>{ele.absent}</td>
+                            <td>{ele.date}</td>
+                            <td>{DataBasedOnDate[ele.date].length}</td>
                         </tr>
                     )))}
                 </tbody>
@@ -339,8 +257,8 @@ const BarChart = ({ data }) => {
                 </div>
                 <div style={{marginBottom:'80px'}} className="stats-section-container">
                     <h3 className="stats-section-heading">Graph</h3>
-                    <BarChart data={filtereddata} startDate={startDate} endDate={endDate}/>
-                    <LineChart data={filtereddata} startDate={startDate} endDate={endDate}/>
+                    <BarChart data={filtereddata} startDate={startDate} endDate={endDate} DataBasedOnDate={DataBasedOnDate}/>
+                    <LineChart data={filtereddata} startDate={startDate} endDate={endDate} DataBasedOnDate={DataBasedOnDate}/>
                 </div>
 
                 </div>
@@ -353,4 +271,4 @@ const BarChart = ({ data }) => {
     )
 }
 
-export default AttendanceStats
+export default SelfieStats

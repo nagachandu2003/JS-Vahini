@@ -2,6 +2,7 @@ import "./index.css"
 import { useState, useEffect, forwardRef } from "react"
 import Footer from "../../Footer"
 import Cookies from 'js-cookie'
+import { Link } from "react-router-dom"
 
   const Stats = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -51,103 +52,137 @@ import Cookies from 'js-cookie'
             {isLoading===false && (
                 <div style={{margin:'10px'}}>
                   <div className="stats-section-container">
-                    <h2 className="stats-section-heading">Attendance</h2>
+                    <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+                    <h3 className="stats-section-heading">Attendance</h3>
+                    <Link to="/attendancestats">
+                    <button type="button">More</button>
+                    </Link>
+                    </div>
                     <div style={{display:'flex',justifyContent:'space-evenly'}}>
                     <div className="avg-cards">
-                        <h1 style={{color:'blue'}}>{0}</h1>
+                        <h2 style={{color:'blue'}}>{`Jun 20`}</h2>
                         <p style={{fontSize:'12px'}}>Joining Date</p>
                     </div>
                     <div className="avg-cards">
-                        <h1 style={{color:'green'}}>{0}</h1>
+                        <h2 style={{color:'green'}}>{12}</h2>
                         <p style={{fontSize:'12px'}}>Total Present</p>
                     </div>
                     <div className="avg-cards">
-                        <h1 style={{color:'red'}}>{0}</h1>
+                        <h2 style={{color:'red'}}>{15}</h2>
                         <p style={{fontSize:'13px'}}>Total Absent</p>
                     </div>
                     </div>
                     </div>
                     <div className="stats-section-container">
-                    <h2 className="stats-section-heading">Household (Selfie)</h2>
+                    <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+                    <h3 className="stats-section-heading">Household (Selfie)</h3>
+                    <Link to="/selfiestats">
+                    <button type="button">More</button>
+                    </Link>
+                    </div>
+
                     <div style={{display:'flex',justifyContent:'space-evenly'}}>
                     <div className="avg-cards">
-                        <h1 style={{color:'blue'}}>0</h1>
+                        <h2 style={{color:'blue'}}>5.5</h2>
                         <p style={{fontSize:'12px'}}>Daily Avg.</p>
                     </div>
                     <div className="avg-cards">
-                        <h1 style={{color:'green'}}>0</h1>
+                        <h2 style={{color:'green'}}>2.15</h2>
                         <p style={{fontSize:'12px'}}>Weekly Avg.</p>
                     </div>
                     <div className="avg-cards">
-                        <h1 style={{color:'red'}}>0</h1>
+                        <h2 style={{color:'red'}}>1.5</h2>
                         <p style={{fontSize:'13px'}}>Monthly Avg.</p>
                     </div>
                     </div>
                     </div>
                     <div className="stats-section-container">
-                    <h2 className="stats-section-heading">Sansthapak Sadasya</h2>
+                    <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+                    <h3 className="stats-section-heading">Sansthapak Sadasya</h3>
+                    {/* <Link to="/attendancestats"> */}
+                    <button type="button">More</button>
+                    {/* </Link> */}
+                    </div>
+
                     <div style={{display:'flex',justifyContent:'space-evenly'}}>
                     <div className="avg-cards">
-                        <h1 style={{color:'blue'}}>{0}</h1>
+                        <h2 style={{color:'blue'}}>{6.5}</h2>
                         <p style={{fontSize:'12px'}}>Daily Avg.</p>
                     </div>
                     <div className="avg-cards">
-                        <h1 style={{color:'green'}}>{0}</h1>
+                        <h2 style={{color:'green'}}>{2.2}</h2>
                         <p style={{fontSize:'12px'}}>Weekly Avg.</p>
                     </div>
                     <div className="avg-cards">
-                        <h1 style={{color:'red'}}>{0}</h1>
+                        <h2 style={{color:'red'}}>{1.6}</h2>
                         <p style={{fontSize:'13px'}}>Monthly Avg.</p>
                     </div>
                     </div>
                     </div>
                     <div className="stats-section-container">
-                    <h2 className="stats-section-heading">Digital Influencer</h2>
+                    <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+                    <h3 className="stats-section-heading">Digital Influencer</h3>
+                    {/* <Link to="/attendancestats"> */}
+                    <button type="button">More</button>
+                    {/* </Link> */}
+                    </div>    
+
                     <div style={{display:'flex',justifyContent:'space-evenly'}}>
                     <div className="avg-cards">
-                        <h1 style={{color:'blue'}}>{0}</h1>
+                        <h2 style={{color:'blue'}}>{6.6}</h2>
                         <p style={{fontSize:'12px'}}>Daily Avg.</p>
                     </div>
                     <div className="avg-cards">
-                        <h1 style={{color:'green'}}>{0}</h1>
+                        <h2 style={{color:'green'}}>{2.3}</h2>
                         <p style={{fontSize:'12px'}}>Weekly Avg.</p>
                     </div>
                     <div className="avg-cards">
-                        <h1 style={{color:'red'}}>{0}</h1>
+                        <h2 style={{color:'red'}}>{1.7}</h2>
                         <p style={{fontSize:'13px'}}>Monthly Avg.</p>
                     </div>
                     </div>
                     </div>
                     <div className="stats-section-container">
-                    <h2 className="stats-section-heading">Coaching</h2>
+                    <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+                    <h3 className="stats-section-heading">Coaching</h3>
+                    {/* <Link to="/attendancestats"> */}
+                    <button type="button">More</button>
+                    {/* </Link> */}
+                    </div>
+
                     <div style={{display:'flex',justifyContent:'space-evenly'}}>
                     <div className="avg-cards">
-                        <h1 style={{color:'blue'}}>{0}</h1>
+                        <h2 style={{color:'blue'}}>{6.7}</h2>
                         <p style={{fontSize:'12px'}}>Daily Avg.</p>
                     </div>
                     <div className="avg-cards">
-                        <h1 style={{color:'green'}}>{0}</h1>
+                        <h2 style={{color:'green'}}>{2.4}</h2>
                         <p style={{fontSize:'12px'}}>Weekly Avg.</p>
                     </div>
                     <div className="avg-cards">
-                        <h1 style={{color:'red'}}>{0}</h1>
+                        <h2 style={{color:'red'}}>{1.8}</h2>
                         <p style={{fontSize:'13px'}}>Monthly Avg.</p>
                     </div>
                     </div>
                     </div>
                     <div className="stats-section-container">
-                    <h2 className="stats-section-heading">SS Vitran</h2>
+                    <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+                    <h3 className="stats-section-heading">SS Vitran</h3>
+                    {/* <Link to="/attendancestats"> */}
+                    <button type="button">More</button>
+                    {/* </Link> */}
+                    </div>
                     <div style={{display:'flex',justifyContent:'space-evenly'}}>
                     <div className="avg-cards">
-                        <h1 style={{color:'blue'}}>{0}</h1>
+                        <h2 style={{color:'blue'}}>{6.8}</h2>
                         <p style={{fontSize:'12px'}}>Daily Avg.</p>
                     </div>
                     <div className="avg-cards">
-                        <h1 style={{color:'green'}}>{0}</h1>
+                        <h2 style={{color:'green'}}>{2.5}</h2>
                         <p style={{fontSize:'12px'}}>Weekly Avg.</p>
                     </div>
                     <div className="avg-cards">
-                        <h1 style={{color:'red'}}>{0}</h1>
+                        <h2 style={{color:'red'}}>{1.9}</h2>
                         <p style={{fontSize:'13px'}}>Monthly Avg.</p>
                     </div>
                     </div>

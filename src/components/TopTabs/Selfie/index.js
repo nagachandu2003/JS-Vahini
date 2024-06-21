@@ -393,7 +393,7 @@ const Selfie = () => {
               <Footer />
             </>
           )}
-          <div style={{ height: '90vh' }}>
+          <div style={{ height: '90vh',backgroundColor:'black' }}>
             {isCameraOpen && (
               <div style={{ height: '100vh', position: 'relative' }}>
                 {capturedImage ? (
