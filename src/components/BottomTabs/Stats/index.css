@@ -1,0 +1,22 @@
+.avg-cards2{
+    min-width:80px;
+    background-color: white;
+    text-align: center;
+    border-radius:5px;
+    padding:5px;
+}
+.stats-section-heading2{
+    margin-left:4%;
+    color:white;
+    margin-bottom:10px;
+}
+.avg-cards2 {
+    background-color: #F9F9F9;
+    border: 1px solid #E0E0E0;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 5px;
+  }
+
+
+

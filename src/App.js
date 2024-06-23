@@ -40,6 +40,7 @@ import D2DIncharge from './components/AdminTabs/D2DIncharge';
 import AdminWhatsapp from './components/AdminWhatsapp';
 import AttendanceStats from './components/AttendanceStats';
 import SelfieStats from './components/SelfieStats';
+import AttendanceSelfie from './components/TopTabs/AttendanceSelfie';
 
 const App = () => {
   const userexists = Cookies.get("campuseremail");
@@ -87,6 +88,7 @@ const App = () => {
     <Route path="/adminwhatsapp" element={<AdminWhatsapp/>}/>
     <Route path="/attendancestats" element={<AttendanceStats/>}/>
     <Route path="/selfiestats" element={<SelfieStats/>}/>
+    <Route path="/attendanceselfie" element={<AttendanceSelfie/>}/>
   </Routes>
   </BrowserRouter>
   )

@@ -65,6 +65,10 @@ const Report = () => {
             <FaUserEdit className='icon' />
             <h2 className='heading-grid'>SS Vitran</h2>
           </Link>
+          <Link to='/attendanceselfie' className='grid-card grid-card-1'>
+            <FaCamera className='icon' />
+            <h2 className='heading-grid'>Attendance Selfie</h2>
+          </Link>
           {/* <Link to='/maps' className='grid-card maps'>
             <FaMapLocationDot className='icon' />
             <h2 className='heading-grid'>Maps</h2>
