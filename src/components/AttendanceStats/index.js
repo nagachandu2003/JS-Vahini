@@ -108,12 +108,15 @@ const BarChart = ({ data }) => {
     const [filtereddata, setFilteredData] = useState([]);
     const rowsPerPage = 10;
     const [currentPage, setCurrentPage] = useState(0);
+    const [vahinimembers, setVahiniMembers] = useState(0);
+    const [padayatrimembers, setPadayatriMembers] = useState(0);
+    const [dayscholarmembers, setDayScholarMembers] = useState(0);
+    const [todayattendancedata, setTodayAttendanceData] = useState([]);
 
     const startIdx = currentPage * rowsPerPage;
     const endIdx = startIdx + rowsPerPage;
 
-    console.log(startDate)
-    console.log(endDate)
+
 
     useEffect(() => {
         const getAttendanceData = async () => {
@@ -123,12 +126,20 @@ const BarChart = ({ data }) => {
             const data = await response.json();
             const { AttendanceList } = data;
             
-            // Sort the AttendanceList based on attendanceDate in descending order
+
             AttendanceList.sort((a, b) => {
               const dateA = new Date(a.attendanceDate.split('/').reverse().join('-'));
               const dateB = new Date(b.attendanceDate.split('/').reverse().join('-'));
               return dateB - dateA;
             });
+
+            if(AttendanceList[0].attendanceDate===(new Date()).toLocaleDateString('en-GB')){
+              setTodayAttendanceData(AttendanceList[0])
+              const dt = AttendanceList[0]
+              setPadayatriMembers((dt.attendance).filter((ele) => ele.category==="Padayatri").length)
+              setVahiniMembers((dt.attendance).filter((ele) => ele.category==="Vahini").length)
+              setDayScholarMembers((dt.attendance).filter((ele) => ele.category==="Day Scholar").length)
+            }
       
             setAttendanceData(AttendanceList);
             filterAttendanceData(AttendanceList, startDate, endDate);
@@ -141,7 +152,11 @@ const BarChart = ({ data }) => {
       
         getAttendanceData();
       }, [campCluster, startDate, endDate]);
+
       
+
+
+
       const filterAttendanceData = (data, start, end) => {
         const sd = new Date(start);
         sd.setHours(0, 0, 0, 0);
@@ -227,7 +242,6 @@ const BarChart = ({ data }) => {
     //     getAttendanceData();
     //   }, []); // Empty dependency array means it runs only once on mount
       
-      console.log(filtereddata);
       
       const displayedItems = filtereddata.slice(startIdx, endIdx);
       
@@ -291,22 +305,71 @@ const BarChart = ({ data }) => {
                 </div>
                 <div className="stats-section-container">
                     <h3 className="stats-section-heading">Numbers</h3>
+                    <h3 className="stats-section-heading">Today</h3>
                     <div style={{display:'flex',justifyContent:'space-evenly'}}>
-                    <div className="avg-cards">
+                    <div className="avg-cards2">
+                        <h2 style={{color:'blue'}}>{padayatrimembers}</h2>
+                        <p style={{fontSize:'12px'}}>Padayatri</p>
+                    </div>
+                    <div className="avg-cards2">
+                        <h2 style={{color:'green'}}>{vahinimembers}</h2>
+                        <p style={{fontSize:'12px'}}>Vahini</p>
+                    </div>
+                    <div className="avg-cards2">
+                        <h2 style={{color:'red'}}>{dayscholarmembers}</h2>
+                        <p style={{fontSize:'12px'}}>Day Scholar</p>
+                    </div>
+                    </div>
+
+                    <div style={{display:'flex',justifyContent:'space-evenly'}}>
+                    <div className="avg-cards2">
                         <h2 style={{color:'blue'}}>{dailyavg}</h2>
                         <p style={{fontSize:'12px'}}>Daily Avg.</p>
                     </div>
-                    <div className="avg-cards">
+                    <div className="avg-cards2">
                         <h2 style={{color:'green'}}>{weeklyavg}</h2>
                         <p style={{fontSize:'12px'}}>Weekly Avg.</p>
                     </div>
-                    <div className="avg-cards">
+                    <div className="avg-cards2">
                         <h2 style={{color:'red'}}>{monthlyavg}</h2>
-                        <p>Monthly Avg.</p>
+                        <p style={{fontSize:'12px'}}>Monthly Avg.</p>
                     </div>
                     </div>
                 </div>
                 <div className="stats-section-container">
+                    <h3 className="stats-section-heading">Table</h3>
+                    <table>
+                <thead>
+                    <tr>
+                    <th style={{fontSize:'13px'}}>Date</th>
+                    <th style={{fontSize:'13px'}}>Padayatri</th>
+                    <th style={{fontSize:'13px'}}>Vahini</th>
+                    <th style={{fontSize:'13px'}}>Day Scholar</th>
+                    <th style={{fontSize:'13px'}}>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {displayedItems.length!==0 && (displayedItems.map((ele,index) => (
+                        <tr style={{fontSize:'12px'}} key={index}>
+                            <td>{ele.attendanceDate}</td>
+                            <td>{(ele.attendance).filter((ele) => ele.category==="Padayatri" && ele.status==="present").length}</td>
+                            <td>{(ele.attendance).filter((ele) => ele.category==="Vahini" && ele.status==="present").length}</td>
+                            <td>{(ele.attendance).filter((ele) => ele.category==="Day Scholar" && ele.status==="present").length}</td>
+                            <td>{(ele.attendance).filter((ele) => ["Padayatri","Vahini","Day Scholar"].includes(ele.category) && ele.status==="present").length}</td>
+                        </tr>
+                    )))}
+                </tbody>
+            </table>
+            <div style={{textAlign:'right'}}>
+                <button className="prev-Btn" onClick={onPreviousPage} disabled={currentPage === 0}>
+                    Previous
+                </button>
+                <button className="next-Btn" onClick={onNextPage} disabled={endIdx >= attendancedata.length}>
+                    Next
+                </button>
+            </div>
+                </div>
+                {/* <div className="stats-section-container">
                     <h3 className="stats-section-heading">Table</h3>
                     <table>
                 <thead>
@@ -336,7 +399,7 @@ const BarChart = ({ data }) => {
                     Next
                 </button>
             </div>
-                </div>
+                </div> */}
                 {/* <div style={{marginBottom:'80px'}} className="stats-section-container">
                     <h3 className="stats-section-heading">Graph</h3>
                     <BarChart data={filtereddata} startDate={startDate} endDate={endDate}/>

@@ -171,7 +171,7 @@ const onDeleteAttendance = async (value) => {
       const currentTime = (new Date()).toLocaleTimeString();
       onSave({
         id:uuidv4(),
-        attendance : allusers.map((ele) => ({name:ele.name,MobNo:ele.MobNo,status:ele.status})),
+        attendance : allusers.map((ele) => ({name:ele.name,MobNo:ele.MobNo,status:ele.status,category:ele.category})),
         attendanceDate:(new Date(date)).toLocaleDateString('en-GB'),
         time : `${currentDate} & ${currentTime}`,
         present : allusers.filter(member => member.status === 'present').length,
