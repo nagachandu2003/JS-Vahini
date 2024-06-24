@@ -337,11 +337,11 @@ const BarChart = ({ data }) => {
                 </button>
             </div>
                 </div>
-                <div style={{marginBottom:'80px'}} className="stats-section-container">
+                {/* <div style={{marginBottom:'80px'}} className="stats-section-container">
                     <h3 className="stats-section-heading">Graph</h3>
                     <BarChart data={filtereddata} startDate={startDate} endDate={endDate}/>
                     <LineChart data={filtereddata} startDate={startDate} endDate={endDate}/>
-                </div>
+                </div> */}
 
                 </div>
                 )}

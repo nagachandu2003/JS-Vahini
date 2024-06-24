@@ -298,13 +298,18 @@ if(activeTab==="pending")
                         <div className="modal rcyt-custom-popup">
                         <div className="content rcyt-popup-cont">
                             <h3>Are you sure want to Approve?</h3>
-                            <div>
+                            <div style={{margin:'auto'}} >
                               <h4>Select Category</h4>
-                              <input style={{marginRight:"10px"}} onChange={(e) => setCategory(e.target.value)} id="vahini" type="radio" name="category" value="vahini"/>
+                              <div style={{textAlign:'left',margin:'auto'}}>
+                              <input style={{marginRight:"10px"}} onChange={(e) => setCategory(e.target.value)} id="vahini" type="radio" name="category" value="Vahini"/>
                               <label htmlFor="vahini">Vahini</label>
                               <br/>
-                              <input style={{marginRight:"10px"}} onChange={(e) => setCategory(e.target.value)} id="padayatri" type="radio" name="category" value="padayatri"/>
+                              <input style={{marginRight:"10px"}} onChange={(e) => setCategory(e.target.value)} id="padayatri" type="radio" name="category" value="Padayatri"/>
                               <label htmlFor="padayatri">Padayatri</label>
+                              <br/>
+                              <input style={{marginRight:"10px"}} onChange={(e) => setCategory(e.target.value)} id="dayscholar" type="radio" name="category" value="Day Scholar"/>
+                              <label htmlFor="dayscholar">Day Scholar</label>
+                              </div>
                             </div>
                             <button style={{marginTop:'20px'}} className="edit-Btn" type="button" onClick={() => {
                             onClickApprove(filteredList[selectedItem].email,categoryVal)

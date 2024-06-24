@@ -412,15 +412,15 @@ const AttendanceSelfie = () => {
                   <div style={{ backgroundColor: 'black', color: 'white', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                     <p>Lat : {lat} & Long : {lon}</p>
                     <h1>Captured Image</h1>
-                    <img src={capturedImage} alt="Captured" style={{ maxHeight: '80%', maxWidth: '100%' }} />
-                    <p>Select the Period </p>
+                    <img style={{marginTop:'10px',marginBottom:'10px'}} src={capturedImage} alt="Captured" style={{ maxHeight: '80%', maxWidth: '100%' }} />
+                    {/* <p>Select the Period </p> */}
                     <div style={{display:'flex'}}>
                     <input style={{marginRight:'5px'}} type="radio" name="period" value="Morning" id="morning" onChange={(e) => setPeriod(e.target.value)}/>
-                    <label htmlFor='morning'>Morning</label>
+                    <label htmlFor='morning'>Morning Attendance</label>
                     </div>
                     <div style={{display:'flex'}}>
                     <input style={{marginRight:'5px'}} type="radio" name="period" id="evening" value="Evening" onChange={(e) => setPeriod(e.target.value)}/>
-                    <label htmlFor='evening'>Evening</label>
+                    <label htmlFor='evening'>Evening Attendance</label>
                     </div>
                     <div style={{ height: '10%', display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
                       <button className="retakeBtn" onClick={handleRetake} style={{ marginRight: '1rem' }}>
