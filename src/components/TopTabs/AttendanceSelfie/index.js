@@ -8,6 +8,8 @@ import Popup from 'reactjs-popup';
 import { IoClose } from "react-icons/io5";
 import Cookies from 'js-cookie';
 import { MdDelete } from 'react-icons/md';
+import { Link } from 'react-router-dom';
+import { IoStatsChartSharp } from 'react-icons/io5';
 
 const AttendanceSelfie = () => {
   const [activeTab, setActiveTab] = useState(0); // State to manage active tab
@@ -207,9 +209,17 @@ const AttendanceSelfie = () => {
     <>
       {isLoading ? (
         <div style={{ backgroundColor: 'black', color: 'white' }} className="photos-container">
-          <div className="photos-main-header-container">
+          {/* <div className="photos-main-header-container">
             <h1 className="photos-main-heading">Attendance Selfie</h1>
-          </div>
+          </div> */}
+              <div className='main-header-container'>
+              <h1 className='main-d2d'>
+                Attendance
+                <Link to="/attendancestats" style={{color:'black',textDecoration:'none'}}>
+                <span className='header-icon'><IoStatsChartSharp size={20} /></span>
+                </Link>
+              </h1>
+            </div>
           <div style={{ backgroundColor: 'black', textAlign: 'center' }} className="photos-content-container">
             <p style={{ color: 'white' }}>Loading Selfie</p>
           </div>
@@ -223,27 +233,13 @@ const AttendanceSelfie = () => {
                 <div className="photos-main-header-container">
                   <h1 className="photos-main-heading">Attendance Selfie</h1>
                 </div>
-                <div style={{ backgroundColor: 'black', color: 'white' }} className="photos-upper-tabs-container">
-                  <div
-                    className={`photos-upper-tab ${activeTab === 0 ? 'active' : ''}`}
-                    onClick={() => setActiveTab(0)}
-                  >
-                    List
-                  </div>
-                  <div
-                    className={`photos-upper-tab ${activeTab === 1 ? 'active' : ''}`}
-                    onClick={() => setActiveTab(1)}
-                  >
-                    Maps
-                  </div>
-                </div>
                 <div className="photos-content-container">
                   {/* Content for Photos tab */}
                   <div style={{ backgroundColor: 'black', color: 'white' }} className={`photos-tab-content ${activeTab === 0 ? 'active' : ''}`}>
                     <div className="photos-container">
                       {/* Webcam and Image List */}
                       <div className="capture-button-container">
-                        <button
+{capturedImages.length!==0 && (                       <button
                           style={{ borderRadius: '5px', borderWidth: 0 }}
                           onClick={() => {
                             setIsCameraOpen(true);
@@ -252,12 +248,21 @@ const AttendanceSelfie = () => {
                           className="floating-button"
                         >
                           <FaCamera size={30} />
-                        </button>
+                        </button>)}
                       </div>
 
                         {capturedImages.length === 0 && (
-                          <div style={{minHeight:'100vh'}} className='image-list-container'>
+                          <div style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}} className='image-list-container'>
                           <p>No Selfie Yet! Click on Camera button to add a Selfie</p>
+                        <button
+                          style={{ borderRadius: '5px', borderWidth: 0,backgroundColor:'#FFFF00' }}
+                          onClick={() => {
+                            setIsCameraOpen(true);
+                            getLatAndLon();
+                          }}
+                        >
+                          <FaCamera size={30} />
+                        </button>
                           </div>)
                           }
                         {capturedImages.length !== 0 && (
@@ -391,13 +396,6 @@ const AttendanceSelfie = () => {
                             </div>
                           </>
                         )}
-                    </div>
-                  </div>
-                  {/* Content for Maps tab */}
-                  <div className={`photos-tab-content ${activeTab === 1 ? 'active' : ''}`}>
-                    <div className="photos-container">
-                      {/* Placeholder for Maps content */}
-                      {/* Replace this with your Maps component */}
                     </div>
                   </div>
                 </div>

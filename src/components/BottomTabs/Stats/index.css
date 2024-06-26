@@ -1,9 +1,20 @@
 .avg-cards2{
     min-width:80px;
-    background-color: white;
+    background: linear-gradient(to right, #FFD700, #FFA500);
     text-align: center;
     border-radius:5px;
     padding:5px;
+    color:white;
+}
+.gr-bg2{
+    background: linear-gradient(to right, #8A2BE2, #20B2AA);
+}
+.gr-bg3{
+    background: linear-gradient(to right, #F0E68C, #FFC0CB);
+    color:black;
+}
+.gr-bg4{
+    background: linear-gradient(to right, #FF0000, #FF4500);
 }
 .stats-section-heading2{
     margin-left:4%;
@@ -16,7 +27,11 @@
     padding: 10px;
     border-radius: 5px;
     margin: 5px;
+    text-align: left;
   }
-
-
-
+.present-text {
+    color:green;
+}
+.absent-text{
+    color:red;
+}

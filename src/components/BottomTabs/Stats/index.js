@@ -5,23 +5,27 @@ import Cookies from 'js-cookie'
 import { Link } from "react-router-dom"
 
   const Stats = () => {
+    const [activeTab, setActiveTab] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const [userDetails, setUserDetails] = useState([]);
     const campCluster = Cookies.get("campId");
     const email = Cookies.get("campuseremail");
-    const [attendancedata, setAttendanceData] = useState([]);
+    const [statsdetails, setStatsDetails] = useState([]);
 
     useEffect(() => {
         const getVideos = async () => {
           setIsLoading(true)
           try{
-            const response = await fetch(`https://js-member-backend.vercel.app/getattendanceselfiedata/${campCluster}`);
+            const options = {
+                method :"POST",
+                headers : {
+                    "Content-Type" : "application/json"
+                },
+                body : JSON.stringify({email,campCluster,date:(new Date()).toLocaleDateString('en-GB')})
+            }
+            const response = await fetch(`https://js-member-backend.vercel.app/gettodaystats`,options);
             const data = await response.json()
-            const filteredList = (data.result).filter((ele) => (ele.campCluster===campCluster && ele.email===email))
-            setAttendanceData(filteredList)
-            // console.log(filteredMembers)
-            // setMembers(filteredMembers)
-            // setUsers(filteredTeams)
+            setStatsDetails(data.detailedstats)
             setIsLoading(false)
                 // console.log(data);
           }
@@ -43,18 +47,39 @@ import { Link } from "react-router-dom"
         <div className='main-header-container'>
             <h1 className='main-d2d'>Stats</h1>
         </div>
-        <div style={{marginBottom:'50px'}} className="scrollable-container">
+        <div style={{ backgroundColor: 'black', color: 'white' }} className="photos-upper-tabs-container">
+                  <div
+                    className={`photos-upper-tab ${activeTab === 0 ? 'active' : ''}`}
+                    onClick={() => setActiveTab(0)}
+                  >
+                    Today
+                  </div>
+                  <div
+                    className={`photos-upper-tab ${activeTab === 1 ? 'active' : ''}`}
+                    onClick={() => setActiveTab(1)}
+                  >
+                    Overall
+                  </div>
+                </div>
+        <div style={{marginBottom:'50px',marginTop:'30px'}} className="scrollable-container">
             <div className="d2d-container">
             {isLoading===false && (
-                <div style={{margin:'10px'}}>
+                <div style={{margin:'10px'}} className={`photos-tab-content ${activeTab === 0 ? 'active' : ''}`}>
                   <div className="stats-section-container">
-                    <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+                    <div>
                     <h3 className="stats-section-heading2">Attendance</h3>
-                    <Link to="/attendancestats">
-                    {/* <button type="button">More</button> */}
-                    </Link>
+                    <div className="avg-cards2">
+                        <h4>{statsdetails.attendancedetails}</h4>
+                        {/* <h4>Morning : {(attendancedata.filter((ele) => ele.date===(new Date()).toLocaleDateString('en-GB') && ele.period==="Morning")).length===0?'Absent':'Present'}</h4>
+                        <h4>Evening : {(attendancedata.filter((ele) => ele.date===(new Date()).toLocaleDateString('en-GB') && ele.period==="Evening")).length===0?'Absent':'Present'}</h4> */}
                     </div>
-                    <div style={{display:'flex',justifyContent:'space-evenly'}}>
+
+
+                    {/* <Link to="/attendancestats">
+                    <button type="button">More</button>
+                    </Link> */}
+                    </div>
+                    {/* <div style={{display:'flex',justifyContent:'space-evenly'}}>
                     <div className="avg-cards-daily-avg avg-cards2">
                         <h2 style={{color:'blue'}}>{(new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' }).replace(/(\d+)\s(\w+)/, '$2 $1'))}</h2>
                         <p style={{fontSize:'12px'}}>Today's Date</p>
@@ -72,17 +97,17 @@ import { Link } from "react-router-dom"
                         <p style={{fontSize:'13px'}}>Absent</p>
 
                     </div>
-                    </div>
+                    </div> */}
                     </div>
                     <div className="stats-section-container">
-                    <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
-                    <h3 className="stats-section-heading2">Household (Selfie)</h3>
-                    <Link to="/selfiestats">
-                    {/* <button type="button">More</button> */}
-                    </Link>
+                    <div>
+                    <h3 className="stats-section-heading2">Attendance (Selfie)</h3>
+                    <div className="avg-cards2 gr-bg2">
+                        <h4>Morning Selfie : {(statsdetails.morningattendanceselfiedetails)}</h4>
+                        <h4>Evening Selfie : {(statsdetails.eveningattendanceselfiedetails)}</h4>
                     </div>
-
-                    <div style={{display:'flex',justifyContent:'space-evenly'}}>
+                    </div>
+                    {/* <div style={{display:'flex',justifyContent:'space-evenly'}}>
                     <div className="avg-cards2">
                         <h2 style={{color:'blue'}}>5.5</h2>
                         <p style={{fontSize:'12px'}}>Daily Avg.</p>
@@ -95,96 +120,66 @@ import { Link } from "react-router-dom"
                         <h2 style={{color:'red'}}>1.5</h2>
                         <p style={{fontSize:'13px'}}>Monthly Avg.</p>
                     </div>
-                    </div>
+                    </div> */}
                     </div>
                     <div className="stats-section-container">
-                    <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+                    <div>
+                    <h3 className="stats-section-heading2">Household (Selfie)</h3>
+                    <div className="avg-cards2 gr-bg3">
+                        <h4>Total Selfie : {statsdetails.householdselfiedetails}</h4>
+                    </div>
+                    </div>
+                    {/* <div style={{display:'flex',justifyContent:'space-evenly'}}>
+                    <div className="avg-cards2">
+                        <h2 style={{color:'blue'}}>5.5</h2>
+                        <p style={{fontSize:'12px'}}>Daily Avg.</p>
+                    </div>
+                    <div className="avg-cards2">
+                        <h2 style={{color:'green'}}>2.15</h2>
+                        <p style={{fontSize:'12px'}}>Weekly Avg.</p>
+                    </div>
+                    <div className="avg-cards2">
+                        <h2 style={{color:'red'}}>1.5</h2>
+                        <p style={{fontSize:'13px'}}>Monthly Avg.</p>
+                    </div>
+                    </div> */}
+                    </div>
+                    <div className="stats-section-container">
+                    <div>
                     <h3 className="stats-section-heading2">Sansthapak Sadasya</h3>
-                    {/* <Link to="/attendancestats"> */}
-                    {/* <button type="button">More</button> */}
-                    {/* </Link> */}
+                    <div className="avg-cards2 gr-bg4">
+                        <h4>Total SS Reported  : {statsdetails.ssdetails}</h4>
+                        {/* <h4>No of Blocks : {(attendancedata.filter((ele) => ele.date===(new Date()).toLocaleDateString('en-GB') && ele.period==="Morning")).length===0?'Absent':'Present'}</h4>
+                        <h4>No of Villages : {(attendancedata.filter((ele) => ele.date===(new Date()).toLocaleDateString('en-GB') && ele.period==="Evening")).length===0?'Absent':'Present'}</h4> */}
+                    </div>
                     </div>
 
-                    <div style={{display:'flex',justifyContent:'space-evenly'}}>
-                    <div className="avg-cards2">
-                        <h2 style={{color:'blue'}}>{6.5}</h2>
-                        <p style={{fontSize:'12px'}}>Daily Avg.</p>
-                    </div>
-                    <div className="avg-cards2">
-                        <h2 style={{color:'green'}}>{2.2}</h2>
-                        <p style={{fontSize:'12px'}}>Weekly Avg.</p>
-                    </div>
-                    <div className="avg-cards2">
-                        <h2 style={{color:'red'}}>{1.6}</h2>
-                        <p style={{fontSize:'13px'}}>Monthly Avg.</p>
-                    </div>
-                    </div>
                     </div>
                     <div className="stats-section-container">
-                    <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+                    <div>
                     <h3 className="stats-section-heading2">Digital Influencer</h3>
-                    {/* <Link to="/attendancestats"> */}
-                    {/* <button type="button">More</button> */}
-                    {/* </Link> */}
-                    </div>    
-
-                    <div style={{display:'flex',justifyContent:'space-evenly'}}>
-                    <div className="avg-cards2">
-                        <h2 style={{color:'blue'}}>{6.6}</h2>
-                        <p style={{fontSize:'12px'}}>Daily Avg.</p>
-                    </div>
-                    <div className="avg-cards2">
-                        <h2 style={{color:'green'}}>{2.3}</h2>
-                        <p style={{fontSize:'12px'}}>Weekly Avg.</p>
-                    </div>
-                    <div className="avg-cards2">
-                        <h2 style={{color:'red'}}>{1.7}</h2>
-                        <p style={{fontSize:'13px'}}>Monthly Avg.</p>
+                    <div className="avg-cards2 gr-bg1">
+                        <h4>Total Digital Influencers Reported : {statsdetails.didetails}</h4>
+                        {/* <h4>Morning Selfie : {(attendancedata.filter((ele) => ele.date===(new Date()).toLocaleDateString('en-GB') && ele.period==="Morning")).length===0?'Absent':'Present'}</h4>
+                        <h4>Evening Selfie : {(attendancedata.filter((ele) => ele.date===(new Date()).toLocaleDateString('en-GB') && ele.period==="Evening")).length===0?'Absent':'Present'}</h4> */}
                     </div>
                     </div>
                     </div>
                     <div className="stats-section-container">
-                    <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+                    <div className="stats-section-container">
+                    <div>
                     <h3 className="stats-section-heading2">Coaching</h3>
-                    {/* <Link to="/attendancestats"> */}
-                    {/* <button type="button">More</button> */}
-                    {/* </Link> */}
+                    <div className="avg-cards2 gr-bg2">
+                    <h4>Total Coaching Reported : {statsdetails.coachingdetails}</h4>
                     </div>
-
-                    <div style={{display:'flex',justifyContent:'space-evenly'}}>
-                    <div className="avg-cards2">
-                        <h2 style={{color:'blue'}}>{6.7}</h2>
-                        <p style={{fontSize:'12px'}}>Daily Avg.</p>
-                    </div>
-                    <div className="avg-cards2">
-                        <h2 style={{color:'green'}}>{2.4}</h2>
-                        <p style={{fontSize:'12px'}}>Weekly Avg.</p>
-                    </div>
-                    <div className="avg-cards2">
-                        <h2 style={{color:'red'}}>{1.8}</h2>
-                        <p style={{fontSize:'13px'}}>Monthly Avg.</p>
                     </div>
                     </div>
                     </div>
                     <div className="stats-section-container">
-                    <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+                    <div>
                     <h3 className="stats-section-heading2">SS Vitran</h3>
-                    {/* <Link to="/attendancestats"> */}
-                    {/* <button type="button">More</button> */}
-                    {/* </Link> */}
-                    </div>
-                    <div style={{display:'flex',justifyContent:'space-evenly'}}>
-                    <div className="avg-cards2">
-                        <h2 style={{color:'blue'}}>{6.8}</h2>
-                        <p style={{fontSize:'12px'}}>Daily Avg.</p>
-                    </div>
-                    <div className="avg-cards2">
-                        <h2 style={{color:'green'}}>{2.5}</h2>
-                        <p style={{fontSize:'12px'}}>Weekly Avg.</p>
-                    </div>
-                    <div className="avg-cards2">
-                        <h2 style={{color:'red'}}>{1.9}</h2>
-                        <p style={{fontSize:'13px'}}>Monthly Avg.</p>
+                    <div className="avg-cards2 gr-bg3">
+                    <h4>Total SS Vitran Reported : {statsdetails.ssvitrandetails}</h4>
                     </div>
                     </div>
                     </div>

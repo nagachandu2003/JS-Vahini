@@ -29,11 +29,15 @@ const Report = () => {
       </div>
       <div  className='grid-container'>
         <div className='grid-row'>
+        <Link to='/attendanceselfie' className='grid-card grid-card-1'>
+            <FaCamera className='icon' />
+            <h2 className='heading-grid'>Attendance Selfie</h2>
+          </Link>
         <Link to='/selfie' className='grid-card grid-card-6'>
             <FaCamera className='icon' />
             <h2 className='heading-grid'>Household (Selfie)</h2>
           </Link>
-          <Link to='/d2d' className='grid-card grid-card-1'>
+          <Link to='/d2d' className='grid-card grid-card-3'>
             <FaDoorOpen className='icon' />
             <h2 className='heading-grid'>D2D Report</h2>
           </Link>
@@ -45,7 +49,7 @@ const Report = () => {
               Club
             </h2>
           </Link> */}
-          <Link to='/ss' className='grid-card grid-card-3'>
+          <Link to='/ss' className='grid-card grid-card-1'>
             <FaUserCheck className='icon' />
             <h2 className='heading-grid'>Sansthapak Sadasaya</h2>
           </Link>
@@ -64,10 +68,6 @@ const Report = () => {
           <Link to='/ssvitran' className='grid-card grid-card-6'>
             <FaUserEdit className='icon' />
             <h2 className='heading-grid'>SS Vitran</h2>
-          </Link>
-          <Link to='/attendanceselfie' className='grid-card grid-card-1'>
-            <FaCamera className='icon' />
-            <h2 className='heading-grid'>Attendance Selfie</h2>
           </Link>
           {/* <Link to='/maps' className='grid-card maps'>
             <FaMapLocationDot className='icon' />
