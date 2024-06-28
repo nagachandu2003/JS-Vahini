@@ -5,6 +5,7 @@
     border-radius:5px;
     padding:5px;
     color:white;
+    height:100px;
 }
 .gr-bg2{
     background: linear-gradient(to right, #8A2BE2, #20B2AA);
@@ -17,10 +18,10 @@
     background: linear-gradient(to right, #FF0000, #FF4500);
 }
 .stats-section-heading2{
-    margin-left:4%;
     color:white;
     margin-bottom:10px;
 }
+
 .avg-cards2 {
     background-color: #F9F9F9;
     border: 1px solid #E0E0E0;
@@ -28,7 +29,10 @@
     border-radius: 5px;
     margin: 5px;
     text-align: left;
-  }
+}
+.avg-cards2{
+    height:160px;
+}
 .present-text {
     color:green;
 }
