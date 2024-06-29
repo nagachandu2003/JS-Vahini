@@ -103,6 +103,7 @@ const BarChart = ({ data }) => {
     const [weeklyavg, setWeeklyAvg] = useState(0);
     const [monthlyavg, setMonthlyAvg] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
+    const [wholeattendance, setWholeAttendance] = useState([]);
     const campCluster = Cookies.get("campId");
     const [attendancedata, setAttendanceData] = useState([]);
     const [filtereddata, setFilteredData] = useState([]);
@@ -112,6 +113,18 @@ const BarChart = ({ data }) => {
     const [padayatrimembers, setPadayatriMembers] = useState(0);
     const [dayscholarmembers, setDayScholarMembers] = useState(0);
     const [todayattendancedata, setTodayAttendanceData] = useState([]);
+    const [padayatris, setPadayatris] = useState([]);
+    const [vahinis, setVahinis] = useState([]);
+    const [dayscholars, setDayScholars] = useState([]);
+    const [dailyAvgPadayatri, setDailyAvgPadayatri] = useState(0);
+    const [weeklyAvgPadayatri, setWeeklyAvgPadayatri] = useState(0);
+    const [monthlyAvgPadayatri, setMonthlyAvgPadayatri] = useState(0);
+    const [dailyAvgVahini, setDailyAvgVahini] = useState(0);
+    const [weeklyAvgVahini, setWeeklyAvgVahini] = useState(0);
+    const [monthlyAvgVahini, setMonthlyAvgVahini] = useState(0);
+    const [dailyAvgDayscholar, setDailyAvgDayscholar] = useState(0);
+    const [weeklyAvgDayscholar, setWeeklyAvgDayscholar] = useState(0);
+    const [monthlyAvgDayscholar, setMonthlyAvgDayscholar] = useState(0);
 
     const startIdx = currentPage * rowsPerPage;
     const endIdx = startIdx + rowsPerPage;
@@ -140,7 +153,7 @@ const BarChart = ({ data }) => {
               setVahiniMembers((dt.attendance).filter((ele) => ele.category==="Vahini").length)
               setDayScholarMembers((dt.attendance).filter((ele) => ele.category==="Day Scholar").length)
             }
-      
+            setWholeAttendance(AttendanceList)
             setAttendanceData(AttendanceList);
             filterAttendanceData(AttendanceList, startDate, endDate);
             setIsLoading(false);
@@ -153,8 +166,6 @@ const BarChart = ({ data }) => {
         getAttendanceData();
       }, [campCluster, startDate, endDate]);
 
-      
-
 
 
       const filterAttendanceData = (data, start, end) => {
@@ -164,28 +175,81 @@ const BarChart = ({ data }) => {
         ed.setHours(23, 59, 59, 999); // Set time to end of day for accurate comparison
 
         const filteredData = data.filter((ele) => {
-          const [day, month, year] = ele.attendanceDate.split('/');
-          const dateObject = new Date(year, month - 1, day);
-          dateObject.setHours(0, 0, 0, 0); // Set time to midnight for accurate comparison
-          
-          
-          return dateObject >= sd && dateObject <= ed;
+            const [day, month, year] = ele.attendanceDate.split('/');
+            const dateObject = new Date(year, month - 1, day);
+            dateObject.setHours(0, 0, 0, 0); // Set time to midnight for accurate comparison
+            return dateObject >= sd && dateObject <= ed;
         });
-        const totalPresent = filteredData.reduce((sum, ele) => sum + ele.present, 0);
-        const daysDiff = Math.ceil((ed - sd) / (1000 * 60 * 60 * 24)) + 1; // +1 to include both start and end dates
-        const weeksDiff = daysDiff / 7;
-        const monthsDiff = (ed.getFullYear() - sd.getFullYear()) * 12 + ed.getMonth() - sd.getMonth() + 1;
 
-        const dailyAvg = totalPresent / daysDiff;
-        const weeklyAvg = totalPresent / weeksDiff;
-        const monthlyAvg = totalPresent / monthsDiff;
+        const categories = ['Padayatri', 'Vahini', 'Day Scholar'];
+        categories.forEach(category => {
+            const categoryData = filteredData.flatMap(record => 
+                record.attendance.filter(att => att.category === category && att.status === 'present')
+            );
+
+            const totalPresent = categoryData.length;
+            const daysDiff = Math.ceil((ed - sd) / (1000 * 60 * 60 * 24)) + 1; // +1 to include both start and end dates
+            const weeksDiff = daysDiff / 7;
+            const monthsDiff = (ed.getFullYear() - sd.getFullYear()) * 12 + ed.getMonth() - sd.getMonth() + 1;
+
+            const dailyAvg = totalPresent / daysDiff;
+            const weeklyAvg = totalPresent / weeksDiff;
+            const monthlyAvg = totalPresent / monthsDiff;
+
+            switch (category) {
+                case 'Padayatri':
+                    setDailyAvgPadayatri(Math.round(dailyAvg * 100) / 100);
+                    setWeeklyAvgPadayatri(Math.round(weeklyAvg * 100) / 100);
+                    setMonthlyAvgPadayatri(Math.round(monthlyAvg * 100) / 100);
+                    break;
+                case 'Vahini':
+                    setDailyAvgVahini(Math.round(dailyAvg * 100) / 100);
+                    setWeeklyAvgVahini(Math.round(weeklyAvg * 100) / 100);
+                    setMonthlyAvgVahini(Math.round(monthlyAvg * 100) / 100);
+                    break;
+                case 'Day Scholar':
+                    setDailyAvgDayscholar(Math.round(dailyAvg * 100) / 100);
+                    setWeeklyAvgDayscholar(Math.round(weeklyAvg * 100) / 100);
+                    setMonthlyAvgDayscholar(Math.round(monthlyAvg * 100) / 100);
+                    break;
+                default:
+                    break;
+            }
+        });
 
         setFilteredData(filteredData);
-        setDailyAvg(Math.round(dailyAvg * 100) / 100);
-        setWeeklyAvg(Math.round(weeklyAvg * 100) / 100);
-        setMonthlyAvg(Math.round(monthlyAvg * 100) / 100);
+    };
 
-      };
+
+      // const filterAttendanceData = (data, start, end) => {
+      //   const sd = new Date(start);
+      //   sd.setHours(0, 0, 0, 0);
+      //   const ed = new Date(end);
+      //   ed.setHours(23, 59, 59, 999); // Set time to end of day for accurate comparison
+
+      //   const filteredData = data.filter((ele) => {
+      //     const [day, month, year] = ele.attendanceDate.split('/');
+      //     const dateObject = new Date(year, month - 1, day);
+      //     dateObject.setHours(0, 0, 0, 0); // Set time to midnight for accurate comparison
+          
+          
+      //     return dateObject >= sd && dateObject <= ed;
+      //   });
+      //   const totalPresent = filteredData.reduce((sum, ele) => sum + ele.present, 0);
+      //   const daysDiff = Math.ceil((ed - sd) / (1000 * 60 * 60 * 24)) + 1; // +1 to include both start and end dates
+      //   const weeksDiff = daysDiff / 7;
+      //   const monthsDiff = (ed.getFullYear() - sd.getFullYear()) * 12 + ed.getMonth() - sd.getMonth() + 1;
+
+      //   const dailyAvg = totalPresent / daysDiff;
+      //   const weeklyAvg = totalPresent / weeksDiff;
+      //   const monthlyAvg = totalPresent / monthsDiff;
+
+      //   setFilteredData(filteredData);
+      //   setDailyAvg(Math.round(dailyAvg * 100) / 100);
+      //   setWeeklyAvg(Math.round(weeklyAvg * 100) / 100);
+      //   setMonthlyAvg(Math.round(monthlyAvg * 100) / 100);
+
+      // };
       
       const onChangeStartDate = (event) => {
         const newStartDate = event.target.value;
@@ -299,42 +363,43 @@ const BarChart = ({ data }) => {
             <div className="d2d-container">
             {isLoading===false && (
                 <div>
-                <div style={{width:'100%'}}>
-                    <input value={startDate} className="datefilter" type="date" onChange={onChangeStartDate}/>
-                    <input value={endDate} className="datefilter" type="date" onChange={onChangeEndDate}/>
-                </div>
+                
                 <div className="stats-section-container">
-                    <h3 className="stats-section-heading">Numbers</h3>
-                    <h3 className="stats-section-heading">Today</h3>
+                    <h1 className="stats-section-heading">Today</h1>
                     <div style={{display:'flex',justifyContent:'space-evenly'}}>
-                    <div className="avg-cards2">
-                        <h2 style={{color:'blue'}}>{padayatrimembers}</h2>
-                        <p style={{fontSize:'12px'}}>Padayatri</p>
+                    <div className="avg-cards-attstats">
+                        <h1 style={{color:'blue'}}>{padayatrimembers}</h1>
+                        <p className = "attendance-stats-par">Padayatri</p>
                     </div>
-                    <div className="avg-cards2">
-                        <h2 style={{color:'green'}}>{vahinimembers}</h2>
-                        <p style={{fontSize:'12px'}}>Vahini</p>
+                    <div className="avg-cards-attstats">
+                        <h1 style={{color:'green'}}>{vahinimembers}</h1>
+                        <p className = "attendance-stats-par">Vahini</p>
                     </div>
-                    <div className="avg-cards2">
-                        <h2 style={{color:'red'}}>{dayscholarmembers}</h2>
-                        <p style={{fontSize:'12px'}}>Day Scholar</p>
+                    <div className="avg-cards-attstats">
+                        <h1 style={{color:'red'}}>{dayscholarmembers}</h1>
+                        <p className = "attendance-stats-par">Day Scholar</p>
                     </div>
                     </div>
 
-                    <div style={{display:'flex',justifyContent:'space-evenly'}}>
-                    <div className="avg-cards2">
-                        <h2 style={{color:'blue'}}>{dailyavg}</h2>
-                        <p style={{fontSize:'12px'}}>Daily Avg.</p>
+                    {/* <div style={{display:'flex',justifyContent:'space-evenly'}}>
+                    <div className="avg-cards-attstats">
+                        <h1 style={{color:'blue'}}>{dailyavg}</h1>
+                        <p className = "attendance-stats-par">Daily Avg.</p>
                     </div>
-                    <div className="avg-cards2">
-                        <h2 style={{color:'green'}}>{weeklyavg}</h2>
-                        <p style={{fontSize:'12px'}}>Weekly Avg.</p>
+                    <div className="avg-cards-attstats">
+                        <h1 style={{color:'green'}}>{weeklyavg}</h1>
+                        <p className = "attendance-stats-par">Weekly Avg.</p>
                     </div>
-                    <div className="avg-cards2">
-                        <h2 style={{color:'red'}}>{monthlyavg}</h2>
-                        <p style={{fontSize:'12px'}}>Monthly Avg.</p>
+                    <div className="avg-cards-attstats">
+                        <h1 style={{color:'red'}}>{monthlyavg}</h1>
+                        <p className = "attendance-stats-par">Monthly Avg.</p>
                     </div>
-                    </div>
+                    </div> */}
+
+                    <h1 className="stats-section-heading">Overall</h1>
+                    <div style={{width:'100%'}}>
+                    <input value={startDate} className="datefilter" type="date" onChange={onChangeStartDate}/>
+                    <input value={endDate} className="datefilter" type="date" onChange={onChangeEndDate}/>
                 </div>
                 <div className="stats-section-container">
                     <h3 className="stats-section-heading">Table</h3>
@@ -369,6 +434,58 @@ const BarChart = ({ data }) => {
                 </button>
             </div>
                 </div>
+                <h2 className="stats-section-heading">Padayatri</h2>
+                    <div style={{display:'flex',justifyContent:'space-evenly'}}>
+                    <div className="avg-cards-attstats">
+                        <h1 style={{color:'blue'}}>{dailyAvgPadayatri}</h1>
+                        <p className = "attendance-stats-par">Daily Avg.</p>
+                    </div>
+                    <div className="avg-cards-attstats">
+                        <h1 style={{color:'green'}}>{weeklyAvgPadayatri}</h1>
+                        <p className = "attendance-stats-par">Weekly Avg.</p>
+                    </div>
+                    <div className="avg-cards-attstats">
+                        <h1 style={{color:'red'}}>{monthlyAvgPadayatri}</h1>
+                        <p className = "attendance-stats-par">Monthly Avg.</p>
+                    </div>
+                    </div>
+
+
+                    <h2 className="stats-section-heading">Vahini</h2>
+                    <div style={{display:'flex',justifyContent:'space-evenly'}}>
+                    <div className="avg-cards-attstats">
+                        <h1 style={{color:'blue'}}>{dailyAvgVahini}</h1>
+                        <p className = "attendance-stats-par">Daily Avg.</p>
+                    </div>
+                    <div className="avg-cards-attstats">
+                        <h1 style={{color:'green'}}>{weeklyAvgVahini}</h1>
+                        <p className = "attendance-stats-par">Weekly Avg.</p>
+                    </div>
+                    <div className="avg-cards-attstats">
+                        <h1 style={{color:'red'}}>{monthlyAvgVahini}</h1>
+                        <p className = "attendance-stats-par">Monthly Avg.</p>
+                    </div>
+                    </div>
+                    
+
+                    <h2 className="stats-section-heading">Day Scholar</h2>
+                    <div style={{display:'flex',justifyContent:'space-evenly',marginBottom:'80px'}}>
+                    <div className="avg-cards-attstats">
+                        <h1 style={{color:'blue'}}>{dailyAvgDayscholar}</h1>
+                        <p className = "attendance-stats-par">Daily Avg.</p>
+                    </div>
+                    <div className="avg-cards-attstats">
+                        <h1 style={{color:'green'}}>{weeklyAvgDayscholar}</h1>
+                        <p className = "attendance-stats-par">Weekly Avg.</p>
+                    </div>
+                    <div className="avg-cards-attstats">
+                        <h1 style={{color:'red'}}>{monthlyAvgDayscholar}</h1>
+                        <p className = "attendance-stats-par">Monthly Avg.</p>
+                    </div>
+                    </div>
+                    
+                </div>
+                
                 {/* <div className="stats-section-container">
                     <h3 className="stats-section-heading">Table</h3>
                     <table>
