@@ -4,6 +4,8 @@ import Footer from '../Footer';
 import "./index.css";
 import { googleLogout } from '@react-oauth/google';
 import Cookies from 'js-cookie'
+import { BiIdCard } from 'react-icons/bi';
+import { Link } from 'react-router-dom';
 
 const AdminProfile = () => {
   const [isLoading,setIsLoading] = useState(false);
@@ -83,6 +85,11 @@ const AdminProfile = () => {
         </div> */}
         <div className='profile-bottom-email'>
           <FaEnvelope className='profile-bottom-logo'/> {emailId}
+        </div>
+        <div className='profile-bottom-email'>
+          <Link to="/kyc" style={{textDecoration:'none',color: '#4f4f4f'}}>
+          <BiIdCard className='profile-bottom-logo'/> KYC
+          </Link>
         </div>
         {/* <div className='profile-bottom-camp-id'>
           <FaIdCard className='profile-bottom-logo'/> Camp ID

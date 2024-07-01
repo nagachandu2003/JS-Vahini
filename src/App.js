@@ -41,6 +41,7 @@ import AdminWhatsapp from './components/AdminWhatsapp';
 import AttendanceStats from './components/AttendanceStats';
 import SelfieStats from './components/SelfieStats';
 import AttendanceSelfie from './components/TopTabs/AttendanceSelfie';
+import KYC from './components/KYC';
 
 const App = () => {
   const userexists = Cookies.get("campuseremail");
@@ -89,6 +90,7 @@ const App = () => {
     <Route path="/attendancestats" element={<AttendanceStats/>}/>
     <Route path="/selfiestats" element={<SelfieStats/>}/>
     <Route path="/attendanceselfie" element={<AttendanceSelfie/>}/>
+    <Route path="/kyc" element={<KYC/>}/>
   </Routes>
   </BrowserRouter>
   )
