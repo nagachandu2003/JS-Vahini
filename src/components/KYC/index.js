@@ -19,6 +19,7 @@ const KYC = () => {
     const [aadharPhotoBase64, setAadhaarPhotoBase64] = useState('');
     const [isLoading, setIsLoading] = useState('false')
     const [userDetails,setUserDetails] = useState('')
+    const campCluster = Cookies.get("campId")
 
     const navigate = useNavigate();
 
@@ -100,6 +101,7 @@ const KYC = () => {
 
 
     const postKYC = async (obj) => {
+        console.log(obj)
         const email = Cookies.get("campuseremail");
         try {
             const options = {
@@ -135,8 +137,8 @@ const KYC = () => {
             // city,
             aadharNumber,
             aadharPhoto,
+            campCluster
         };
-        // console.log(formData)
         postKYC(formData)
         setName('');
         setBankName('');
@@ -163,7 +165,7 @@ const KYC = () => {
                     </div>
                 </div>
                 {isLoading===true && (
-                        <div className="ytmchome-content-container" style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center'}}>
+                        <div className="ytmchome-content-container" style={{display:'flex',flexDirection:'column',justifyContent:'center',alignItems:'center',backgroundColor:'black',minHeight:'100vh'}}>
                                 <ThreeDots color="gray" height={50} width={50}/>
                         </div>
                 )}

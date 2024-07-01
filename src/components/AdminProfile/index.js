@@ -86,8 +86,8 @@ const AdminProfile = () => {
         <div className='profile-bottom-email'>
           <FaEnvelope className='profile-bottom-logo'/> {emailId}
         </div>
-        <div className='profile-bottom-email'>
-          <Link to="/kyc" style={{textDecoration:'none',color: '#4f4f4f'}}>
+        <div className='profile-bottom-email' style={{color:'white'}}>
+          <Link to="/kyc" style={{textDecoration:'none',color: 'white'}}>
           <BiIdCard className='profile-bottom-logo'/> KYC
           </Link>
         </div>

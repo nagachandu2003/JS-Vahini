@@ -74,7 +74,7 @@ const Profile = () => {
       )
       }
       {isLoading===false && (
-      <div className='main-content'>
+      <div className='main-content' style={{backgroundColor:'black'}}>
       <div className='profile-top-container'>
         <img src="https://res.cloudinary.com/dvwnbhpcy/image/upload/v1715776970/istockphoto-1495088043-612x612-removebg-preview_hdifqs.png" alt="profile" className='profile-logo' />
         <p className='profile-name'>{users.name}</p>
@@ -92,7 +92,7 @@ const Profile = () => {
           <FaEnvelope className='profile-bottom-logo'/> {emailId}
         </div>
         <div className='profile-bottom-email'>
-          <Link to="/kyc" style={{textDecoration:'none',color: '#4f4f4f'}}>
+          <Link to="/kyc" style={{textDecoration:'none',color: 'white'}}>
           <BiIdCard className='profile-bottom-logo'/> KYC
           </Link>
         </div>

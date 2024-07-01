@@ -25,6 +25,7 @@ const CampLogin = () => {
     if(data.success===true )
     {
       setUser1('member')
+      Cookies.set("campId",(data.result).campCluster);
       return true
     }
     else if(data.success==="pending")
