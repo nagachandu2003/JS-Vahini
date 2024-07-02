@@ -14,7 +14,7 @@ import { MdPhotoSizeSelectActual } from "react-icons/md";
 import { FaMapLocationDot } from "react-icons/fa6";
 import { FaCamera } from "react-icons/fa";
 import Footer from '../../Footer'
-import { BiSolidInstitution } from "react-icons/bi";
+import { BiIdCard, BiSolidInstitution } from "react-icons/bi";
 import Cookies from 'js-cookie'
 
 import './index.css';
@@ -40,6 +40,10 @@ const Report = () => {
           <Link to='/d2d' className='grid-card grid-card-3'>
             <FaDoorOpen className='icon' />
             <h2 className='heading-grid'>D2D Report</h2>
+          </Link>
+          <Link to='/kyc' className='grid-card grid-card-5'>
+            <BiIdCard className='icon' />
+            <h2 className='heading-grid'>KYC</h2>
           </Link>
           {/* <Link to='/yc' className='grid-card grid-card-2'>
             <FaUserFriends className='icon' />

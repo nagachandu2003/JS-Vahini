@@ -41,7 +41,7 @@ import AdminWhatsapp from './components/AdminWhatsapp';
 import AttendanceStats from './components/AttendanceStats';
 import SelfieStats from './components/SelfieStats';
 import AttendanceSelfie from './components/TopTabs/AttendanceSelfie';
-import KYC from './components/KYC';
+import KYC from './components/TopTabs/KYC';
 
 const App = () => {
   const userexists = Cookies.get("campuseremail");

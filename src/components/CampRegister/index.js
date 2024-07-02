@@ -473,6 +473,9 @@ const CampRegister = () => {
     const [village, setVillage] = useState('');
     const [aadhaarNo, setAadhaarNo] = useState('');
     const [language, setLanguage] = useState('english');
+    const [highestQualification, setHighestQualification] = useState('');
+    const [cv, setCV] = useState('');
+    const [aadharCard, setAadharCard] = useState('');
 
 
     const navigate = useNavigate();
@@ -506,6 +509,29 @@ const CampRegister = () => {
       else
       setLanguage("english")
     }
+    const getUrl = async (file) => {
+      const formData = new FormData();
+      formData.append('file', file);
+  
+      try {
+        const response = await fetch('https://js-member-backend.vercel.app/upload', {method:"POST",body:formData});
+        const data = await response.json()
+        return data.Location
+      } catch (error) {
+        alert("File Upload Failed")
+        console.error('Error uploading file:', error.response ? error.response.data : error.message);
+      }
+    }
+    const onChangeCV = async (event) => {
+      const cvfile = event.target.files[0];
+      const cvlink = await getUrl(cvfile);
+      setCV(cvlink)
+    }
+    const onChangeAadharCard = async (event) => {
+      const aadharcard = event.target.files[0];
+      const aadharlink = await getUrl(aadharcard);
+      setAadharCard(aadharlink)
+    }
 
     
 
@@ -529,6 +555,7 @@ const CampRegister = () => {
         if(district==="SELECT")
           alert("Please fill the district")
         else {
+          if(cv && aadharCard){
         const formData = {
             name,
             campCluster,
@@ -550,14 +577,24 @@ const CampRegister = () => {
             date : currDate,
             time : currTime,
             person:"member",
-            addedToTeam : false
+            addedToTeam : false,
+            highestQualification,
+            cv,
+            aadharCard
         };
-        // console.log(formData)
-        // postData(formData);
-        // history.replace("/regpending")
+        setCV('')
+        setAadharCard('')
+        console.log(formData)
         navigate("/capturephoto", { state: formData},{replace:true})
         // navigate("/regpending",{replace:true})
-        setRegisteredStatus(!registeredStatus);
+        setRegisteredStatus(!registeredStatus); 
+      }
+      else{
+        alert("Files are uploading")
+      }
+        // postData(formData);
+        // history.replace("/regpending")
+
       }
     };
 
@@ -578,6 +615,9 @@ const CampRegister = () => {
     const aadharnolabel = language==="english"?"Aadhaar Number":"आधार नंबर"
     const mobilenolabel = language==="english"?"Mobile Number":"मोबाईल नंबर"
     const referrallabel = language==="english"?"Referral":"किसके द्वारा लाए गए"
+    const highestqualificationlabel = language==="english"?"Highest Qualification":"उच्चतम योग्यता"
+    const cvlabel = language==="english"?"CV":"सीवी";
+    const aadharcardlabel = language==="english"?"Aadhar":"आधार" 
 
     return (
       <div className="ytmcregister-main-container">
@@ -651,17 +691,34 @@ const CampRegister = () => {
         {district && blocks[district].map((ele) => (<option key={ele} value={ele}>{ele}</option>))}
     </select>
 </div>
+
+            <div className="ytmcregister-cont-ele">
+              <label htmlFor="highestqualification">{highestqualificationlabel}</label>
+              <br/>
+              <input placeholder="Enter the Highest Qualification" onChange={(e) => setHighestQualification(e.target.value)} className="ytmcregister-user-input" type="text" id="highestqualification" required/>
+              </div>
               {/* <div className="ytmcregister-cont-ele">
                   <label htmlFor="photo">Photo</label>
                   <br/>
                   <input className="ytmcregister-user-input" onChange={onChangePhoto} type="file" id="photo" required/>
               </div> */}
+              <div className="ytmcregister-cont-ele">
+              <label htmlFor="cv">{cvlabel}</label>
+              <br/>
+              <input onChange={onChangeCV} className="ytmcregister-user-input" type="file" id="cv" required/>
+          </div>
 
-<div className="ytmcregister-cont-ele">
+          <div className="ytmcregister-cont-ele">
+              <label htmlFor="aadharcard">{aadharcardlabel}</label>
+              <br/>
+              <input onChange={onChangeAadharCard} className="ytmcregister-user-input" type="file" id="aadharcard" required/>
+          </div>
+
+          <div className="ytmcregister-cont-ele">
               <label htmlFor="panchayat">{panchayatlabel}</label>
               <br/>
               <input placeholder="Enter the Panchayat" onChange={onChangePanchayat} className="ytmcregister-user-input" type="text" id="panchayat" required/>
-              </div>
+          </div>
 
               <div className="ytmcregister-cont-ele">
               <label htmlFor="village">{villagelabel}</label>

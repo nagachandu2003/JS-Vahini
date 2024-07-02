@@ -11,6 +11,12 @@ import { Link } from "react-router-dom"
     const campCluster = Cookies.get("campId");
     const email = Cookies.get("campuseremail");
     const [statsdetails, setStatsDetails] = useState([]);
+    const [endDate,setEndDate] = useState((new Date()).toISOString().split('T')[0]);
+    const [startDate,setStartDate] = useState(() => {
+        const date = new Date();
+        date.setDate(date.getDate() - 30);
+        return date.toISOString().split('T')[0];
+    });
 
     useEffect(() => {
         const getVideos = async () => {
@@ -69,9 +75,12 @@ import { Link } from "react-router-dom"
                   <div className="stats-section-container">
                     <div>
                     
-                    <div style={{height:'100px'}} className="avg-cards2">
-                    <h3 className="stats-section-heading2">Attendance</h3>
+                    <div style={{height:'100px',color:'black',display:'flex',justifyContent:'space-between'}} className="avg-cards2">
+                        <div>
+                    <h3 style={{color:'black'}} className="stats-section-heading2">Attendance</h3>
                         <h4>{statsdetails.attendancedetails}</h4>
+                        </div>
+                        <h1 className="number-size">{statsdetails.attendancedetails==="Absent"?0:1}</h1>
                         {/* <h4>Morning : {(attendancedata.filter((ele) => ele.date===(new Date()).toLocaleDateString('en-GB') && ele.period==="Morning")).length===0?'Absent':'Present'}</h4>
                         <h4>Evening : {(attendancedata.filter((ele) => ele.date===(new Date()).toLocaleDateString('en-GB') && ele.period==="Evening")).length===0?'Absent':'Present'}</h4> */}
                     </div>
@@ -104,10 +113,13 @@ import { Link } from "react-router-dom"
                     <div className="stats-section-container">
                     <div>
 
-                    <div style={{height:'100px'}} className="avg-cards2 gr-bg2">
+                    <div style={{height:'100px',display:'flex',justifyContent:'space-between'}} className="avg-cards2 gr-bg2">
+                    <div>
                     <h3 className="stats-section-heading2">Attendance (Selfie)</h3>
-                        <h4>Morning Selfie : {(statsdetails.morningattendanceselfiedetails)}</h4>
-                        <h4>Evening Selfie : {(statsdetails.eveningattendanceselfiedetails)}</h4>
+                        <h4>Morning : {(statsdetails.morningattendanceselfiedetails)}</h4>
+                        <h4>Evening : {(statsdetails.eveningattendanceselfiedetails)}</h4>
+                    </div>
+                        <h1 className="number-size">{(statsdetails.morningattendanceselfiedetails)==="Absent"?0:1}{(statsdetails.eveningattendanceselfiedetails)==="Absent"?0:1}</h1>
                     </div>
                     </div>
                     {/* <div style={{display:'flex',justifyContent:'space-evenly'}}>
@@ -128,9 +140,13 @@ import { Link } from "react-router-dom"
                     <div className="stats-section-container">
                     <div>
 
-                    <div style={{height:'100px'}} className="avg-cards2 gr-bg3">
+                    <div style={{height:'100px',display:'flex',justifyContent:'space-between'}} className="avg-cards2 gr-bg3">
+                        <div>
                     <h3 style={{color:'black'}} className="stats-section-heading2">Household (Selfie)</h3>
-                        <h4>Total Selfie : {statsdetails.householdselfiedetails}</h4>
+                        <h4>Total Selfie :</h4>
+                        </div>
+                        <h1 className="number-size">25</h1>
+                        {/* <h1 className="number-size">{statsdetails.householdselfiedetails}</h1> */}
                     </div>
                     </div>
                     {/* <div style={{display:'flex',justifyContent:'space-evenly'}}>
@@ -151,9 +167,13 @@ import { Link } from "react-router-dom"
                     <div className="stats-section-container">
                     <div>
 
-                    <div style={{height:'100px'}} className="avg-cards2 gr-bg4">
+                    <div style={{height:'100px',display:'flex',justifyContent:'space-between'}} className="avg-cards2 gr-bg4">
+                        <div>
                     <h3 className="stats-section-heading2">Sansthapak Sadasya</h3>
-                        <h4>Total SS Reported  : {statsdetails.ssdetails}</h4>
+                        <h4>Total SS Reported  : </h4>
+                        </div>
+                        <h1 className="number-size">37</h1>
+                        {/* <h1 className="number-size">{statsdetails.ssdetails}</h1> */}
                         {/* <h4>No of Blocks : {(attendancedata.filter((ele) => ele.date===(new Date()).toLocaleDateString('en-GB') && ele.period==="Morning")).length===0?'Absent':'Present'}</h4>
                         <h4>No of Villages : {(attendancedata.filter((ele) => ele.date===(new Date()).toLocaleDateString('en-GB') && ele.period==="Evening")).length===0?'Absent':'Present'}</h4> */}
                     </div>
@@ -163,9 +183,13 @@ import { Link } from "react-router-dom"
                     <div className="stats-section-container">
                     <div>
 
-                    <div style={{height:'100px'}} className="avg-cards2 gr-bg1">
+                    <div style={{height:'100px',display:'flex',justifyContent:'space-between'}} className="avg-cards2 gr-bg1">
+                        <div>
                     <h3 className="stats-section-heading2">Digital Influencer</h3>
-                        <h4>Total Digital Influencers Reported : {statsdetails.didetails}</h4>
+                        <h4>Total DI Reported : </h4>
+                        </div>
+                        <h1 className="number-size">58</h1>
+                        {/* <h1 className="number-size">{statsdetails.didetails}</h1> */}
                         {/* <h4>Morning Selfie : {(attendancedata.filter((ele) => ele.date===(new Date()).toLocaleDateString('en-GB') && ele.period==="Morning")).length===0?'Absent':'Present'}</h4>
                         <h4>Evening Selfie : {(attendancedata.filter((ele) => ele.date===(new Date()).toLocaleDateString('en-GB') && ele.period==="Evening")).length===0?'Absent':'Present'}</h4> */}
                     </div>
@@ -175,9 +199,13 @@ import { Link } from "react-router-dom"
                     <div className="stats-section-container">
                     <div>
 
-                    <div style={{height:'100px'}} className="avg-cards2 gr-bg2">
+                    <div style={{height:'100px',display:'flex',justifyContent:'space-between'}} className="avg-cards2 gr-bg2">
+                        <div>
                     <h3 className="stats-section-heading2">Coaching</h3>
-                    <h4>Total Coaching Reported : {statsdetails.coachingdetails}</h4>
+                    <h4>Total Coaching Reported : </h4>
+                    </div>
+                    <h1 className="number-size">89</h1>
+                    {/* <h1 className="number-size">{statsdetails.coachingdetails}</h1> */}
                     </div>
                     </div>
                     </div>
@@ -185,9 +213,13 @@ import { Link } from "react-router-dom"
                     <div className="stats-section-container">
                     <div>
 
-                    <div style={{height:'100px'}} className="avg-cards2 gr-bg3">
+                    <div style={{height:'100px',display:'flex',justifyContent:'space-between'}} className="avg-cards2 gr-bg3">
+                        <div>
                     <h3 style={{color:'black'}} className="stats-section-heading2">SS Vitran</h3>
-                    <h4>Total SS Vitran Reported : {statsdetails.ssvitrandetails}</h4>
+                    <h4>Total SS Vitran Reported : </h4>
+                    </div>
+                    <h1 className="number-size">86</h1>
+                    {/* <h1 className="number-size">{statsdetails.ssvitrandetails}</h1> */}
                     </div>
                     </div>
                     </div>
@@ -195,13 +227,35 @@ import { Link } from "react-router-dom"
                 <div style={{margin:'10px'}} className={`photos-tab-content ${activeTab === 1 ? 'active' : ''}`}>
                 <div className="stats-section-container">
                   <div>
-                  
-                  <div className="avg-cards2">
+                    <div style={{display:'flex',alignItems:'center'}}>
+                        <div style={{color:'white',width:'50%',textAlign:'center'}}>
+                            <h3>Date</h3>
+                            <h4>{(new Date(startDate)).toLocaleDateString('en-GB')}</h4>
+                            <h4>{(new Date(endDate)).toLocaleDateString('en-GB')}</h4>
+                        </div>
+                        <div style={{width:'50%',textAlign:'center'}}>
+                            <h3 style={{color:'white'}}>Date Filter</h3>
+                    <div className="date-input-container">
+                    <i className="fas fa-calendar-alt icon"></i>
+                    <input style={{border:'none',outline:'none'}} type="date" onChange={(e) => setStartDate(e.target.value)} value={startDate}/>
+                    </div>
+                    <div className="date-input-container">
+                        <i className="fas fa-clock icon"></i>
+                        <input style={{border:'none',outline:'none'}} type="date" onChange={(e) => setEndDate(e.target.value)} value={endDate}/>
+                    </div>
+                    </div>
+                    </div>
+                  <div style={{display:'flex',justifyContent:'space-between',marginTop:'15px'}} className="avg-cards2">
+                <div>
                   <h3 className="stats-section-heading2">Attendance</h3>
-                      <h4>Total Present : {0}</h4>
-                      <h4>Daily Avg    : {0}</h4>
+                  <h4>Total</h4>
+                  </div>
+                  <h1 className="number-size">{23}</h1>
+                  {/* <h3>{(new Date().toLocaleString('default',{month:'long'}))}</h3> */}
+                      {/* <h4>Total Present : {0}</h4> */}
+                      {/* <h4>Daily Avg    : {0}</h4>
                       <h4>Weekly Avg    : {0}</h4>
-                      <h4>Monthly Avg    : {0}</h4>
+                      <h4>Monthly Avg    : {0}</h4> */}
                       {/* <h4>Morning : {(attendancedata.filter((ele) => ele.date===(new Date()).toLocaleDateString('en-GB') && ele.period==="Morning")).length===0?'Absent':'Present'}</h4>
                       <h4>Evening : {(attendancedata.filter((ele) => ele.date===(new Date()).toLocaleDateString('en-GB') && ele.period==="Evening")).length===0?'Absent':'Present'}</h4> */}
                   </div>
@@ -236,10 +290,17 @@ import { Link } from "react-router-dom"
 
                   <div className="avg-cards2 gr-bg2">
                   <h3 className="stats-section-heading2">Attendance (Selfie)</h3>
-                      <h4>Total Attendance Selfie : {0}</h4>
-                      <h4>Daily Avg              : {0}</h4>
-                      <h4>Weekly Avg             : {0}</h4>
-                      <h4>Monthly Avg            : {0}</h4>
+                  <div style={{display:'flex',justifyContent:'space-evenly',alignItems:'center'}}>
+                    <div>
+                        <h1 className="number-size">24</h1>
+                        <p>Morning</p>
+                    </div>
+                    <div>
+                        <h1 className="number-size">26</h1>
+                        <p>Evening</p>
+                    </div>
+                  </div>
+                      {/* <h4>Total Attendance Selfie : {0}</h4> */}
                       {/* <h4>Morning Selfie : {(statsdetails.morningattendanceselfiedetails)}</h4>
                       <h4>Evening Selfie : {(statsdetails.eveningattendanceselfiedetails)}</h4> */}
                   </div>
@@ -264,10 +325,28 @@ import { Link } from "react-router-dom"
 
                   <div className="avg-cards2 gr-bg3">
                   <h3 style={{color:'black'}} className="stats-section-heading2">Household (Selfie)</h3>
-                      <h4>Total Selfie : {0}</h4>
+                  <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+                    <div>
+                        <h1 className="number-size">26</h1>
+                        <p>Total Selfie</p>
+                    </div>
+                    <div>
+                        <h1 className="number-size">44</h1>
+                        <p>Daily Avg</p>
+                    </div>
+                    <div>
+                        <h1 className="number-size">66</h1>
+                        <p>Weekly Avg</p>
+                    </div>
+                    <div>
+                        <h1 className="number-size">28</h1>
+                        <p>Monthly Avg</p>
+                    </div>
+                  </div>
+                      {/* <h4>Total Selfie : {0}</h4>
                       <h4>Daily Avg              : {0}</h4>
                       <h4>Weekly Avg             : {0}</h4>
-                      <h4>Monthly Avg            : {0}</h4>
+                      <h4>Monthly Avg            : {0}</h4> */}
                   </div>
                   </div>
                   {/* <div style={{display:'flex',justifyContent:'space-evenly'}}>
@@ -290,7 +369,7 @@ import { Link } from "react-router-dom"
 
                   <div className="avg-cards2 gr-bg4">
                   <h3 className="stats-section-heading2">Sansthapak Sadasya</h3>
-                      <h4>Total SS Reported  : {6}</h4>
+                      <h4>Total SS Reported  : {0}</h4>
                       <h4>Daily Avg              : {0}</h4>
                       <h4>Weekly Avg             : {0}</h4>
                       <h4>Monthly Avg            : {0}</h4>

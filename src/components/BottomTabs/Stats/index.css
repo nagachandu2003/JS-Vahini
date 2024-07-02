@@ -39,3 +39,20 @@
 .absent-text{
     color:red;
 }
+.number-size{
+    font-size:40px;
+}
+.date-input-container {
+    position: relative;
+    display: inline-block;
+}
+.date-input-container input {
+padding-left: 30px;
+}
+.date-input-container .icon {
+position: absolute;
+left: 10px;
+top: 50%;
+transform: translateY(-50%);
+pointer-events: none;
+}

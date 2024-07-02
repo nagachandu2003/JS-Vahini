@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
 import "./index.css"
 import Cookies from 'js-cookie'
-import YTCMFooter from '../Footer';
+import Footer from '../../Footer';
 import { ThreeDots } from 'react-loader-spinner';
 import {Popup} from 'reactjs-popup'
 
@@ -158,9 +158,9 @@ const KYC = () => {
             <div className="ytmcregister-main-container">
                 <div style={{ textAlign: 'left', backgroundColor: '#ffff00', position: 'fixed', width: '100%', top: '0', zIndex: '100',marginBottom:'0' }} className="ytmcregister-top-container">
                     <div style={{ display: 'flex', alignItems: 'center' }}>
-                        <Link to="/profile" style={{ textDecoration: 'none' }}>
+                        {/* <Link to="/profile" style={{ textDecoration: 'none' }}>
                             <FaArrowLeft className="back-icon" />
-                        </Link>
+                        </Link> */}
                         <h2>KYC</h2>
                     </div>
                 </div>
@@ -268,7 +268,7 @@ const KYC = () => {
 
             </div>
             <div style={{ position: 'fixed', bottom: '0', width: '100%', zIndex: '100' }}>
-                <YTCMFooter />
+                <Footer />
             </div>
         </>
     )

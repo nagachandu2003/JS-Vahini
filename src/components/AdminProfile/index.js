@@ -69,7 +69,7 @@ const AdminProfile = () => {
       <div className='main-header-container'>
         <h1 className='main-heading'>Profile</h1>
       </div>
-      <div className='main-content'>
+      <div style={{backgroundColor:'black'}} className='main-content'>
       <div className='profile-top-container'>
         <img src="https://res.cloudinary.com/dvwnbhpcy/image/upload/v1715776970/istockphoto-1495088043-612x612-removebg-preview_hdifqs.png" alt="profile" className='profile-logo' />
         <p className='profile-name'>{name}</p>

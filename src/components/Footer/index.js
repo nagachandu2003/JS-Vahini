@@ -35,7 +35,7 @@ const Footer = () => {
             {renderTab("/trainings", 'Trainings', FaBell, 'Trainings')}
             {renderTab("/stats", 'Stats', FaTasks, 'Stats')}
             {renderTab("/task", 'Task', GrTasks, 'Task')}
-            {renderTab("/team", 'Team', FaUsers, 'Team')}
+            {/* {renderTab("/team", 'Team', FaUsers, 'Team')} */}
             {renderTab("/profile", 'Profile', FaUser, 'Profile')}
           </nav>
         </div>
@@ -47,7 +47,7 @@ const Footer = () => {
             {renderTab("/report", 'Report', FaFileAlt, 'Report')}
             {renderTab("/stats", 'Stats', FaTasks, 'Stats')}
             {renderTab("/trainings", 'Trainings', FaBell, 'Trainings')}
-            {renderTab("/team", 'Team', FaUsers, 'Team')}
+            {/* {renderTab("/team", 'Team', FaUsers, 'Team')} */}
             {renderTab("/adminprofile", 'Profile', FaUser, 'Profile')}
           </nav>
         </div>
