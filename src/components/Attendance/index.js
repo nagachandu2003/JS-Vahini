@@ -53,6 +53,7 @@ const Attendance = () => {
           person: 'member',
           MobNo: ele.mobileno,
           status: 'present',
+          email:ele.email
         }));
 
         // Getting Admins
@@ -65,6 +66,7 @@ const Attendance = () => {
           MobNo: ele.campInchargeNumber,
           name: ele.campInchargeName,
           status: 'present',
+          email:ele.campInchargeGmail
         }));
 
         // Getting Sub Admins
@@ -76,6 +78,7 @@ const Attendance = () => {
           person: 'subadmin',
           MobNo: ele.mobileNo,
           status: 'present',
+          email:ele.email
         }));
 
         const newList = [...mappedList1, ...mappedList2, ...mappedList3];

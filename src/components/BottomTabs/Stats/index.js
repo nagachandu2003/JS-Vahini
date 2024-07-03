@@ -17,6 +17,7 @@ import { Link } from "react-router-dom"
         date.setDate(date.getDate() - 30);
         return date.toISOString().split('T')[0];
     });
+    const [overalluserDetails, setOverAllUserDetails] = useState([]);
 
     useEffect(() => {
         const getVideos = async () => {
@@ -43,6 +44,34 @@ import { Link } from "react-router-dom"
         // Call getVideos only once on mount
         getVideos();
       }, []); 
+
+
+      useEffect(() => {
+        const getVideos = async () => {
+          setIsLoading(true)
+          try{
+            const options = {
+                method :"POST",
+                headers : {
+                    "Content-Type" : "application/json"
+                },
+                body : JSON.stringify({email,campCluster,startDate,endDate})
+            }
+            const response = await fetch(`https://js-member-backend.vercel.app/getoverallstats`,options);
+            const data = await response.json()
+            console.log(data)
+            setOverAllUserDetails(data.detailedstats)
+            setIsLoading(false)
+                // console.log(data);
+          }
+          catch(Err){
+            console.log(`Error Occurred : ${Err}`);
+          }
+        };
+    
+        // Call getVideos only once on mount
+        getVideos();
+      }, [startDate,endDate]); 
 
       
 
@@ -250,7 +279,7 @@ import { Link } from "react-router-dom"
                   <h3 className="stats-section-heading2">Attendance</h3>
                   <h4>Total</h4>
                   </div>
-                  <h1 className="number-size">{23}</h1>
+                  <h1 className="number-size">{overalluserDetails.attendancedetails}</h1>
                   {/* <h3>{(new Date().toLocaleString('default',{month:'long'}))}</h3> */}
                       {/* <h4>Total Present : {0}</h4> */}
                       {/* <h4>Daily Avg    : {0}</h4>
@@ -292,11 +321,11 @@ import { Link } from "react-router-dom"
                   <h3 className="stats-section-heading2">Attendance (Selfie)</h3>
                   <div style={{display:'flex',justifyContent:'space-evenly',alignItems:'center'}}>
                     <div>
-                        <h1 className="number-size">24</h1>
+                        <h1 className="number-size">{overalluserDetails.morningattendanceselfiedetails}</h1>
                         <p>Morning</p>
                     </div>
                     <div>
-                        <h1 className="number-size">26</h1>
+                        <h1 className="number-size">{overalluserDetails.eveningattendanceselfiedetails}</h1>
                         <p>Evening</p>
                     </div>
                   </div>
@@ -325,22 +354,26 @@ import { Link } from "react-router-dom"
 
                   <div className="avg-cards2 gr-bg3">
                   <h3 style={{color:'black'}} className="stats-section-heading2">Household (Selfie)</h3>
-                  <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+                  <div style={{display:'flex',justifyContent:'space-around',alignItems:'center'}}>
                     <div>
-                        <h1 className="number-size">26</h1>
-                        <p>Total Selfie</p>
+                        <h1 className="number-size">{overalluserDetails.householdselfiedetails}</h1>
+                        <p>Total</p>
+                        <p>Selfie</p>
                     </div>
                     <div>
-                        <h1 className="number-size">44</h1>
-                        <p>Daily Avg</p>
+                        <h1 className="number-size">20</h1>
+                        <p>Daily</p>
+                        <p>Avg</p>
                     </div>
                     <div>
                         <h1 className="number-size">66</h1>
-                        <p>Weekly Avg</p>
+                        <p>Weekly</p>
+                        <p>Avg</p>
                     </div>
                     <div>
                         <h1 className="number-size">28</h1>
-                        <p>Monthly Avg</p>
+                        <p>Monthly</p>
+                        <p>Avg</p>
                     </div>
                   </div>
                       {/* <h4>Total Selfie : {0}</h4>
@@ -366,56 +399,120 @@ import { Link } from "react-router-dom"
                   </div>
                   <div className="stats-section-container">
                   <div>
-
                   <div className="avg-cards2 gr-bg4">
-                  <h3 className="stats-section-heading2">Sansthapak Sadasya</h3>
-                      <h4>Total SS Reported  : {0}</h4>
-                      <h4>Daily Avg              : {0}</h4>
-                      <h4>Weekly Avg             : {0}</h4>
-                      <h4>Monthly Avg            : {0}</h4>
-                      {/* <h4>No of Blocks : {(attendancedata.filter((ele) => ele.date===(new Date()).toLocaleDateString('en-GB') && ele.period==="Morning")).length===0?'Absent':'Present'}</h4>
-                      <h4>No of Villages : {(attendancedata.filter((ele) => ele.date===(new Date()).toLocaleDateString('en-GB') && ele.period==="Evening")).length===0?'Absent':'Present'}</h4> */}
+                  <h3 style={{color:'white'}} className="stats-section-heading2">Sansthapak Sadasya</h3>
+                  <div style={{display:'flex',justifyContent:'space-around',alignItems:'center'}}>
+                    <div>
+                        <h1 className="number-size">{overalluserDetails.ssdetails}</h1>
+                        <p>Total</p>
+                        <p>SS</p>
+                    </div>
+                    <div>
+                        <h1 className="number-size">44</h1>
+                        <p>Daily</p>
+                        <p>Avg</p>
+                    </div>
+                    <div>
+                        <h1 className="number-size">66</h1>
+                        <p>Weekly</p>
+                        <p>Avg</p>
+                    </div>
+                    <div>
+                        <h1 className="number-size">28</h1>
+                        <p>Monthly</p>
+                        <p>Avg</p>
+                    </div>
                   </div>
                   </div>
 
+                  </div>
                   </div>
                   <div className="stats-section-container">
                   <div>
 
                   <div className="avg-cards2 gr-bg1">
-                  <h3 className="stats-section-heading2">Digital Influencer</h3>
-                      <h4>Total Digital Influencers Reported : {0}</h4>
-                      <h4>Daily Avg              : {0}</h4>
-                      <h4>Weekly Avg             : {0}</h4>
-                      <h4>Monthly Avg            : {0}</h4>
-                      {/* <h4>Morning Selfie : {(attendancedata.filter((ele) => ele.date===(new Date()).toLocaleDateString('en-GB') && ele.period==="Morning")).length===0?'Absent':'Present'}</h4>
-                      <h4>Evening Selfie : {(attendancedata.filter((ele) => ele.date===(new Date()).toLocaleDateString('en-GB') && ele.period==="Evening")).length===0?'Absent':'Present'}</h4> */}
+                  <h3 style={{color:'white'}} className="stats-section-heading2">Digital Influencer</h3>
+                  <div style={{display:'flex',justifyContent:'space-around',alignItems:'center'}}>
+                    <div>
+                        <h1 className="number-size">{overalluserDetails.didetails}</h1>
+                        <p>Total</p>
+                        <p>DI</p>
+                    </div>
+                    <div>
+                        <h1 className="number-size">44</h1>
+                        <p>Daily</p>
+                        <p>Avg</p>
+                    </div>
+                    <div>
+                        <h1 className="number-size">66</h1>
+                        <p>Weekly</p>
+                        <p>Avg</p>
+                    </div>
+                    <div>
+                        <h1 className="number-size">28</h1>
+                        <p>Monthly</p>
+                        <p>Avg</p>
+                    </div>
                   </div>
                   </div>
                   </div>
-                  <div className="stats-section-container">
+                  </div>
+
                   <div className="stats-section-container">
                   <div>
 
                   <div className="avg-cards2 gr-bg2">
-                  <h3 className="stats-section-heading2">Coaching</h3>
-                  <h4>Total Coaching Reported : {0}</h4>
-                  <h4>Daily Avg              : {0}</h4>
-                  <h4>Weekly Avg             : {0}</h4>
-                  <h4>Monthly Avg            : {0}</h4>
+                  <h3 style={{color:'white'}} className="stats-section-heading2">Coaching</h3>
+                  <div style={{display:'flex',justifyContent:'space-around',alignItems:'center'}}>
+                    <div>
+                        <h1 className="number-size">{overalluserDetails.coachingdetails}</h1>
+                        <p>Total</p>
+                        <p>Coaching</p>
+                    </div>
+                    <div>
+                        <h1 className="number-size">44</h1>
+                        <p>Daily</p>
+                        <p>Avg</p>
+                    </div>
+                    <div>
+                        <h1 className="number-size">66</h1>
+                        <p>Weekly</p>
+                        <p>Avg</p>
+                    </div>
+                    <div>
+                        <h1 className="number-size">28</h1>
+                        <p>Monthly</p>
+                        <p>Avg</p>
+                    </div>
                   </div>
                   </div>
                   </div>
                   </div>
                   <div className="stats-section-container">
-                  <div>
 
                   <div className="avg-cards2 gr-bg3">
                   <h3 style={{color:'black'}} className="stats-section-heading2">SS Vitran</h3>
-                  <h4>Total SS Vitran Reported : {0}</h4>
-                  <h4>Daily Avg              : {0}</h4>
-                  <h4>Weekly Avg             : {0}</h4>
-                  <h4>Monthly Avg            : {0}</h4>
+                  <div style={{display:'flex',justifyContent:'space-around',alignItems:'center'}}>
+                    <div>
+                        <h1 className="number-size">{overalluserDetails.ssvitrandetails}</h1>
+                        <p>Total</p>
+                        <p>SS Vitran</p>
+                    </div>
+                    <div>
+                        <h1 className="number-size">44</h1>
+                        <p>Daily</p>
+                        <p>Avg</p>
+                    </div>
+                    <div>
+                        <h1 className="number-size">66</h1>
+                        <p>Weekly</p>
+                        <p>Avg</p>
+                    </div>
+                    <div>
+                        <h1 className="number-size">28</h1>
+                        <p>Monthly</p>
+                        <p>Avg</p>
+                    </div>
                   </div>
                   </div>
                   </div>
