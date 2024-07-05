@@ -7,8 +7,10 @@ import { IoLanguage } from 'react-icons/io5';
 import Cookies from 'js-cookie'
 import DistrictItem from '../../DistrictItem';
 import {v4 as uuidv4} from 'uuid'
+import { Link } from 'react-router-dom';
+import { IoStatsChartSharp } from 'react-icons/io5';
 
-import './index.css'; // Import CSS file
+import './index.css';
 
 const blocks = {
 
@@ -479,9 +481,14 @@ const  isVillageComplete2Label = language === "english" ? "Is the Village Comple
   return (
     <>
       <div>
-        <div className='main-header-container'>
-          <h1 className='main-ss'>D2D Incharge</h1>
-        </div>
+      <div className='main-header-container'>
+      <h1 className='main-d2d'>
+        D2D Incharge
+        <Link to="/d2dinchargestats" style={{color:'black',textDecoration:'none'}}>
+        <span className='header-icon'><IoStatsChartSharp size={20} /></span>
+        </Link>
+      </h1>
+      </div>
         <div className='ss-container'>
           <div className={showForm ? "overlay" : "overlay hidden"} onClick={() => setShowForm(false)}></div>
           {showForm && <FormComponent onSave={handleSave} onClose={() => setShowForm(false)} />}

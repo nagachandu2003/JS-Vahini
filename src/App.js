@@ -42,6 +42,7 @@ import AttendanceStats from './components/AttendanceStats';
 import SelfieStats from './components/SelfieStats';
 import AttendanceSelfie from './components/TopTabs/AttendanceSelfie';
 import KYC from './components/TopTabs/KYC';
+import D2DInchargeStats from './components/D2DInchargeStats';
 
 const App = () => {
   const userexists = Cookies.get("campuseremail");
@@ -86,6 +87,7 @@ const App = () => {
     <Route path="/coaching" element={<Coaching/>}/>
     <Route path="/ssvitran" element={<SSVitran/>}/>
     <Route path="/d2dincharge" element={<D2DIncharge/>}/>
+    <Route path="/d2dinchargestats" element={<D2DInchargeStats/>}/>
     <Route path="/adminwhatsapp" element={<AdminWhatsapp/>}/>
     <Route path="/attendancestats" element={<AttendanceStats/>}/>
     <Route path="/selfiestats" element={<SelfieStats/>}/>
