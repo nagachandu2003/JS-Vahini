@@ -30,7 +30,7 @@ import { Link } from "react-router-dom"
                 },
                 body : JSON.stringify({email,campCluster,date:(new Date()).toLocaleDateString('en-GB')})
             }
-            const response = await fetch(`http://localhost:3001/gettodayd2dstats`,options);
+            const response = await fetch(`https://js-member-backend.vercel.app/gettodayd2dstats`,options);
             const data = await response.json()
             setStatsDetails(data.details)
             setIsLoading(false)
