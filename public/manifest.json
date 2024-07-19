@@ -3,17 +3,17 @@
   "name": "Welcome to JS Vahini",
   "icons": [
     {
-      "src": "https://res.cloudinary.com/dylh46szw/image/upload/v1711793425/favicon2_pef2lb.jpg",
+      "src": "./JS Vahini -logo.png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "https://res.cloudinary.com/dylh46szw/image/upload/v1711793425/favicon2_pef2lb.jpg",
+      "src": "./JS Vahini -logo.png",
       "type": "image/jpg",
       "sizes": "192x192"
     },
     {
-      "src": "./logoicon.png",
+      "src": "./JS Vahini -logo.png",
       "sizes": "512x512",
       "type": "image/png"
   }
